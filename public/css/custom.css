@@ -1,0 +1,23 @@
+.error{
+	color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+	position: relative;
+    padding: .20rem 1rem;
+    margin-bottom: 0.2rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+	width: 100%;
+	display: block;
+}
+
+select[readonly] {
+  background: #eee; 
+  pointer-events: none;
+  touch-action: none;
+}
+
+.obrigatorio{
+    color: red;
+    margin-left: 3px;
+}
