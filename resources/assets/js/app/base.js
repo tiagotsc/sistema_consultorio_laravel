@@ -21,8 +21,8 @@ $(".responsive-calendar").responsiveCalendar({
     /*time: '2018-07',*/
     onDayClick: function(events) { 
         
-        let formataDia = $(this).data('day');
-        let formataMes = $(this).data('month');
+        var formataDia = $(this).data('day');
+        var formataMes = $(this).data('month');
         
         if($(this).data('day') < 10){
             formataDia = '0'+$(this).data('day');
@@ -32,10 +32,10 @@ $(".responsive-calendar").responsiveCalendar({
             formataMes = '0'+$(this).data('month');
         }
         
-        let data = formataDia+'/'+formataMes+'/'+$(this).data('year');
+        var dataCompleta = formataDia+'/'+formataMes+'/'+$(this).data('year');
         /*$(window.document.location).attr('href','http://localhost/consultorio/agenda/secretaria/'+data);*/
         /*alert($(this).data('day')+'/'+$(this).data('month')+'/'+$(this).data('year'));*/
-        $(location).attr('href', '/agenda/secretaria/'+data);
+        $(location).attr('href', '/agenda/secretaria/'+dataCompleta);
     }
 });
 

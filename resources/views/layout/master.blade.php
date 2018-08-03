@@ -4,15 +4,16 @@
     <title>Colorlib Medi+</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="{{ asset('css/font.css') }}" rel="stylesheet">
+    <!--<link href="{{ asset('css/font.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.timepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('fonts/fontawesome/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('calendario/css/responsive-calendar.css') }}">
-    <!-- Theme Style -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">-->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('fonts/fontawesome/css/font-awesome.min.css') }}">
   </head>
   <body>
     
@@ -124,7 +125,7 @@
 				<div class="responsive-calendar">
                     <div class="controls">
                         <a class="pull-left" data-go="prev"><div class="btn btn-primary">Anterior</div></a>
-                        <h4><span data-head-year></span> <span data-head-month></span></h4>
+                        <h4><span id="calendario-ano" data-head-year></span> <span id="calendario-mes" data-head-month></span></h4>
                         <a class="pull-right" data-go="next"><div class="btn btn-primary">Próximo</div></a>
                     </div><hr/>
                     <div class="day-headers">
@@ -227,7 +228,7 @@
     @show
 
     @section('footerScrits')
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <!--<script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -238,7 +239,8 @@
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/util.js') }}"></script>
-    <script src="{{ asset('js/base.js') }}"></script>
+    <script src="{{ asset('js/base.js') }}"></script>-->
+    <script src="{{ asset('js/app.js') }}"></script>
     @show
   </body>
 </html>

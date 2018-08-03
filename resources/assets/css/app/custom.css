@@ -21,3 +21,7 @@ select[readonly] {
     color: red;
     margin-left: 3px;
 }
+
+#calendario-mes,#calendario-ano{
+    font-size: 20px;
+}
