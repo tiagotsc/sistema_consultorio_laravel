@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class agendaController extends Controller
+class AgendaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        echo 'aqui2'; exit();
+        $dataEscolhida = $request->dia.'/'.$request->mes.'/'.$request->ano;
+        return view('agenda.index', ['data' => $dataEscolhida, 'tipo' => $request->tipo]);
     }
 
     /**
@@ -80,5 +81,16 @@ class agendaController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    /**
+     * Tela de marcar consulta
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function marcar()
+    {
+        return view('agenda.marcar');
     }
 }

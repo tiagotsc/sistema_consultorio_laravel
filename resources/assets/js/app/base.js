@@ -20,7 +20,7 @@ $(".responsive-calendar").responsiveCalendar({
     translateMonths: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
     /*time: '2018-07',*/
     onDayClick: function(events) { 
-        
+        loadingShow();
         var formataDia = $(this).data('day');
         var formataMes = $(this).data('month');
         
@@ -51,4 +51,26 @@ $(".cep").on('keyup', function(){
         }, "json" );
     }
 });*/
+
+function montaModalDefault(caminho, parametros, modalTitulo/*, fullModal*/){
+	/*$("#modal_titulo_default").html('Aguarde...');
+	$("#modal_conteudo_default").html( '' );
+	$('#modalDefault').modal('show');
+	if(fullModal == 'S'){
+		if($( "#modalFullDefault" ).hasClass( "modal-full" ) == false){
+			$("#modalFullDefault").addClass( "modal-full" );
+		}
+	}else{
+		$("#modalFullDefault").removeClass( "modal-full" );
+	}*/
+	$.post( caminho, { valores: parametros }, function( data ) {
+		$("#modal_titulo_default").html(modalTitulo);
+		$( "#modal_conteudo_default" ).html( data );
+	});
+	/*if(modalOpcaoAbrir != ''){
+		$("#modal_default_close").on("click", function(){
+			$(modalOpcaoAbrir).modal('show');
+		});
+	}*/
+}
 
