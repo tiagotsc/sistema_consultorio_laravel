@@ -18,7 +18,8 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home.index');
 
 // Agenda
-Route::get('agenda/secretaria/{dia}/{mes}/{ano}', 'AgendaController@index')->where(['dia' => '[0-9]{2}', 'mes' => '[0-9]{2}', 'ano' => '[0-9]{4}']);
+Route::get('agenda/{tipo}/{dia}/{mes}/{ano}', 'AgendaController@index')->where(['dia' => '[0-9]{2}', 'mes' => '[0-9]{2}', 'ano' => '[0-9]{4}'])->name('agenda.index');
+Route::get('agenda/marcar', 'AgendaController@marcar')->name('agenda.marcar');
 
 // Funcionário
 Route::get('/funcionario', 'FuncionarioController@index')->name('funcionario.index');
