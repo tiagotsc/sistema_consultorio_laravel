@@ -1,6 +1,4 @@
-buscaCep(".cep","#endereco","#bairro","#cidade","#estado");
-
-$("#frm").validate({
+$("#frmMarcar").validate({
 	debug: false,
 	errorClass: 'error',
 	errorElement: 'p',
@@ -23,31 +21,23 @@ $("#frm").validate({
 	rules: {
 		nome: {
 			required: true
-        },
-        tipoUsuario: {
-			required: true
-		},
-		perfil: {
-			required: true,
-		}
+        }
 	},
 	messages: {
 		nome: {
 			required: "Informe, por favor!"
-        },
-        tipoUsuario: {
-			required: "Selecione, por favor!",
-		},
-		perfil: {
-			required: "Selecione, por favor!",
-		}
+        }
 	}
 });
 
-$("#salvar").on("click", function(){
-	if($("#frm").valid()){
+$("#salvarConsultar").on("click", function(){
+	if($("#frmMarcar").valid()){
         loadingShow('Gravando...');
 		$(this).prop('disabled', true).html('Aguarde...');
-		$('#frm').submit();
+		//$('#frmMarcar').submit();
 	}
 });
+
+/*$("#salvarConsultar").on("click", function(){
+    alert('Salvando');
+});*/

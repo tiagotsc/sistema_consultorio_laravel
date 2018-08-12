@@ -7,13 +7,14 @@
          <h4>Agenta {{ $tipo }} - {{ $data }}</h4>
         </div>
         <div class="col-md-6 text-right">
-         <a class="menu-item" href="#" data-toggle="modal" data-target="#modalDefault">Marcar consulta <i class="fas fa-plus"></i></a>
+         <a id="modalMarcar" data-selecionada="{{ $data }}" class="menu-item" href="#" data-toggle="modal" data-target="#modalDefault">Marcar consulta <i class="fas fa-plus"></i></a>
         </div>
     </div>
     <hr>
     {!! Form::open() !!}
     <div class="row">
         <div class="form-group col-md-9">
+        {!! Form::token() !!}
         {!! Form::label('nome', 'Nome paciente') !!}
         {!! Form::text('nome', '', ['class' => 'form-control', 'maxlength' => '200']) !!}
         </div>
@@ -67,4 +68,9 @@
     </div>
     {!! Form::close() !!}
 </div>
+@endsection
+
+@section('footerScrits')
+@parent
+<script src="{{ asset('js/agenda/index.js') }}"></script>
 @endsection

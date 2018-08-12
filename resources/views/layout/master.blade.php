@@ -179,54 +179,27 @@
 
     <!-- Modal -->
     @section('modalDefault')
-    <div class="modal fade" id="modalDefault" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Appointment</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form action="#">
-              <div class="modal-body">
-                  <div class="form-group">
-                    <label for="appointment_name" class="text-black">Full Name</label>
-                    <input type="text" class="form-control" id="appointment_name">
-                  </div>
-                  <div class="form-group">
-                    <label for="appointment_email" class="text-black">Email</label>
-                    <input type="text" class="form-control" id="appointment_email">
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="appointment_date" class="text-black">Date</label>
-                        <input type="text" class="form-control" id="appointment_date">
-                      </div>    
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="appointment_time" class="text-black">Time</label>
-                        <input type="text" class="form-control" id="appointment_time">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="appointment_message" class="text-black">Message</label>
-                    <textarea name="" id="appointment_message" class="form-control" cols="30" rows="10"></textarea>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                <input type="submit" value="Send Message" class="btn btn-primary">
-              </div>
-          </form>
+    <div id="modalDefault" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><input type="text"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
         </div>
-      </div>
     </div>
     @show
-
+    <input type="hidden" id="base_url" value="{{ url('/') }}">
     @section('footerScrits')
     <!--<script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/jquery.blockUI.js') }}"></script>

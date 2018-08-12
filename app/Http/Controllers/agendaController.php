@@ -89,8 +89,9 @@ class AgendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function marcar()
+    public function marcar(Request $request)
     {
-        return view('agenda.marcar');
+        #echo '<pre>'; print_r($request); exit();
+        return view('agenda.marcar')->with('dataSelecionada', $request->input('valores'));
     }
 }
