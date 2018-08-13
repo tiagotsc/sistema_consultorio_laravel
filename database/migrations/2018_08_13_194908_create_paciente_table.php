@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFuncionarioTable extends Migration
+class CreatePacienteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateFuncionarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('funcionario', function (Blueprint $table) {
+        Schema::create('paciente', function (Blueprint $table) {
             $table->increments('id');
             $table->string('matricula', 15)->unique();
             $table->string('nome');
-            $table->integer('idPerfil');
+            $table->string('rg', 15)->nullable();
+            $table->enum('sexo', ['M', 'F']);
+            $table->enum('nacionalidade', ['BRA', 'EST','NAC'])->default('BRA');
             $table->enum('status', ['A', 'I'])->default('A');
             $table->string('telefone', 15)->nullable();
             $table->string('celular', 15)->nullable();
@@ -31,6 +33,7 @@ class CreateFuncionarioTable extends Migration
             $table->char('cep', 9)->nullable();
             $table->char('medico', 1)->nullable();
             $table->date('dataNasc')->nullable();
+            $table->enum('novoPaciente', ['S', 'N'])->default('S');
             $table->timestamps();
         });
     }
@@ -42,6 +45,6 @@ class CreateFuncionarioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('funcionario');
+        Schema::dropIfExists('paciente');
     }
 }
