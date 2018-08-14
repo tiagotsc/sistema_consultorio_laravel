@@ -29,7 +29,7 @@ class CreateFuncionarioTable extends Migration
             $table->string('bairro', 100)->nullable();
             $table->integer('idEstado')->nullable();
             $table->char('cep', 9)->nullable();
-            $table->char('medico', 1)->nullable();
+            $table->enum('medico', ['S', 'N']);
             $table->date('dataNasc')->nullable();
             $table->timestamps();
         });
