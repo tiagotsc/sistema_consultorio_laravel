@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 //use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
-class FuncionarioTableSeeder extends Seeder
+class FuncionariosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +13,7 @@ class FuncionarioTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('funcionario')->insert([
+        DB::table('funcionarios')->insert([
             'matricula' => 'F'.date('Ym').'001',
             'nome' => 'Paulo Roberto',
             'email' => 'paulo.roberto@teste.com.br',
@@ -24,5 +24,6 @@ class FuncionarioTableSeeder extends Seeder
             'status' => 'A',
             'idPerfil' => 1
         ]);
+		
     }
 }

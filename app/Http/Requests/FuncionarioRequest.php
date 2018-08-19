@@ -23,14 +23,16 @@ class FuncionarioRequest extends FormRequest
      */
     public function rules()
     {
-        $dados = $this->all(); 
+        #$this->path() URI
+        #$dados = $this->all(); 
+        #$dados['dataNasc'] = implode('-',array_reverse(explode('/',$dados['dataNasc'])));
         #echo '<pre>';
         #print_r($dados);
         #exit();
         return [
             'nome' => 'required',
-            'tipoUsuario' => 'required',
-            'perfil' => 'required'
+            'medico' => 'required',
+            'idPerfil' => 'required'
         ];
     }
 }

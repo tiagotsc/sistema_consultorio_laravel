@@ -23,8 +23,8 @@
         {!! Form::text('nome', '', ['class' => 'form-control', 'maxlength' => '200', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-3">
-        {!! Form::label('dt_nasc', 'Data nascimento') !!}
-        {!! Form::text('dt_nasc', '', ['class' => 'form-control data', 'maxlength' => '10', 'placeholder' => 'Preencha...']) !!}
+        {!! Form::label('dataNasc', 'Data nascimento') !!}
+        {!! Form::text('dataNasc', '', ['class' => 'form-control data', 'maxlength' => '10', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-3">
         {!! Form::label('cpf', 'CPF') !!}
@@ -35,12 +35,16 @@
         {!! Form::text('email', '', ['class' => 'form-control', 'maxlength' => '150', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-3">
-        {!! Form::label('tipoUsuario', 'Tipo usuário') !!}<span class="obrigatorio">*</span>
-        {!! Form::select('tipoUsuario', array(''=>'','MEDICO'=>'Médico','SECRETARIA'=>'Secretária'), null, ['class' => 'form-control']) !!}
+        {!! Form::label('medico', 'Tipo usuário') !!}<span class="obrigatorio">*</span>
+        {!! Form::select('medico', array(''=>'','S'=>'Médico','N'=>'Secretária'), null, ['class' => 'form-control']) !!}
+        </div>
+        <div class="form-group col-md-4">
+        {!! Form::label('especialidade[]', 'Especialidade') !!}<span class="obrigatorio">*</span>
+        {!! Form::select('especialidade[]', $especialidades, null, ['multiple'=>'multiple', 'class' => 'form-control']) !!}
         </div>
         <div class="form-group col-md-3">
-        {!! Form::label('perfil', 'Perfil') !!}<span class="obrigatorio">*</span>
-        {!! Form::select('perfil', array(''=>'','MEDICO'=>'Médico','SECRETARIA'=>'Secretária'), null, ['class' => 'form-control']) !!}
+        {!! Form::label('idPerfil', 'Perfil') !!}<span class="obrigatorio">*</span>
+        {!! Form::select('idPerfil', array(''=>'','1'=>'Médico','2'=>'Secretária'), null, ['class' => 'form-control']) !!}
         </div>
         <div class="form-group col-md-3">
         {!! Form::label('telefone', 'Telefone fixo') !!}
@@ -59,8 +63,8 @@
         {!! Form::text('endereco', '', ['class' => 'form-control', 'readonly' => true, 'maxlength' => '255', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-3">
-        {!! Form::label('numero', 'Número') !!}
-        {!! Form::text('numero', '', ['class' => 'form-control', 'maxlength' => '50', 'placeholder' => 'Preencha...']) !!}
+        {!! Form::label('endNumero', 'Número') !!}
+        {!! Form::text('endNumero', '', ['class' => 'form-control', 'maxlength' => '50', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-4">
         {!! Form::label('bairro', 'Bairro') !!}
@@ -71,8 +75,8 @@
         {!! Form::text('cidade', '', ['class' => 'form-control', 'readonly' => true, 'maxlength' => '100', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-3">
-        {!! Form::label('estado', 'Estado') !!}
-        {!! Form::select('estado', array(''=>'','RJ'=>'Rio de Janeiro','SP'=>'São Paulo'), null, ['class' => 'form-control', 'readonly' => true]) !!}
+        {!! Form::label('estado_id', 'Estado') !!}
+        {!! Form::select('estado_id', $estados, null, ['class' => 'form-control', 'readonly' => true]) !!}
         </div>
         <div class="form-group col-md-3">
         {!! Form::label('status', 'Status') !!}

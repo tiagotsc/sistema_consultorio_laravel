@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFuncionarioTable extends Migration
+class CreateFuncionariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFuncionarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('funcionario', function (Blueprint $table) {
+        Schema::create('funcionarios', function (Blueprint $table) {
             $table->increments('id');
             $table->string('matricula', 15)->unique();
             $table->string('nome');
@@ -26,12 +26,14 @@ class CreateFuncionarioTable extends Migration
             $table->string('senha')->nullable();
             $table->string('endereco')->nullable();
             $table->string('endNumero', 50)->nullable();
+            $table->string('cidade', 100)->nullable();
             $table->string('bairro', 100)->nullable();
-            $table->integer('idEstado')->nullable();
             $table->char('cep', 9)->nullable();
             $table->enum('medico', ['S', 'N']);
             $table->date('dataNasc')->nullable();
             $table->timestamps();
+            $table->unsignedInteger('estado_id')->nullable();
+            $table->foreign('estado_id')->references('id')->on('estados');
         });
     }
 
@@ -42,6 +44,6 @@ class CreateFuncionarioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('funcionario');
+        Schema::dropIfExists('funcionarios');
     }
 }

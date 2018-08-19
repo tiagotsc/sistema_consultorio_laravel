@@ -1,4 +1,4 @@
-buscaCep(".cep","#endereco","#bairro","#cidade","#estado");
+buscaCep(".cep","#endereco","#bairro","#cidade","#estado_id");
 
 $("#frm").validate({
 	debug: false,
@@ -24,10 +24,10 @@ $("#frm").validate({
 		nome: {
 			required: true
         },
-        tipoUsuario: {
+        medico: {
 			required: true
 		},
-		perfil: {
+		idPerfil: {
 			required: true,
 		}
 	},
@@ -35,10 +35,10 @@ $("#frm").validate({
 		nome: {
 			required: "Informe, por favor!"
         },
-        tipoUsuario: {
+        medico: {
 			required: "Selecione, por favor!",
 		},
-		perfil: {
+		idPerfil: {
 			required: "Selecione, por favor!",
 		}
 	}

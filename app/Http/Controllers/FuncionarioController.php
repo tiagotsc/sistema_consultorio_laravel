@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\FuncionarioRequest;
+use App\Funcionario;
+use App\Especialidade;
+use App\Estado;
 
 class FuncionarioController extends Controller
 {
@@ -24,7 +28,20 @@ class FuncionarioController extends Controller
      */
     public function create()
     {
-        return view('funcionario.create');
+        $funcionario = new Funcionario();
+        $especialidades = $funcionario->find(2)->especialidades;
+        foreach($especialidades as $t){
+            echo $t->nome.'<br>'; 
+        }
+        echo $funcionario->find(2)->estado->nome;
+        exit();
+        #echo '<pre>'; print_r($teste); exit();
+        $estados = Estado::where('status','A')->orderBy('nome')->pluck('sigla', 'id')->prepend('', '');
+        $especialidades = Especialidade::where('status','A')->orderBy('nome')->pluck('nome', 'id');
+        return view('funcionario.create', [
+                                        'estados' => $estados,
+                                        'especialidades' => $especialidades
+                                        ]);
     }
 
     /**
@@ -34,12 +51,24 @@ class FuncionarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(FuncionarioRequest $request)
-    {
-        #echo '</pre>';
-        #var_dump($request->all());
-        #exit();
-        #return redirect()->route('funcionario.create')->with('alertMessage', 'alert-warning|Está tudo bem!');
-        return redirect()->route('funcionario.create')->with('alertMessage', 'alert-success|Está tudo bem!');
+    { 
+        $especialidades = $request->input('especialidade');
+        try {
+            $dados = $request->except(['_token', 'especialidade']);
+            $funcionario = new Funcionario($dados);
+            if($funcionario->save()){
+                $funcionario->especialidades()->attach($especialidades);
+                $msg = 'alert-success|Funcionário criado com sucesso!';
+            }else{
+                $msg = 'alert-warning|Erro ao criar funcionário! Se o erro persistir, entre em contato com o administrador.';
+            }
+        } catch (Exception $e) {
+            report($e);
+            $msg = 'alert-warning|Erro ao criar funcionário! Se o erro persistir, entre em contato com o administrador.';
+        }
+        #echo '<pre>'; print_r($especialidades); exit();
+        #echo $funcionario->especialidades()->attach($especialidades); exit();
+        return redirect()->route('funcionario.create')->with('alertMessage', $msg);
     }
 
     /**

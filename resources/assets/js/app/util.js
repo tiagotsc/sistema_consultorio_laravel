@@ -31,7 +31,13 @@ function buscaCep(elemento,endereco,bairro,cidade,estado){
                 $(endereco).val(res.logradouro).prop('readonly', true);
                 $(bairro).val(res.bairro).prop('readonly', true);
                 $(cidade).val(res.cidade).prop('readonly', true);
-                $(estado).val(res.estado).attr('readonly','readonly').css('backgroundColor', '#eee');
+                /*$(estado).val(res.estado).attr('readonly','readonly').css('backgroundColor', '#eee');*/
+                $(estado+' option').each(function(){
+                    var item = $(this).text();
+                    if(item == res.estado){
+                       $(this).prop('selected',true);
+                    }
+                });
               loadingHide();
             }, "json" ).fail(function() {
                 $(endereco).val('').prop('readonly', false);
