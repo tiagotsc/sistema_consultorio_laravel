@@ -30,5 +30,22 @@
             {!! Form::close() !!}
         </div>
     </div>
+   
+        <table class="table" id="frm-pesq">
+            <thead>
+                <tr>
+                    <th>Matrícula</th>
+                    <th>Nome</th>
+                    <th>Status</th>
+                    <th>Perfil</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+        </table>
+   
 </div>
+@endsection
+@section('footerScrits')
+@parent
+<script src="{{ asset('js/funcionario/index.js') }}"></script>
 @endsection

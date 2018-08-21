@@ -21,20 +21,25 @@ class FuncionarioController extends Controller
         return view('funcionario.index');
     }
 
+    public function getpesq(){
+        $dados = DB::table('funcionarios')->select('id','matricula','nome','idPerfil','status')->get();
+        return json_encode(array('data' => $dados));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {/*
         $funcionario = new Funcionario();
         $especialidades = $funcionario->find(2)->especialidades;
         foreach($especialidades as $t){
             echo $t->nome.'<br>'; 
         }
         echo $funcionario->find(2)->estado->nome;
-        exit();
+        exit();*/
         #echo '<pre>'; print_r($teste); exit();
         $estados = Estado::where('status','A')->orderBy('nome')->pluck('sigla', 'id')->prepend('', '');
         $especialidades = Especialidade::where('status','A')->orderBy('nome')->pluck('nome', 'id');

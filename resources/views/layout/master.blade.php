@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">-->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('fonts/fontawesome/css/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/datatable/DataTables/datatables.min.css') }}">
   </head>
   <body>
     
@@ -214,6 +215,7 @@
     <script src="{{ asset('js/util.js') }}"></script>
     <script src="{{ asset('js/base.js') }}"></script>-->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/datatable/DataTables/datatables.min.js') }}"></script>
     @show
   </body>
 </html>

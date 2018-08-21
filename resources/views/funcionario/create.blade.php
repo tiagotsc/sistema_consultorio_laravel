@@ -28,7 +28,7 @@
         </div>
         <div class="form-group col-md-3">
         {!! Form::label('cpf', 'CPF') !!}
-        {!! Form::text('cpf', '', ['class' => 'form-control', 'maxlength' => '20', 'placeholder' => 'Preencha...']) !!}
+        {!! Form::text('cpf', '', ['class' => 'cpf form-control', 'maxlength' => '20', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-6">
         {!! Form::label('email', 'Email') !!}
