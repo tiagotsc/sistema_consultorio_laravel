@@ -21,8 +21,8 @@ class FuncionarioController extends Controller
         return view('funcionario.index');
     }
 
-    public function getpesq(){
-        $dados = DB::table('funcionarios')->select('id','matricula','nome','idPerfil','status')->get();
+    public function getpesq(Request $request){
+        $dados = DB::table('funcionarios')->select('id','matricula','nome','idPerfil','status')->where('nome','like','%'.$request->input('nome_cpf').'%')->get();
         return json_encode(array('data' => $dados));
     }
 
@@ -84,7 +84,7 @@ class FuncionarioController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -95,7 +95,16 @@ class FuncionarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $funcionario = Funcionario::find($id);
+        $funcEsp = $funcionario->especialidades()->pluck('especialidade_id');
+        $estados = Estado::where('status','A')->orderBy('nome')->pluck('sigla', 'id')->prepend('', '');
+        $especialidades = Especialidade::where('status','A')->orderBy('nome')->pluck('nome', 'id');
+        return view('funcionario.edit', [
+            'funcionario' => $funcionario,
+            'estados' => $estados,
+            'especialidades' => $especialidades,
+            'funcEsp' => $funcEsp
+            ]);
     }
 
     /**
@@ -105,9 +114,25 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FuncionarioRequest $request)
     {
-        //
+        $especialidades = $request->input('especialidade');
+        try {
+            $dados = $request->except(['_token', 'especialidade']);
+            $funcionario = Funcionario::find($request->input('id'));
+            if($funcionario->update($dados)){
+                #$funcionario->especialidades()->attach($especialidades);
+                $msg = 'alert-success|Funcionário alterado com sucesso!';
+            }else{
+                $msg = 'alert-warning|Erro ao alterar funcionário! Se o erro persistir, entre em contato com o administrador.';
+            }
+        } catch (Exception $e) {
+            report($e);
+            $msg = 'alert-warning|Erro ao alterar funcionário! Se o erro persistir, entre em contato com o administrador.';
+        }
+        #echo '<pre>'; print_r($especialidades); exit();
+        #echo $funcionario->especialidades()->attach($especialidades); exit();
+        return redirect()->route('funcionario.edit', ['id' => $funcionario->id])->with('alertMessage', $msg);
     }
 
     /**

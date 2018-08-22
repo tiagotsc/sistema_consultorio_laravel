@@ -15,18 +15,11 @@
         <div class="col-md-12">
             {!! Form::open() !!}
               <div class="form-group">
+                {!! Form::token() !!}
                 {!! Form::label('nome_cpf', 'Nome ou CPF:') !!}
-                {!! Form::text('nome_cpf', '', ['class' => 'form-control', 'placeholder' => 'Informe o nome ou CPF']) !!}
+                {!! Form::text('nome_cpf', null, ['class' => 'form-control', 'placeholder' => 'Informe o nome ou CPF']) !!}
               </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-              <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button id="pesq" type="button" class="btn btn-primary">Pesquisar</button>
             {!! Form::close() !!}
         </div>
     </div>

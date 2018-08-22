@@ -25,7 +25,9 @@ Route::get('agenda/marcar', 'AgendaController@marcar')->name('agenda.marcar');
 Route::get('/funcionario', 'FuncionarioController@index')->name('funcionario.index');
 Route::get('/funcionario/create', 'FuncionarioController@create')->name('funcionario.create');
 Route::post('/funcionario/store', 'FuncionarioController@store')->name('funcionario.store');
-Route::get('/funcionario/getpesq', 'FuncionarioController@getpesq')->name('funcionario.getpesq');
+Route::post('/funcionario/getpesq', 'FuncionarioController@getpesq')->name('funcionario.getpesq');
+Route::get('/funcionario/edit/{id}', 'FuncionarioController@edit')->where(['id' => '[0-9]'])->name('funcionario.edit');
+Route::post('/funcionario/update', 'FuncionarioController@update')->name('funcionario.update');
 //Route::post('/funcionario/store', function(){
     /*$employeeZeroFirstName = Request::input('employees.0.firstName');
     $allLastNames = Request::input('employees.*.lastName');
