@@ -38,7 +38,7 @@ table = $('#frm-pesq').DataTable({
            orderable: false, // Habilita ou desabilita ordenação da coluna
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
-                   return '<a href="'+$("#base_url").val()+'/funcionario/edit/'+data+'" idEdit="'+data+'" class="editar">Editar</a><a idDel="'+data+'" titulo="'+row.nome+'" href="#" class="apagar">Apagar</a>';
+                   return '<a title="Editar" href="'+$("#base_url").val()+'/funcionario/edit/'+data+'" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a><a title="Apagar" idDel="'+data+'" titulo="'+row.nome+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i class="fas fa-trash-alt fa-lg"></a>';
                }
                return data;
            },
@@ -50,4 +50,16 @@ table = $('#frm-pesq').DataTable({
 $("#pesq").on('click', function(){
     table.clear().draw();
     table.ajax.reload();
+});
+
+$('#frm-pesq tbody').on( 'click', '.apagar', function (event) {
+    event.preventDefault(); 
+    $("#frm-deletar").attr('action',$("#rota-deletar").val().replace(0, $(this).attr('idDel')));
+    $("#del-id").val($(this).attr('idDel'));
+    $("#del-nome").val($(this).attr('titulo'));
+});
+
+$("#apagar").on("click", function(){
+    $(this).prop('disabled', true).val('Aguarde...');
+    $("#frm-deletar").submit();
 });

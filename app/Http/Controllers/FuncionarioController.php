@@ -143,6 +143,17 @@ class FuncionarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $funcionario = Funcionario::find($id);
+            if($funcionario->delete()){
+                $msg = 'alert-success|Funcionário excluido com sucesso!';
+            }else{
+                $msg = 'alert-warning|Erro ao excluir funcionário! Se o erro persistir, entre em contato com o administrador.';
+            }
+        } catch (Exception $e) {
+            report($e);
+            $msg = 'alert-warning|Erro ao excluir funcionário! Se o erro persistir, entre em contato com o administrador.';
+        }
+        return redirect()->route('funcionario.index')->with('alertMessage', $msg);
     }
 }

@@ -25,3 +25,19 @@ select[readonly] {
 #calendario-mes,#calendario-ano{
     font-size: 20px;
 }
+
+.floatLeft{
+    float: left;
+}
+
+.floatRight{
+    float:right;
+}
+
+.marginBotton{
+    margin-bottom: 15px;
+}
+
+.marginIcon{
+    margin-right: 5px;
+}

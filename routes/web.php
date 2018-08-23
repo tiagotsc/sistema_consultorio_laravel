@@ -28,6 +28,7 @@ Route::post('/funcionario/store', 'FuncionarioController@store')->name('funciona
 Route::post('/funcionario/getpesq', 'FuncionarioController@getpesq')->name('funcionario.getpesq');
 Route::get('/funcionario/edit/{id}', 'FuncionarioController@edit')->where(['id' => '[0-9]'])->name('funcionario.edit');
 Route::post('/funcionario/update', 'FuncionarioController@update')->name('funcionario.update');
+Route::delete('/funcionario/destroy/{id}', 'FuncionarioController@destroy')->where(['id' => '[0-9]'])->name('funcionario.destroy');
 //Route::post('/funcionario/store', function(){
     /*$employeeZeroFirstName = Request::input('employees.0.firstName');
     $allLastNames = Request::input('employees.*.lastName');

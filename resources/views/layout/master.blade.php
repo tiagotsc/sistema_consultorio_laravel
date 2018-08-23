@@ -125,9 +125,9 @@
 				<!-- Responsive calendar - START -->
 				<div class="responsive-calendar">
                     <div class="controls">
-                        <a class="pull-left" data-go="prev"><div class="btn btn-primary">Anterior</div></a>
+                        <a style="float:left" class="pull-left floatLeft" data-go="prev"><div class="btn btn-primary">Anterior</div></a>
                         <h4><span id="calendario-ano" data-head-year></span> <span id="calendario-mes" data-head-month></span></h4>
-                        <a class="pull-right" data-go="next"><div class="btn btn-primary">Próximo</div></a>
+                        <a class="pull-right floatRight" data-go="next"><div class="btn btn-primary">Próximo</div></a>
                     </div><hr/>
                     <div class="day-headers">
                         <div class="day header">Dom</div>
