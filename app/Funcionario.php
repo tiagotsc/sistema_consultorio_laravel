@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Funcionario extends Model
 {
@@ -19,12 +20,12 @@ class Funcionario extends Model
             return $model;
         });
         self::saving(function($model){ // Insert ou Update
-            $model->dataNasc = ($model->dataNasc != null)? implode('-',array_reverse(explode('/',$model->dataNasc))): null;
+            $model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('d/m/Y', $model->dataNasc): null;
             return $model;
         });
 
         self::retrieved(function($model){ // Select
-            $model->dataNasc = ($model->dataNasc != null)? implode('/',array_reverse(explode('-',$model->dataNasc))): null;
+            $model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('Y-m-d', $model->dataNasc)->format('d/m/Y'): null;
             return $model;
         });
     }

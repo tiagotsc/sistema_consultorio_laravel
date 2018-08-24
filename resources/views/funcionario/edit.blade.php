@@ -11,7 +11,7 @@
         </div>
     </div>
     <hr>
-    {!! Form::model($funcionario, ['route' => ['funcionario.update'], 'id' => 'frm', 'class' => 'form']) !!}
+    {!! Form::model($funcionario, ['route' => ['funcionario.update', $funcionario->id], 'method' => 'put', 'id' => 'frm', 'class' => 'form']) !!}
     <div class="row">
         <div class="form-group col-md-3">
         {!! Form::token() !!}

@@ -22,7 +22,7 @@ class FuncionarioController extends Controller
     }
 
     public function getpesq(Request $request){
-        $dados = DB::table('funcionarios')->select('id','matricula','nome','idPerfil','status')->where('nome','like','%'.$request->input('nome_cpf').'%')->get();
+        $dados = Funcionario::select('id','matricula','nome','idPerfil','status')->where('nome','like','%'.$request->input('nome_cpf').'%')->get();
         return json_encode(array('data' => $dados));
     }
 
@@ -32,15 +32,7 @@ class FuncionarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {/*
-        $funcionario = new Funcionario();
-        $especialidades = $funcionario->find(2)->especialidades;
-        foreach($especialidades as $t){
-            echo $t->nome.'<br>'; 
-        }
-        echo $funcionario->find(2)->estado->nome;
-        exit();*/
-        #echo '<pre>'; print_r($teste); exit();
+    {
         $estados = Estado::where('status','A')->orderBy('nome')->pluck('sigla', 'id')->prepend('', '');
         $especialidades = Especialidade::where('status','A')->orderBy('nome')->pluck('nome', 'id');
         return view('funcionario.create', [
@@ -71,8 +63,6 @@ class FuncionarioController extends Controller
             report($e);
             $msg = 'alert-warning|Erro ao criar funcionário! Se o erro persistir, entre em contato com o administrador.';
         }
-        #echo '<pre>'; print_r($especialidades); exit();
-        #echo $funcionario->especialidades()->attach($especialidades); exit();
         return redirect()->route('funcionario.create')->with('alertMessage', $msg);
     }
 
@@ -93,9 +83,8 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Funcionario $funcionario)
     {
-        $funcionario = Funcionario::find($id);
         $funcEsp = $funcionario->especialidades()->pluck('especialidade_id');
         $estados = Estado::where('status','A')->orderBy('nome')->pluck('sigla', 'id')->prepend('', '');
         $especialidades = Especialidade::where('status','A')->orderBy('nome')->pluck('nome', 'id');
@@ -114,14 +103,13 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(FuncionarioRequest $request)
+    public function update(FuncionarioRequest $request, Funcionario $funcionario)
     {
         $especialidades = $request->input('especialidade');
         try {
             $dados = $request->except(['_token', 'especialidade']);
-            $funcionario = Funcionario::find($request->input('id'));
             if($funcionario->update($dados)){
-                #$funcionario->especialidades()->attach($especialidades);
+                $funcionario->especialidades()->sync($especialidades);
                 $msg = 'alert-success|Funcionário alterado com sucesso!';
             }else{
                 $msg = 'alert-warning|Erro ao alterar funcionário! Se o erro persistir, entre em contato com o administrador.';
@@ -130,8 +118,6 @@ class FuncionarioController extends Controller
             report($e);
             $msg = 'alert-warning|Erro ao alterar funcionário! Se o erro persistir, entre em contato com o administrador.';
         }
-        #echo '<pre>'; print_r($especialidades); exit();
-        #echo $funcionario->especialidades()->attach($especialidades); exit();
         return redirect()->route('funcionario.edit', ['id' => $funcionario->id])->with('alertMessage', $msg);
     }
 

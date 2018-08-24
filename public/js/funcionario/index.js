@@ -38,7 +38,7 @@ table = $('#frm-pesq').DataTable({
            orderable: false, // Habilita ou desabilita ordenação da coluna
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
-                   return '<a title="Editar" href="'+$("#base_url").val()+'/funcionario/edit/'+data+'" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a><a title="Apagar" idDel="'+data+'" titulo="'+row.nome+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i class="fas fa-trash-alt fa-lg"></a>';
+                   return '<a title="Editar" href="'+$("#base_url").val()+'/funcionario/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a><a title="Apagar" idDel="'+data+'" titulo="'+row.nome+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i class="fas fa-trash-alt fa-lg"></a>';
                }
                return data;
            },

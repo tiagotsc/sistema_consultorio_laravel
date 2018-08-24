@@ -13,14 +13,11 @@
     <hr>
     <div class="row marginBotton">
         <div class="col-md-12">
-            {!! Form::open() !!}
               <div class="form-group">
-                {!! Form::token() !!}
                 {!! Form::label('nome_cpf', 'Nome ou CPF:') !!}
                 {!! Form::text('nome_cpf', null, ['class' => 'form-control', 'placeholder' => 'Informe o nome ou CPF']) !!}
               </div>
               <button id="pesq" type="button" class="btn btn-primary floatRight">Pesquisar</button>
-            {!! Form::close() !!}
         </div>
     </div>
    

@@ -22,13 +22,8 @@ Route::get('agenda/{tipo}/{dia}/{mes}/{ano}', 'AgendaController@index')->where([
 Route::get('agenda/marcar', 'AgendaController@marcar')->name('agenda.marcar');
 
 // Funcionário
-Route::get('/funcionario', 'FuncionarioController@index')->name('funcionario.index');
-Route::get('/funcionario/create', 'FuncionarioController@create')->name('funcionario.create');
-Route::post('/funcionario/store', 'FuncionarioController@store')->name('funcionario.store');
 Route::post('/funcionario/getpesq', 'FuncionarioController@getpesq')->name('funcionario.getpesq');
-Route::get('/funcionario/edit/{id}', 'FuncionarioController@edit')->where(['id' => '[0-9]'])->name('funcionario.edit');
-Route::post('/funcionario/update', 'FuncionarioController@update')->name('funcionario.update');
-Route::delete('/funcionario/destroy/{id}', 'FuncionarioController@destroy')->where(['id' => '[0-9]'])->name('funcionario.destroy');
+Route::resource('funcionario', 'FuncionarioController');
 //Route::post('/funcionario/store', function(){
     /*$employeeZeroFirstName = Request::input('employees.0.firstName');
     $allLastNames = Request::input('employees.*.lastName');
@@ -40,3 +35,7 @@ Route::delete('/funcionario/destroy/{id}', 'FuncionarioController@destroy')->whe
     echo '</pre>';
     var_dump(Request::all());*/
 //})->name('funcionario.store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
