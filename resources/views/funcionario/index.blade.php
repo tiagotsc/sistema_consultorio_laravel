@@ -7,13 +7,16 @@
          <h4>Pesquisar funcionário</h4>
         </div>
         <div class="col-md-6 text-right">
+        @can('product-create')
          <a class="menu-item" href="{{ route('funcionario.create') }}">Cadastrar</a>
+         @endcan
         </div>
     </div>
     <hr>
     <div class="row marginBotton">
         <div class="col-md-12">
               <div class="form-group">
+                {!! Form::token() !!}
                 {!! Form::label('nome_cpf', 'Nome ou CPF:') !!}
                 {!! Form::text('nome_cpf', null, ['class' => 'form-control', 'placeholder' => 'Informe o nome ou CPF']) !!}
               </div>

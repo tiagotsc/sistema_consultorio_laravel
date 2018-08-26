@@ -30,8 +30,27 @@
               </ul>
             </div>
             <div class="col-md-6 col-sm-6 col-7 text-right">
-              <p class="mb-0">
-                <a href="#" class="cta-btn" data-toggle="modal" data-target="#modalDefault">Make an Appointment</a></p>
+                @auth
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            Olá! {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a id="logout_link" class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                Sair
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+                @endauth
             </div>
           </div>
         </div>
@@ -42,7 +61,7 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-
+          {!! $MenuTopo->asUl(['class'=>'navbar-nav ml-auto']) !!}
           <div class="collapse navbar-collapse" id="navbarsExample05">
           @section('menu')
             <ul class="navbar-nav ml-auto">
@@ -57,10 +76,10 @@
                 <a class="nav-link menu-item" href="{{ route('funcionario.index') }}">Funcionário</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="doctors.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Doctors</a>
+                <a class="nav-link dropdown-toggle" href="doctors.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown05">
-                  <a class="dropdown-item" href="doctors.html">Find Doctors</a>
-                  <a class="dropdown-item" href="#">Practitioner</a>
+                  <a class="dropdown-item" href="doctors.html">Roles</a>
+                  <a class="dropdown-item" href="#">Permissions</a>
                 </div>
               </li>
               <li class="nav-item">

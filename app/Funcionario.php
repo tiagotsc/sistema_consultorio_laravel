@@ -5,10 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+#use Spatie\Permission\Traits\HasRoles;
 
 class Funcionario extends Model
 {
+    #use HasRoles;
     protected $guarded = ['id', 'created_at', 'updated_at'];
+    #protected $guard_name = 'web';
 
     public static function boot()
     {

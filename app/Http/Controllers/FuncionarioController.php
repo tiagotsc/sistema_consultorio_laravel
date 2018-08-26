@@ -8,6 +8,8 @@ use App\Http\Requests\FuncionarioRequest;
 use App\Funcionario;
 use App\Especialidade;
 use App\Estado;
+use Spatie\Permission\Models\Role; # Apagar
+use App\User; # Apagar
 
 class FuncionarioController extends Controller
 {
@@ -16,8 +18,24 @@ class FuncionarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    function __construct()
     {
+         $this->middleware('permission:product-list');
+         $this->middleware('permission:product-create', ['only' => ['create','store']]);
+         $this->middleware('permission:product-edit', ['only' => ['edit']]);
+         /*$this->middleware('permission:product-delete', ['only' => ['destroy']]);*/
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {#echo 1; exit();
+        #$user = User::find(1);
+        #$user->assignRole(1);
+        #dd(User::role('teste1')->get());
         return view('funcionario.index');
     }
 
