@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function(){
     // Roles
     Route::resource('roles','RoleController');
     Route::post('/rolesgetpesq', 'RoleController@getpesq')->name('roles.getpesq');
+
 });
 
 
