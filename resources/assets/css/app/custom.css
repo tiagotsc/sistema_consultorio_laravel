@@ -41,3 +41,7 @@ select[readonly] {
 .marginIcon{
     margin-right: 5px;
 }
+
+#logout_link{
+    color: black;
+}

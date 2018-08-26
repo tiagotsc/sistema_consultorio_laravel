@@ -30,8 +30,27 @@
               </ul>
             </div>
             <div class="col-md-6 col-sm-6 col-7 text-right">
-              <p class="mb-0">
-                <a href="#" class="cta-btn" data-toggle="modal" data-target="#modalDefault">Make an Appointment</a></p>
+                @auth
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            Olá! {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a id="logout_link" class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                Sair
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+                @endauth
             </div>
           </div>
         </div>
