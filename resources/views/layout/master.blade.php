@@ -61,7 +61,9 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          {!! $MenuTopo->asUl(['class'=>'navbar-nav ml-auto']) !!}
+          <ul class="navbar-nav ml-auto">
+          @include(config('laravel-menu.views.bootstrap-items'), ['items' => $MenuTopo->roots()])
+          <ul>
           <div class="collapse navbar-collapse" id="navbarsExample05">
           @section('menu')
             <ul class="navbar-nav ml-auto">
@@ -69,7 +71,7 @@
                 <a class="nav-link dropdown-toggle" href="services.html" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agenda</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown04">
                   <a class="dropdown-item menu-item" href="#">Secretária</a>
-                  <a class="dropdown-item menu-item" href="#">Médico</a>
+                  <a class="active dropdown-item menu-item" href="#">Médico</a>
                 </div>
               </li>
               <li class="nav-item">
