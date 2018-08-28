@@ -1,13 +1,14 @@
 @foreach($items as $item)
 <?php 
 
-#echo '<pre>'; print_r($item); exit();
-
+#echo '<pre>'; print_r($item->link->path['route']); exit();
+#echo \Request::path(); echo '<br>';
+#$item->link->path['route']; exit();
 ?>
 @if(isset($item->attributes['class']) and $item->attributes['class'] != 'dropdown-item'and $item->attributes['class'] != 'active')
   <li@lm-attrs($item) @if($item->hasChildren())class ="nav-item dropdown"@endif @lm-endattrs>
 @endif
-    @if($item->link) <a@lm-attrs($item->link) @if($item->hasChildren()) class="nav-link dropdown-toggle" data-toggle="dropdown" @endif @lm-endattrs href="{!! $item->url() !!}">
+    @if($item->link) <a @if(isset($item->link->path['route']) and \Request::url() == route($item->link->path['route'])) active="sim" @endif @lm-attrs($item->link) @if($item->hasChildren()) class="nav-link dropdown-toggle" data-toggle="dropdown" @endif @lm-endattrs href="{!! $item->url() !!}">
       {!! $item->title !!}
     </a>
     @else

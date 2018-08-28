@@ -16,16 +16,19 @@ class GenerateMenus
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    {#echo \Request::url();exit();
         \Menu::make('MenuTopo', function ($menu) {
-            $menu->add('Home', ['route'  => 'roles.index', 'class' => 'nav-item', 'id' => 'home'])
+            $menu->add('Home', ['route'  => 'funcionario.create', 'class' => 'nav-item'])
                     ->data('permission', 'product-list')
                     ->link->attr(['class'=> 'nav-link']);
-            $menu->add('About', ['route'  => 'roles.index', 'class' => 'nav-item dropdown', 'id' => 'about'])
+            $menu->add('About', ['url'  => '#', 'class' => 'nav-item dropdown'])
             #->add('Level2', 'link address')
                     ->data('permission', 'product-list')
                     ->link->attr(['class'=> 'nav-link']);
                     $menu->about->add('Funcionário', ['route'  => 'funcionario.index'])
+                    ->data('permission', 'product-list')
+                    ->link->attr(['class'=> 'dropdown-item']);
+                    $menu->about->add('Funcionário criar', ['route'  => 'funcionario.create'])
                     ->data('permission', 'product-list')
                     ->link->attr(['class'=> 'dropdown-item']);
             /*$menu->add('Services', ['route'  => 'roles.index', 'class' => 'nav-item', 'id' => 'service'])
@@ -33,10 +36,16 @@ class GenerateMenus
                     ->link->attr(['class'=> 'nav-link']);
             $menu->add('Contact', ['route'  => 'roles.index', 'class' => 'nav-item', 'id' => 'contact'])
                     ->data('permission', 'product-list')
-                    ->link->attr(['class'=> 'nav-link']);
-            $menu->add('Roles', ['route'  => 'roles.index', 'class' => 'nav-item', 'id' => 'role'])
-                    ->data('permission', 'product-list')
                     ->link->attr(['class'=> 'nav-link']);*/
+            $menu->add('Roles', ['url'  => '#', 'class' => 'nav-item dropdown'])
+                    ->data('permission', 'product-list')
+                    ->link->attr(['class'=> 'nav-link']);
+                    $menu->roles->add('Roles list', ['route'  => 'roles.index'])
+                    ->data('permission', 'product-list')
+                    ->link->attr(['class'=> 'dropdown-item']);
+                    $menu->roles->add('Roles create', ['route'  => 'roles.create'])
+                    ->data('permission', 'product-list')
+                    ->link->attr(['class'=> 'dropdown-item']);
         })->filter(function($item){
             if(Auth::check()){
                 if(User::find(Auth::id())->can( $item->data('permission'))) {

@@ -43,7 +43,7 @@ $(".responsive-calendar").responsiveCalendar({
 $(".menu-item").on("click", function(){
     loadingShow();
 });
-
+$("a[active='sim']").css('color', '#007bff'); // Deixa o link do menu ativo destacado
 /*
 $(".cep").on('keyup', function(){
     if($(this).val().length == 9){ // CEP Completo
