@@ -78,6 +78,10 @@
         {!! Form::label('estado_id', 'Estado') !!}
         {!! Form::select('estado_id', $estados, old('estado_id'), ['class' => 'form-control', 'readonly' => true]) !!}
         </div>
+        <div class="form-group col-md-4">
+        {!! Form::label('password', 'Senha') !!}
+        {!! Form::password('password', ['class' => 'form-control', 'maxlength' => '255', 'placeholder' => 'Preencha...']) !!}
+        </div>
         <div class="form-group col-md-3">
         {!! Form::label('status', 'Status') !!}
         {!! Form::select('status', array('A'=>'Ativo','I'=>'Inativo'), old('status'), ['class' => 'form-control']) !!}
