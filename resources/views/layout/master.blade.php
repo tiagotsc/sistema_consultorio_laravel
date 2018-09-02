@@ -75,7 +75,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link menu-item" href="{{ route('funcionario.index') }}">Funcionário</a>
+                <a class="nav-link menu-item" href="{{ route('usuario.index') }}">Usuários</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="doctors.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
