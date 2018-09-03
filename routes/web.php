@@ -30,6 +30,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/funcionario/getpesq', 'FuncionarioController@getpesq')->name('funcionario.getpesq');
     Route::resource('funcionario', 'FuncionarioController');
 
+    // Usuário
+    Route::post('/usuario/getpesq', 'UserController@getpesq')->name('usuario.getpesq');
+    Route::resource('usuario', 'UserController');
+
     // Roles
     Route::resource('roles','RoleController');
     Route::post('/rolesgetpesq', 'RoleController@getpesq')->name('roles.getpesq');

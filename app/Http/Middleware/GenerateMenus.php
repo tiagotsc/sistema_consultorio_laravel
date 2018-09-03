@@ -18,11 +18,30 @@ class GenerateMenus
     public function handle($request, Closure $next)
     {#echo \Request::url();exit();
         \Menu::make('MenuTopo', function ($menu) {
+            $menu->add('Agenda', ['url'  => '#', 'class' => 'nav-item dropdown'])
+                    ->data('permission', 'menu-agenda')
+                    ->link->attr(['class'=> 'nav-link']);
+                    $menu->agenda->add('Secretária', ''/*['route'  => 'usuario.index']*/)
+                    ->data('permission', 'agenda-secretaria')
+                    ->link->attr(['class'=> 'dropdown-item']);
+                    $menu->agenda->add('Médico', ''/*['route'  => 'roles.create']*/)
+                    ->data('permission', 'agenda-medico')
+                    ->link->attr(['class'=> 'dropdown-item']);
+
+            $menu->add('Administrador', ['url'  => '#', 'class' => 'nav-item dropdown'])
+                    ->data('permission', 'menu-admin')
+                    ->link->attr(['class'=> 'nav-link']);
+                    $menu->administrador->add('Usuários', ['route'  => 'usuario.index'])
+                    ->data('permission', 'usuario-lista')
+                    ->link->attr(['class'=> 'dropdown-item']);
+                    $menu->administrador->add('Perfis', ['route'  => 'roles.create'])
+                    ->data('permission', 'perfil-lista')
+                    ->link->attr(['class'=> 'dropdown-item']);
+
             $menu->add('Home', ['route'  => 'funcionario.create', 'class' => 'nav-item'])
                     ->data('permission', 'product-list')
                     ->link->attr(['class'=> 'nav-link']);
             $menu->add('About', ['url'  => '#', 'class' => 'nav-item dropdown'])
-            #->add('Level2', 'link address')
                     ->data('permission', 'product-list')
                     ->link->attr(['class'=> 'nav-link']);
                     $menu->about->add('Funcionário', ['route'  => 'funcionario.index'])
