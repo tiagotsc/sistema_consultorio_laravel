@@ -26,10 +26,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('agenda/{tipo}/{dia}/{mes}/{ano}', 'AgendaController@index')->where(['dia' => '[0-9]{2}', 'mes' => '[0-9]{2}', 'ano' => '[0-9]{4}'])->name('agenda.index');
     Route::get('agenda/marcar', 'AgendaController@marcar')->name('agenda.marcar');
     
-    // Funcionários
-    Route::post('/funcionario/getpesq', 'FuncionarioController@getpesq')->name('funcionario.getpesq');
-    Route::resource('funcionario', 'FuncionarioController');
-
     // Usuário
     Route::post('/usuario/getpesq', 'UserController@getpesq')->name('usuario.getpesq');
     Route::resource('usuario', 'UserController');

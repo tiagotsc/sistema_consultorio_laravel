@@ -75,16 +75,6 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link menu-item" href="{{ route('usuario.index') }}">Usuários</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="doctors.html" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown05">
-                  <a class="dropdown-item" href="doctors.html">Roles</a>
-                  <a class="dropdown-item" href="#">Permissions</a>
-                </div>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="news.html">News</a>
               </li>
               <li class="nav-item">

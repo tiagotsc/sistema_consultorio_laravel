@@ -32,24 +32,24 @@ class GenerateMenus
                     ->data('permission', 'menu-admin')
                     ->link->attr(['class'=> 'nav-link']);
                     $menu->administrador->add('Usuários', ['route'  => 'usuario.index'])
-                    ->data('permission', 'usuario-lista')
+                    ->data('permission', 'usuario-listar')
                     ->link->attr(['class'=> 'dropdown-item']);
                     $menu->administrador->add('Perfis', ['route'  => 'roles.create'])
-                    ->data('permission', 'perfil-lista')
+                    ->data('permission', 'perfil-listar')
                     ->link->attr(['class'=> 'dropdown-item']);
 
-            $menu->add('Home', ['route'  => 'funcionario.create', 'class' => 'nav-item'])
+            /*$menu->add('Home', ['route'  => 'funcionario.create', 'class' => 'nav-item'])
                     ->data('permission', 'product-list')
-                    ->link->attr(['class'=> 'nav-link']);
+                    ->link->attr(['class'=> 'nav-link']);*/
             $menu->add('About', ['url'  => '#', 'class' => 'nav-item dropdown'])
                     ->data('permission', 'product-list')
                     ->link->attr(['class'=> 'nav-link']);
-                    $menu->about->add('Funcionário', ['route'  => 'funcionario.index'])
+                    /*$menu->about->add('Funcionário', ['route'  => 'funcionario.index'])
                     ->data('permission', 'product-list')
                     ->link->attr(['class'=> 'dropdown-item']);
                     $menu->about->add('Funcionário criar', ['route'  => 'funcionario.create'])
                     ->data('permission', 'product-list')
-                    ->link->attr(['class'=> 'dropdown-item']);
+                    ->link->attr(['class'=> 'dropdown-item']);*/
             /*$menu->add('Services', ['route'  => 'roles.index', 'class' => 'nav-item', 'id' => 'service'])
                     ->data('permission', 'product-list')
                     ->link->attr(['class'=> 'nav-link']);

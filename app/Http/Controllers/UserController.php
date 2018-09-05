@@ -19,10 +19,10 @@ class UserController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:product-list');
-         $this->middleware('permission:product-create', ['only' => ['create','store']]);
-         $this->middleware('permission:product-edit', ['only' => ['edit']]);
-         /*$this->middleware('permission:product-delete', ['only' => ['destroy']]);*/
+         $this->middleware('permission:usuario-listar');
+         $this->middleware('permission:usuario-criar', ['only' => ['create','store']]);
+         $this->middleware('permission:usuario-editar', ['only' => ['edit','update']]);
+         $this->middleware('permission:usuario-apagar', ['only' => ['destroy']]);
     }
     
     /**
