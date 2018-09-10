@@ -27,8 +27,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('agenda/marcar', 'AgendaController@marcar')->name('agenda.marcar');
     
     // Usuário
-    Route::post('/usuario/getpesq', 'UserController@getpesq')->name('usuario.getpesq');
     Route::resource('usuario', 'UserController');
+    Route::post('/usuario/getpesq', 'UserController@getpesq')->name('usuario.getpesq');
+
+    Route::resource('paciente', 'PacienteController');
+    Route::post('/paciente/getpesq', 'PacienteController@getpesq')->name('paciente.getpesq');
 
     // Roles
     Route::resource('roles','RoleController');

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Estado extends Model
 {
-    public function funcionarios()
-    {                                              #Id do funcionario Id da tabela estado
-        return $this->belongsTo('App\Funcionario', 'id', 'id');
+    public function usuarios()
+    {                                              #Id do user Id da tabela estado
+        return $this->belongsTo('App\User', 'id', 'id');
     }
 }

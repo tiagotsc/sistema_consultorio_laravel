@@ -61,11 +61,11 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <ul class="navbar-nav ml-auto">
-          @include(config('laravel-menu.views.bootstrap-items'), ['items' => $MenuTopo->roots()])
-          <ul>
           <div class="collapse navbar-collapse" id="navbarsExample05">
           @section('menu')
+          <ul class="navbar-nav ml-auto">
+          @include(config('laravel-menu.views.bootstrap-items'), ['items' => $MenuTopo->roots()])
+          <!--
             <ul class="navbar-nav ml-auto">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="services.html" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agenda</a>
@@ -84,6 +84,7 @@
                 <a class="nav-link" href="contact.html">Contact</a>
               </li>
             </ul>
+            -->
           @show
           </div>
         </div>

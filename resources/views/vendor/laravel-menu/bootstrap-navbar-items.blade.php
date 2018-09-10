@@ -1,10 +1,4 @@
 @foreach($items as $item)
-<?php 
-
-#echo '<pre>'; print_r($item->link->path['route']); exit();
-#echo \Request::path(); echo '<br>';
-#$item->link->path['route']; exit();
-?>
 @if(isset($item->attributes['class']) and $item->attributes['class'] != 'dropdown-item'and $item->attributes['class'] != 'active')
   <li@lm-attrs($item) @if($item->hasChildren())class ="nav-item dropdown"@endif @lm-endattrs>
 @endif

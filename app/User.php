@@ -49,7 +49,7 @@ class User extends Authenticatable
 
         self::retrieved(function($model){ // Select
             $model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('Y-m-d', $model->dataNasc)->format('d/m/Y'): null;
-            #$model->dataNasc = ($model->status == 'A')? 'Ativo': 'Inativo';
+            $model->status = ($model->status == 'A')? 'Ativo': 'Inativo';
             return $model;
         });
     }

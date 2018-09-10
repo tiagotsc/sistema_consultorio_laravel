@@ -5,20 +5,18 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-#use Spatie\Permission\Traits\HasRoles;
 
-class Funcionario extends Model
+class Paciente extends Model
 {
-    #use HasRoles;
     protected $guarded = ['id', 'created_at', 'updated_at'];
-    #protected $guard_name = 'web';
 
     public static function boot()
     {
         parent::boot();
         self::creating(function($model){ // Insert
-            $matQtd =  DB::table('funcionarios')->where('matricula', 'like', 'F'.date('ym').'%')->count() + 1; 
-            $matricula = 'F'.date('ym').str_pad($matQtd, 3, "0", STR_PAD_LEFT);
+            $matQtd =  DB::table('pacientes')->where('matricula', 'like', 'P'.date('ym').'%')->count() + 1; 
+            $matricula = 'P'.date('ym').str_pad($matQtd, 3, "0", STR_PAD_LEFT);
+            
             $model->matricula = $matricula;
             return $model;
         });
@@ -29,18 +27,8 @@ class Funcionario extends Model
 
         self::retrieved(function($model){ // Select
             $model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('Y-m-d', $model->dataNasc)->format('d/m/Y'): null;
+            $model->status = ($model->status == 'A')? 'Ativo': 'Inativo';
             return $model;
         });
-    }
-
-    public function especialidades()
-    {
-        return $this->belongsToMany('App\Especialidade', 'funcionarios_especialidades', 'funcionario_id', 'especialidade_id')
-                ->withTimestamps();
-    }
-
-    public function estado()
-    {
-        return $this->hasOne('App\Estado', 'id', 'estado_id');
     }
 }

@@ -1,17 +1,38 @@
 var table;
 table = $('#frm-pesq').DataTable({
-    "ajax": {
-        "url": $("#base_url").val()+'/usuario/getpesq',
-        "type": 'POST',
-        "data": function(data){ // Criando a function ele pega os dados do inputs dinamicamente
+    language: { // Traduz o plugin
+        url: "js/datatable/language/dataTables.pt-br.json", // Arquivo de tradução
+        select: { // Tradução encima das operações de seleção de linha
+            rows: { // Tradução para o Footer da tabela
+                _: "Você selecionou %d linhas", // Footer -> Tradução para mais de uma linha selecionada
+                0: "Clique na linha para selecionar", // Footer -> Tradução para nenhuma linha selecionada
+                1: "Apenas 1 linha foi selecionada" // Footer -> Tradução para apenas uma linha selecionada
+            }
+        },
+        buttons: { // Tradução encima da mensagem do botão de cópia
+            copyTitle: 'Tabela copiada',
+            copySuccess: {
+                _: '%d linhas copiadas',
+                1: '1 linha copiada'
+            }
+        }
+    },
+    drawCallback: function( settings ) { // Aplica funções javascript no html que esta sendo renderizado no datatable
+        $('[data-toggle="tooltip"]').tooltip();
+    },
+    pageLength: 50, // Define o número de registros por página
+    ajax: {
+        url: $("#base_url").val()+'/usuario/getpesq',
+        type: 'POST',
+        data: function(data){ // Criando a function ele pega os dados do inputs dinamicamente
             data._token = $( "input[name='_token']" ).val();
             data.nome_cpf = $("#nome_cpf").val();
            //data.email = $("#email").val();
            //data.status = $("#status").val();
         }
     },
-    'processing': true,
-    'columnDefs': [
+    processing: true,
+    columnDefs: [
         {
            targets: 0, 
            data: 'matricula', 
@@ -33,7 +54,7 @@ table = $('#frm-pesq').DataTable({
            orderable: false, // Habilita ou desabilita ordenação da coluna
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
-                   return '<a title="Editar" href="'+$("#base_url").val()+'/usuario/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a><a title="Apagar" idDel="'+data+'" titulo="'+row.name+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i class="fas fa-trash-alt fa-lg"></a>';
+                   return '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="'+$("#base_url").val()+'/usuario/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a><a title="Apagar" data-toggle="tooltip" data-placement="bottom" idDel="'+data+'" titulo="'+row.name+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i class="fas fa-trash-alt fa-lg"></a>';
                }
                return data;
            },
