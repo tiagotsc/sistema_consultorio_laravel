@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 use DB;
 
 class RoleController extends Controller
@@ -29,8 +31,9 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $permissoes = User::find(Auth::id())->getPermissionsViaRoles()->pluck('name')->toArray();
         #$roles = Role::orderBy('id','DESC');
-        return view('role.index');
+        return view('role.index',['permissoes' => json_encode($permissoes)]);
     }
 
     public function getpesq(Request $request)

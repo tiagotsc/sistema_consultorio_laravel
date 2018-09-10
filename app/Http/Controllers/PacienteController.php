@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Estado;
 use App\Paciente;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class PacienteController extends Controller
 {
@@ -29,7 +31,8 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        return view('paciente.index');
+        $permissoes = User::find(Auth::id())->getPermissionsViaRoles()->pluck('name')->toArray();
+        return view('paciente.index', ['permissoes' => json_encode($permissoes)]);
     }
 
     public function getpesq(Request $request){

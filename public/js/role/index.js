@@ -43,7 +43,11 @@ table = $('#frm-pesq').DataTable({
            orderable: false, // Habilita ou desabilita ordenação da coluna
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
-                   return '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="'+$("#base_url").val()+'/roles/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
+                   var bt = '';
+                   if($("#permissoes").val().indexOf('perfil-editar') > -1){
+                       bt += '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="'+$("#base_url").val()+'/roles/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
+                   }
+                   return bt;
                }
                return data;
            },

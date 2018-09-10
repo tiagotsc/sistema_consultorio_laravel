@@ -9,6 +9,7 @@ use App\Especialidade;
 use App\Estado;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -32,7 +33,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.index');
+        $permissoes = User::find(Auth::id())->getPermissionsViaRoles()->pluck('name')->toArray();
+        return view('user.index',['permissoes' => json_encode($permissoes)]);
     }
 
     public function getpesq(Request $request){

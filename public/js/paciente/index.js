@@ -55,7 +55,15 @@ table = $('#frm-pesq').DataTable({
            orderable: false, // Habilita ou desabilita ordenação da coluna
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
-                   return '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="'+$("#base_url").val()+'/paciente/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a><a title="Apagar" data-toggle="tooltip" data-placement="bottom" idDel="'+data+'" titulo="'+row.name+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i class="fas fa-trash-alt fa-lg"></a>';
+                   var bt = '';
+                    if($("#permissoes").val().indexOf('paciente-editar') > -1){
+                        bt += '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="'+$("#base_url").val()+'/paciente/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
+                    }
+                    if($("#permissoes").val().indexOf('paciente-apagar') > -1){
+                        bt += '<a idDel="'+data+'" titulo="'+row.nome+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i title="Apagar" data-toggle="tooltip" data-placement="bottom" class="fas fa-trash-alt fa-lg"></a>';
+                    }
+                    //return '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="'+$("#base_url").val()+'/paciente/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a><a title="Apagar" data-toggle="tooltip" data-placement="bottom" idDel="'+data+'" titulo="'+row.name+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i class="fas fa-trash-alt fa-lg"></a>';
+                   return bt;
                }
                return data;
            },
