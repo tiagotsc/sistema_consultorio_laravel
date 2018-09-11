@@ -4,7 +4,7 @@
 <div class="col-md-8 border-right">
     <div class="row">
         <div class="col-md-6">
-         <h4>Pesquisar role</h4>
+         <h4>Pesquisar perfil</h4>
         </div>
         <div class="col-md-6 text-right">
         @can('perfil-criar')
@@ -16,7 +16,6 @@
     <div class="row marginBotton">
         <div class="col-md-12">
               <div class="form-group">
-              <input type="text" id="permissoes" value="{{$permissoes}}">
                 {!! Form::token() !!}
                 {!! Form::label('nome', 'Nome:') !!}
                 {!! Form::text('nome', null, ['class' => 'form-control', 'placeholder' => 'Informe o nome']) !!}

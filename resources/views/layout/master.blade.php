@@ -213,6 +213,7 @@
     </div>
     @show
     <input type="hidden" id="base_url" value="{{ url('/') }}">
+    <input type="hidden" id="all_permissions" value="{{ $permissoes }}">
     @section('footerScrits')
     <!--<script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
@@ -231,4 +232,3 @@
     @show
   </body>
 </html>
-}

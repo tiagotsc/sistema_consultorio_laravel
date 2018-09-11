@@ -55,10 +55,10 @@ table = $('#frm-pesq').DataTable({
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
                    var bt = '';
-                    if($("#permissoes").val().indexOf('usuario-editar') > -1){
+                    if($("#all_permissions").val().indexOf('usuario-editar') > -1){
                         bt += '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="'+$("#base_url").val()+'/usuario/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
                     }
-                    if($("#permissoes").val().indexOf('usuario-apagar') > -1){
+                    if($("#all_permissions").val().indexOf('usuario-apagar') > -1){
                         bt += '<a idDel="'+data+'" titulo="'+row.name+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i title="Apagar" data-toggle="tooltip" data-placement="bottom" class="fas fa-trash-alt fa-lg"></a>';
                     }
                     return bt;

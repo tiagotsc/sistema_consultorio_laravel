@@ -44,7 +44,7 @@ table = $('#frm-pesq').DataTable({
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
                    var bt = '';
-                   if($("#permissoes").val().indexOf('perfil-editar') > -1){
+                   if($("#all_permissions").val().indexOf('perfil-editar') > -1){
                        bt += '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="'+$("#base_url").val()+'/roles/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
                    }
                    return bt;

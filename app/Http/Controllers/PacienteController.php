@@ -31,8 +31,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $permissoes = User::find(Auth::id())->getPermissionsViaRoles()->pluck('name')->toArray();
-        return view('paciente.index', ['permissoes' => json_encode($permissoes)]);
+        return view('paciente.index');
     }
 
     public function getpesq(Request $request){

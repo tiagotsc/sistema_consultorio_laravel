@@ -4,7 +4,7 @@
 <div class="col-md-8 border-right">
     <div class="row">
         <div class="col-md-6">
-         <h5>Cadastro role</h5>
+         <h5>Cadastro perfil</h5>
         </div>
         <div class="col-md-6 text-right">
          <a class="menu-item" href="{{ route('roles.index') }}">Voltar pesquisa</a>

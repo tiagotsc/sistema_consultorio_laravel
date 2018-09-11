@@ -16,7 +16,6 @@
     <div class="row marginBotton">
         <div class="col-md-12">
               <div class="form-group">
-              <input type="text" id="permissoes" value="{{$permissoes}}">
                 {!! Form::token() !!}
                 {!! Form::label('nome_cpf_rg', 'Nome ou CPF ou RG:') !!}
                 {!! Form::text('nome_cpf_rg', null, ['class' => 'form-control', 'placeholder' => 'Informe o nome ou CPF ou RG']) !!}

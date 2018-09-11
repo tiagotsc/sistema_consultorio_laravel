@@ -31,9 +31,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $permissoes = User::find(Auth::id())->getPermissionsViaRoles()->pluck('name')->toArray();
         #$roles = Role::orderBy('id','DESC');
-        return view('role.index',['permissoes' => json_encode($permissoes)]);
+        return view('role.index');
     }
 
     public function getpesq(Request $request)

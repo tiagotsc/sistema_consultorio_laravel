@@ -44,6 +44,7 @@ class User extends Authenticatable
         });
         self::saving(function($model){ // Insert ou Update
             $model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('d/m/Y', $model->dataNasc): null;
+            $model->status = ($model->status == 'Ativo')? 'A': 'I';
             return $model;
         });
 

@@ -33,8 +33,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $permissoes = User::find(Auth::id())->getPermissionsViaRoles()->pluck('name')->toArray();
-        return view('user.index',['permissoes' => json_encode($permissoes)]);
+        return view('user.index');
     }
 
     public function getpesq(Request $request){
