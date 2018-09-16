@@ -12,7 +12,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      {!! Form::open(['id' => 'frmMarcar', 'route' => 'funcionario.store']) !!}
+      {!! Form::open(['id' => 'frmMarcar', 'route' => 'agenda.store']) !!}
       <div class="modal-body">
         <div class="row">
             <div class="form-group col-md-3">

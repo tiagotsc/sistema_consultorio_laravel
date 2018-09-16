@@ -6,10 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AgendaConfigTableSeeder' => $baseDir . '/database/seeds/AgendaConfigTableSeeder.php',
+    'App\\AgendaConfig' => $baseDir . '/app/AgendaConfig.php',
+    'App\\AgendaStatus' => $baseDir . '/app/AgendaStatus.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Especialidade' => $baseDir . '/app/Especialidade.php',
     'App\\Estado' => $baseDir . '/app/Estado.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\AgendaConfigController' => $baseDir . '/app/Http/Controllers/AgendaConfigController.php',
     'App\\Http\\Controllers\\AgendaController' => $baseDir . '/app/Http/Controllers/agendaController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
@@ -29,6 +33,7 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\FuncionarioRequest' => $baseDir . '/app/Http/Requests/FuncionarioRequest.php',
+    'App\\Paciente' => $baseDir . '/app/Paciente.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

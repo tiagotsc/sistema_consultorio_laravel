@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('./layout.master', function($view){ // Pega as permissões do usuário a cada requisição de página
+        view()->composer('*', function($view){ // Pega as permissões do usuário a cada requisição de página
             $permissoes = User::findOrFail(Auth::id())->getPermissionsViaRoles()->pluck('name')->toArray();
             $view->with('permissoes',json_encode($permissoes));
         });

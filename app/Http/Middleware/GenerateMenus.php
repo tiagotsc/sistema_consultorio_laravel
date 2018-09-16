@@ -41,6 +41,9 @@ class GenerateMenus
                     $menu->administrador->add('Perfis', ['route'  => 'roles.index'])
                     ->data('permission', 'perfil-listar')
                     ->link->attr(['class'=> 'dropdown-item']);
+                    $menu->administrador->add('Agenda config', ['route'  => 'agendaconfig.create'])
+                    ->data('permission', 'perfil-listar')
+                    ->link->attr(['class'=> 'dropdown-item']);
 
         })->filter(function($item){
             if(Auth::check()){

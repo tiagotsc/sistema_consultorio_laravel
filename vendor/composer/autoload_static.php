@@ -352,10 +352,14 @@ class ComposerStaticInit8e08334551c7b2726141b829e2777081
     );
 
     public static $classMap = array (
+        'AgendaConfigTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AgendaConfigTableSeeder.php',
+        'App\\AgendaConfig' => __DIR__ . '/../..' . '/app/AgendaConfig.php',
+        'App\\AgendaStatus' => __DIR__ . '/../..' . '/app/AgendaStatus.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Especialidade' => __DIR__ . '/../..' . '/app/Especialidade.php',
         'App\\Estado' => __DIR__ . '/../..' . '/app/Estado.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\AgendaConfigController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgendaConfigController.php',
         'App\\Http\\Controllers\\AgendaController' => __DIR__ . '/../..' . '/app/Http/Controllers/agendaController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -375,6 +379,7 @@ class ComposerStaticInit8e08334551c7b2726141b829e2777081
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\FuncionarioRequest' => __DIR__ . '/../..' . '/app/Http/Requests/FuncionarioRequest.php',
+        'App\\Paciente' => __DIR__ . '/../..' . '/app/Paciente.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
