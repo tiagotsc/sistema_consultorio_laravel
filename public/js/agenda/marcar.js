@@ -19,13 +19,49 @@ $("#frmMarcar").validate({
 	  .parents('.form-group').removeClass('has-error');
 	},
 	rules: {
+        primeira_vez: {
+            required: true
+        },
+        data_marcar: {
+            required: true
+        },
+        especialidade: {
+            required: true
+        },
+        medico: {
+            required: true
+        },
+        plano: {
+            required: true
+        },
 		nome: {
+			required: true
+        },
+        hora_marcada: {
 			required: true
         }
 	},
 	messages: {
-		nome: {
+		primeira_vez: {
+			required: "Selecione, por favor!"
+        },
+        data_marcar: {
 			required: "Informe, por favor!"
+        },
+        especialidade: {
+            required: "Selecione, por favor!"
+        },
+        medico: {
+            required: "Selecione, por favor!"
+        },
+        plano: {
+            required: "Selecione, por favor!"
+        },
+        nome: {
+			required: "Informe, por favor!"
+        },
+        hora_marcada: {
+			required: "Marque!"
         }
 	}
 });

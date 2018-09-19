@@ -17,12 +17,12 @@
         <div class="row">
             <div class="form-group col-md-3">
             {!! Form::token() !!}
-            {!! Form::label('primeiraVez', 'Primeira vez?') !!}<span class="obrigatorio">*</span>
-            {!! Form::select('primeiraVez', array('' => '', 'S'=>'Sim','N'=>'Não'), null, ['class' => 'form-control']) !!}
+            {!! Form::label('primeira_vez', 'Primeira vez?') !!}<span class="obrigatorio">*</span>
+            {!! Form::select('primeira_vez', array('' => '', 'S'=>'Sim','N'=>'Não'), null, ['class' => 'form-control']) !!}
             </div>
             <div class="form-group col-md-3">
-            {!! Form::label('dataMarcar', 'Data') !!}<span class="obrigatorio">*</span>
-            {!! Form::text('dataMarcar', $dataSelecionada, ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
+            {!! Form::label('data_marcar', 'Data') !!}<span class="obrigatorio">*</span>
+            {!! Form::text('data_marcar', $dataSelecionada, ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
             </div>
             <div class="form-group col-md-3">
             {!! Form::label('especialidade', 'Especialidade') !!}<span class="obrigatorio">*</span>
@@ -38,18 +38,26 @@
             {!! Form::label('nome', 'Nome') !!}<span class="obrigatorio">*</span>
             {!! Form::text('nome', '', ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
             {!! Form::label('telefone', 'Telefone') !!}
             {!! Form::text('telefone', '', ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
             {!! Form::label('celular', 'Celular') !!}
             {!! Form::text('celular', '', ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
             {!! Form::label('plano', 'Plano saúde') !!}<span class="obrigatorio">*</span>
             {!! Form::select('plano', array('' => '', 'S'=>'Sim','N'=>'Não'), null, ['class' => 'form-control']) !!}
             </div>
+        </div>
+        <div class="row">
+            @foreach ($horas as $hora)
+            <div class="form-group col-md-1">
+                <label>{!! Form::radio('hora_marcada', $hora, false) !!} {{$hora}}</label>
+            </div>
+            @endforeach
+            
         </div>
       </div>
       <div class="modal-footer">

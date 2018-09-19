@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\AgendaConfig;
 
 class AgendaController extends Controller
 {
@@ -91,8 +92,9 @@ class AgendaController extends Controller
      */
     public function marcar(Request $request)
     {
-        #echo '<pre>'; print_r($request); exit();
-        return view('agenda.marcar')->with('dataSelecionada', $request->input('valores'));
+        $agendaConfig = AgendaConfig::first();
+        $horas = $this->intervaloHoras($agendaConfig->inicio.':00:00',$agendaConfig->fim.':00:00', $agendaConfig->intervalo);
+        return view('agenda.marcar',['dataSelecionada' => $request->input('valores'), 'horas' => $horas]);
     }
 
     /**
@@ -108,10 +110,10 @@ class AgendaController extends Controller
     public function intervaloHoras($horaInicio, $horaFim, $minutos){
     
         //Hora início
-        $inicio 		= new DateTime($horaInicio);
+        $inicio 		= new \DateTime($horaInicio);
      
         //Hora fim
-        $fim 		= new DateTime($horaFim);
+        $fim 		= new \DateTime($horaFim);
      
         //Pega todos os horários/intervalos de acordo com os minutos informados
         $horarios = array();
