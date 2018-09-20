@@ -33,9 +33,6 @@ $("#frm").validate({
         medico: {
 			required: true
         },
-        password: {
-			required: true
-        },
         'especialidade[]':{
             required:{
                 depends: function(element){
@@ -61,9 +58,6 @@ $("#frm").validate({
         },
         medico: {
 			required: "Selecione, por favor!",
-        },
-        password: {
-			required: "Informe, por favor!",
         },
         'especialidade[]':{
             required: "Selecione, por favor!"

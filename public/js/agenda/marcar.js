@@ -74,6 +74,10 @@ $("#salvarConsultar").on("click", function(){
 	}
 });
 
+$("#especialidade").on("change", function(){
+    alert(1);
+});
+
 /*$("#salvarConsultar").on("click", function(){
     alert('Salvando');
 });*/

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\AgendaConfig;
+use App\Especialidade;
+use App\User;
 
 class AgendaController extends Controller
 {
@@ -92,9 +94,24 @@ class AgendaController extends Controller
      */
     public function marcar(Request $request)
     {
+        $especialidades = Especialidade::whereHas('users', function ($query) {
+            $query->whereNotNull('user_id');
+        })->orderBy('nome')->pluck('nome', 'id')->prepend('Selecione...', '');
         $agendaConfig = AgendaConfig::first();
         $horas = $this->intervaloHoras($agendaConfig->inicio.':00:00',$agendaConfig->fim.':00:00', $agendaConfig->intervalo);
-        return view('agenda.marcar',['dataSelecionada' => $request->input('valores'), 'horas' => $horas]);
+        return view('agenda.marcar',[
+                                        'dataSelecionada' => $request->input('valores'), 
+                                        'horas' => $horas,
+                                        'especialidades' => $especialidades
+                                    ]);
+    }
+
+    public function getMedicos($idEspecialidade)
+    {
+        $medicos = User::whereHas('especialidades', function ($query) use($idEspecialidade) {
+            $query->where('especialidade_id', $idEspecialidade);
+        })->orderBy('name')->pluck('name', 'id');
+        return response()->json($medicos);
     }
 
     /**

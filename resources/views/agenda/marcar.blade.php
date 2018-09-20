@@ -26,7 +26,7 @@
             </div>
             <div class="form-group col-md-3">
             {!! Form::label('especialidade', 'Especialidade') !!}<span class="obrigatorio">*</span>
-            {!! Form::select('especialidade', array('' => '', '1'=>'Otorrino','2'=>'Oftalmologista'), null, ['class' => 'form-control']) !!}
+            {!! Form::select('especialidade', $especialidades, null, ['class' => 'form-control']) !!}
             </div>
             <div class="form-group col-md-3">
             {!! Form::label('medico', 'Medico') !!}<span class="obrigatorio">*</span>

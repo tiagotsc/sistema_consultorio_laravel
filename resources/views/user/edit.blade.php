@@ -105,5 +105,5 @@
 
 @section('footerScrits')
 @parent
-<script src="{{ asset('js/user/create.js') }}"></script>
+<script src="{{ asset('js/user/edit.js') }}"></script>
 @endsection

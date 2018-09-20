@@ -42,8 +42,8 @@
         {!! Form::label('perfis[]', 'perfis') !!}<span class="obrigatorio">*</span>
         {!! Form::select('perfis[]', $perfis, null, ['multiple'=>'multiple', 'class' => 'form-control']) !!}
         </div>
-        <div class="form-group col-md-6">
-        {!! Form::label('especialidade[]', 'Especialidade') !!}
+        <div id="divEspecialidade" class="form-group col-md-6">
+        {!! Form::label('especialidade[]', 'Especialidade') !!}<span class="obrigatorio">*</span>
         {!! Form::select('especialidade[]', $especialidades, null, ['multiple'=>'multiple', 'class' => 'form-control']) !!}
         </div>
         <div class="form-group col-md-3">
@@ -79,7 +79,7 @@
         {!! Form::select('estado_id', $estados, null, ['class' => 'form-control', 'readonly' => true]) !!}
         </div>
         <div class="form-group col-md-4">
-        {!! Form::label('password', 'Senha') !!}
+        {!! Form::label('password', 'Senha') !!}<span class="obrigatorio">*</span>
         {!! Form::password('password', ['class' => 'form-control', 'maxlength' => '255', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-3">
