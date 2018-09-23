@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\AgendaConfig;
 use App\Especialidade;
 use App\User;
+use App\Agenda;
+use Carbon\Carbon;
 
 class AgendaController extends Controller
 {
@@ -98,7 +100,7 @@ class AgendaController extends Controller
             $query->whereNotNull('user_id');
         })->orderBy('nome')->pluck('nome', 'id')->prepend('Selecione...', '');
         $agendaConfig = AgendaConfig::first();
-        $horas = $this->intervaloHoras($agendaConfig->inicio.':00:00',$agendaConfig->fim.':00:00', $agendaConfig->intervalo);
+        $horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         return view('agenda.marcar',[
                                         'dataSelecionada' => $request->input('valores'), 
                                         'horas' => $horas,
@@ -108,10 +110,26 @@ class AgendaController extends Controller
 
     public function getMedicos($idEspecialidade)
     {
-        $medicos = User::whereHas('especialidades', function ($query) use($idEspecialidade) {
+        $medicos = User::select('id', 'name')->whereHas('especialidades', function ($query) use($idEspecialidade) {
             $query->where('especialidade_id', $idEspecialidade);
-        })->orderBy('name')->pluck('name', 'id');
+        })->orderBy('name')->get();
         return response()->json($medicos);
+    }
+
+    public function getHorariosDisponiveis(Request $request)
+    {
+        $agendaConfig = AgendaConfig::first();
+        $todosHorarios = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
+        
+        $data = Carbon::createFromFormat('d/m/Y', $request->data)->format('Y-m-d'); 
+        $medico = $request->medico;
+        $especialidades = $request->especialidade;
+
+        $horariosMarcados = Agenda::select('horario')
+                        ->where([['medico_id', $request->medico], ['especialidade_id', $request->especialidade]])
+                        ->pluck('horario')->toArray();
+        $horariosDisponiveis = array_values(array_diff($todosHorarios, $horariosMarcados));
+        return response()->json($horariosDisponiveis);
     }
 
     /**
@@ -138,9 +156,7 @@ class AgendaController extends Controller
             $horarios[] = $inicio->format('H:i');
             $inicio = $inicio->modify('+ '.$minutos.' minutes');
         }
-        
         return $horarios;
-    
     }
 
     /**
@@ -156,11 +172,11 @@ class AgendaController extends Controller
          
         // Converte as duas datas para um objeto DateTime do PHP
         // PARA O PHP 5.3 OU SUPERIOR
-        $inicio = DateTime::createFromFormat('H:i:s', $horaInicio);
+        $inicio = \DateTime::createFromFormat('H:i:s', $horaInicio);
         // PARA O PHP 5.2
         // $inicio = date_create_from_format('H:i:s', $inicio);
          
-        $fim = DateTime::createFromFormat('H:i:s', $horaFim);
+        $fim = \DateTime::createFromFormat('H:i:s', $horaFim);
         // $fim = date_create_from_format('H:i:s', $fim);
      
         $intervalo = $inicio->diff($fim);

@@ -75,7 +75,45 @@ $("#salvarConsultar").on("click", function(){
 });
 
 $("#especialidade").on("change", function(){
-    alert(1);
+    $('#medico').html('');
+    if($(this).val() != ''){
+        loadingShow('Carregando médicos...');
+        var comboMedico = '<option>selecione...</option>';
+        $.get( $("#rota_medico_espec").val()+'/'+$(this).val(), function( data ) {
+            $( data ).each(function( ) {
+                comboMedico += '<option value="'+this.id+'">'+this.name+'</option>';
+            });
+            $('#medico').html(comboMedico);
+            loadingHide();
+        }, "json" )
+        .fail(function() {
+            alert( "Erro ao oberter médicos da especialidades!" );
+        });
+    }
+});
+
+$("#medico").on("change", function(){
+    $('#horarios').html('');
+    loadingShow('Carregando horários...');
+    if($(this).val() != ''){
+        var horarios = '';
+        $.get( $("#rota_horarios_disponiveis").val(),{
+            data: $("#data_marcar").val(),
+            medico: $("#medico").val(),
+            especialidade: $("#especialidade").val()
+        }, function( data ) {
+            $( data ).each(function(k,v) {
+                horarios += '<div class="form-group col-md-1">';
+                horarios += '<label><input type="radio" class="" name="horario_marcado" value="'+v+'"> '+v+'</label>';
+                horarios += '</div>';
+            });
+            $('#horarios').html(horarios);
+            loadingHide();
+        }, "json" )
+        .fail(function() {
+            alert( "Erro ao oberter horários!" );
+        });
+    }
 });
 
 /*$("#salvarConsultar").on("click", function(){

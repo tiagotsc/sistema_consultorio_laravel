@@ -30,7 +30,7 @@
             </div>
             <div class="form-group col-md-3">
             {!! Form::label('medico', 'Medico') !!}<span class="obrigatorio">*</span>
-            {!! Form::select('medico', array('' => '', '1'=>'Marco Afonso','2'=>'Rodrigo Pena'), null, ['class' => 'form-control']) !!}
+            {!! Form::select('medico', array(), null, ['class' => 'form-control']) !!}
             </div>
         </div>
         <div class="row">
@@ -51,16 +51,12 @@
             {!! Form::select('plano', array('' => '', 'S'=>'Sim','N'=>'Não'), null, ['class' => 'form-control']) !!}
             </div>
         </div>
-        <div class="row">
-            @foreach ($horas as $hora)
-            <div class="form-group col-md-1">
-                <label>{!! Form::radio('hora_marcada', $hora, false) !!} {{$hora}}</label>
-            </div>
-            @endforeach
-            
+        <div id="horarios" class="row">
         </div>
       </div>
       <div class="modal-footer">
+        <input type="hidden" id="rota_medico_espec" value="{{route('agenda.getMedicos')}}">
+        <input type="hidden" id="rota_horarios_disponiveis" value="{{route('agenda.getHorariosDisponiveis')}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         <button type="button" id="salvarConsultar" class="btn btn-primary">Salvar</button>
       </div>

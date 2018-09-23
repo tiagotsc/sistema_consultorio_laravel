@@ -6,15 +6,19 @@ function loadingShow(msg){
     
     $.blockUI({
         message: '<b style="font-size: 20px">'+msg+'</b>',
-        css: { 
+        css: { /* CSS da mensagem */
             border: 'none', 
             padding: '15px', 
             backgroundColor: '#000', 
             '-webkit-border-radius': '10px', 
             '-moz-border-radius': '10px', 
             opacity: .5, 
-            color: '#fff' 
-        } 
+            color: '#fff',
+            'z-index': 999999999999999999
+        },
+        overlayCSS: { /* Css da mascara */
+            'z-index': 999999999999999999 
+        }
     });
 }
 

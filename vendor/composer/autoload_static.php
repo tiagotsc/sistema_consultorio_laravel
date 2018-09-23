@@ -353,6 +353,8 @@ class ComposerStaticInit8e08334551c7b2726141b829e2777081
 
     public static $classMap = array (
         'AgendaConfigTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AgendaConfigTableSeeder.php',
+        'AgendaStatusTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AgendaStatusTableSeeder.php',
+        'App\\Agenda' => __DIR__ . '/../..' . '/app/Agenda.php',
         'App\\AgendaConfig' => __DIR__ . '/../..' . '/app/AgendaConfig.php',
         'App\\AgendaStatus' => __DIR__ . '/../..' . '/app/AgendaStatus.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
