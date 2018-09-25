@@ -15,14 +15,18 @@
       {!! Form::open(['id' => 'frmMarcar', 'route' => 'agenda.store']) !!}
       <div class="modal-body">
         <div class="row">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
             {!! Form::token() !!}
             {!! Form::label('primeira_vez', 'Primeira vez?') !!}<span class="obrigatorio">*</span>
             {!! Form::select('primeira_vez', array('' => '', 'S'=>'Sim','N'=>'Não'), null, ['class' => 'form-control']) !!}
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
             {!! Form::label('data_marcar', 'Data') !!}<span class="obrigatorio">*</span>
             {!! Form::text('data_marcar', $dataSelecionada, ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
+            </div>
+            <div class="form-group col-md-2">
+            {!! Form::label('plano', 'Plano saúde') !!}<span class="obrigatorio">*</span>
+            {!! Form::select('plano', array('' => '', 'S'=>'Sim','N'=>'Não'), null, ['class' => 'form-control']) !!}
             </div>
             <div class="form-group col-md-3">
             {!! Form::label('especialidade', 'Especialidade') !!}<span class="obrigatorio">*</span>
@@ -33,10 +37,36 @@
             {!! Form::select('medico', array(), null, ['class' => 'form-control']) !!}
             </div>
         </div>
-        <div class="row">
+        <div id="buscaPacientes" class="row">
+            <div class="form-group col-md-12">
+            {!! Form::label('localizar', 'Localizar Paciente') !!}
+            {!! Form::text('localizar', null, ['class' => 'form-control', 'placeholder' => 'Busque por: Nome, CPF, fixo ou celular']) !!}
+            </div>
+        </div>
+        <div id="pacientesEncontrados" class="row">
+            <div class="form-group col-md-12">
+                <table id="encontrados" class="table">
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Fixo</th>
+                        <th>Celular</th>
+                        <th>Ação</th>
+                    </tr>
+                    <tr>
+                        <td>Paulo Nogueira</td>
+                        <td>122.145.957-10</td>
+                        <td>(21) 3986-8948</td>
+                        <td>(21) 98584-3423</td>
+                        <td><a href="#">Selecionar</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="dadosPaciente" class="row">
             <div class="form-group col-md-6">
-            {!! Form::label('nome', 'Nome') !!}<span class="obrigatorio">*</span>
-            {!! Form::text('nome', '', ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
+            {!! Form::label('nome_paciente', 'Nome') !!}<span class="obrigatorio">*</span>
+            {!! Form::text('nome_paciente', '', ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
             </div>
             <div class="form-group col-md-2">
             {!! Form::label('telefone', 'Telefone') !!}
@@ -45,10 +75,7 @@
             <div class="form-group col-md-2">
             {!! Form::label('celular', 'Celular') !!}
             {!! Form::text('celular', '', ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
-            </div>
-            <div class="form-group col-md-2">
-            {!! Form::label('plano', 'Plano saúde') !!}<span class="obrigatorio">*</span>
-            {!! Form::select('plano', array('' => '', 'S'=>'Sim','N'=>'Não'), null, ['class' => 'form-control']) !!}
+            <input type="hidden" id="user_id" name="user_id">
             </div>
         </div>
         <div id="horarios" class="row">
@@ -57,6 +84,7 @@
       <div class="modal-footer">
         <input type="hidden" id="rota_medico_espec" value="{{route('agenda.getMedicos')}}">
         <input type="hidden" id="rota_horarios_disponiveis" value="{{route('agenda.getHorariosDisponiveis')}}">
+        <input type="hidden" id="rota_paciente_busca" value="{{route('agenda.pacienteBusca')}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         <button type="button" id="salvarConsultar" class="btn btn-primary">Salvar</button>
       </div>

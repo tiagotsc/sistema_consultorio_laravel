@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::put('agenda/create', 'AgendaController@create')->name('agenda.store');
     Route::get('agenda/medicos/{idEspecialidade?}', 'AgendaController@getMedicos')->name('agenda.getMedicos');
     Route::get('agenda/horarios/disponiveis', 'AgendaController@getHorariosDisponiveis')->name('agenda.getHorariosDisponiveis');
+    Route::get('agenda/paciente/busca', 'AgendaController@pacienteBusca')->name('agenda.pacienteBusca');
     
     // Agenda config
     Route::resource('agendaconfig', 'AgendaConfigController');

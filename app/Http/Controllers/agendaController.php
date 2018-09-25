@@ -7,6 +7,7 @@ use App\AgendaConfig;
 use App\Especialidade;
 use App\User;
 use App\Agenda;
+use App\Paciente;
 use Carbon\Carbon;
 
 class AgendaController extends Controller
@@ -130,6 +131,17 @@ class AgendaController extends Controller
                         ->pluck('horario')->toArray();
         $horariosDisponiveis = array_values(array_diff($todosHorarios, $horariosMarcados));
         return response()->json($horariosDisponiveis);
+    }
+
+    public function pacienteBusca(Request $request)
+    {
+        $pacientesEncontrados = Paciente::select('id','nome','cpf','telefone','celular')
+                                            ->where('nome','like',$request->dadoBusca.'%')
+                                            ->orWhere('cpf','like',$request->dadoBusca.'%')
+                                            ->orWhere('telefone','like',$request->dadoBusca.'%')
+                                            ->orWhere('celular','like',$request->dadoBusca.'%')
+                                            ->get();
+        return response()->json($pacientesEncontrados);
     }
 
     /**
