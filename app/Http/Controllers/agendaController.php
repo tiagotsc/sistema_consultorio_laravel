@@ -9,6 +9,7 @@ use App\User;
 use App\Agenda;
 use App\Paciente;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AgendaController extends Controller
 {
@@ -41,7 +42,31 @@ class AgendaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        #echo strtoupper($this->removeAcentos($request->input('nome_paciente'))); echo '<br>';
+        #echo '<pre>'; print_r($_POST); exit();
+        if($request->input('paciente_id') != ''){ #Atualizar
+            $paciente = Paciente::find($request->input('paciente_id'));
+            $paciente->telefone = $request->input('telefone');
+            $paciente->celular = $request->input('celular');
+        }else{ # Insere
+            $dadoPaciente['nome'] = $this->removeAcentos($request->input('nome_paciente'));
+            $dadoPaciente['telefone'] = $request->input('telefone');
+            $dadoPaciente['celular'] = $request->input('celular');
+            $paciente = new Paciente($dadoPaciente);
+        }
+        $paciente->save();
+        $dados['data'] = $request->input('data_marcar');
+        $dados['plano_saude'] = $request->input('plano');
+        $dados['especialidade_id'] = $request->input('especialidade');
+        $dados['medico_id'] = $request->input('medico');
+        $dados['horario'] = $request->input('horario_marcado');
+        $dados['paciente_id'] = $paciente->id;
+        $dados['marcou_user_id'] = Auth::id();
+        $agenda = new Agenda($dados);
+        $agenda->save();
+        $data = explode('/',$request->input('data_marcar'));
+        $msg = 'alert-success|Consulta marcada com sucesso!';
+        return redirect()->route('agenda.index', ['tipo'=>'secretaria','dia' => $data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
     /**
@@ -198,4 +223,12 @@ class AgendaController extends Controller
         return $intervalo->format('%H:%I:%S');
     
     }
+
+    public function removeAcentos($string) {
+	   
+        $string = htmlentities($string, ENT_COMPAT, 'UTF-8');
+        $string = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde|cedil);/', '$1',$string);
+		return $string;
+		
+	}
 }

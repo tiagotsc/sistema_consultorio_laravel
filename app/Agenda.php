@@ -3,15 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Agenda extends Model
 {
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
     public static function boot()
     {
         parent::boot();
         self::saving(function($model){ // Insert ou Update
-            #$model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('d/m/Y', $model->dataNasc): null;
-            #$model->status = ($model->status == 'Ativo')? 'A': 'I';
+            $model->data = ($model->data != null)? Carbon::createFromFormat('d/m/Y', $model->data): null;
             return $model;
         });
 

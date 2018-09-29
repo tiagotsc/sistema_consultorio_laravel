@@ -37,9 +37,6 @@ $("#frmMarcar").validate({
         },
 		nome_paciente: {
 			required: true
-        },
-        hora_marcada: {
-			required: true
         }
 	},
 	messages: {
@@ -60,18 +57,15 @@ $("#frmMarcar").validate({
         },
         nome_paciente: {
 			required: "Informe, por favor!"
-        },
-        hora_marcada: {
-			required: "Marque!"
         }
 	}
 });
 
 $("#salvarConsultar").on("click", function(){
 	if($("#frmMarcar").valid()){
-        loadingShow('Gravando...');
+        loadingShow('Marcando consulta...');
 		$(this).prop('disabled', true).html('Aguarde...');
-		//$('#frmMarcar').submit();
+		$('#frmMarcar').submit();
 	}
 });
 
@@ -105,10 +99,16 @@ $("#medico").on("change", function(){
         }, function( data ) {
             $( data ).each(function(k,v) {
                 horarios += '<div class="form-group col-md-1">';
-                horarios += '<label><input type="radio" class="" name="horario_marcado" value="'+v+'"> '+v+'</label>';
+                horarios += '<label><input type="radio" class="horario_marcado" name="horario_marcado" value="'+v+'"> '+v+'</label>';
                 horarios += '</div>';
             });
             $('#horarios').html(horarios);
+            $(".horario_marcado" ).rules( "add", {
+                required: true,
+                messages: {
+                  required: "Marque."
+                }
+            });
             loadingHide();
         }, "json" )
         .fail(function() {
@@ -118,11 +118,13 @@ $("#medico").on("change", function(){
 });
 
 $("#primeira_vez").on("change", function(){
-    $("#nome_paciente, #telefone, #celular, #user_id").val('');
+    $("#nome_paciente, #telefone, #celular, #paciente_id").val('');
     if($(this).val() != ''){
         if($(this).val() == 'S'){
             $("#nome_paciente").prop('readonly', false);
             $("#dadosPaciente").show();
+            $("#localizar").val('').hide();
+            $("#buscaPacientes").hide();
         }else{
             $("#localizar").val('');
             $("#dadosPaciente").hide();
@@ -135,6 +137,9 @@ $("#primeira_vez").on("change", function(){
 });
 
 $("#localizar").on("keyup", function(){
+    if($(this).val().length > 0){
+        $("#salvarConsultar").hide();
+    }
     if($(this).val().length >= 3){
         $("#pacientesEncontrados").show();
         $('#encontrados').html('<tr><th colspan="5">Buscando paciente, aguarde...</th></tr>');
@@ -154,7 +159,7 @@ $("#localizar").on("keyup", function(){
                 encontrados += '<td>'+this.cpf+'</td>';
                 encontrados += '<td>'+this.telefone+'</td>';
                 encontrados += '<td>'+this.celular+'</td>';
-                encontrados += '<td><a href="#" class="selecionar" user_id="'+this.id+'" nome="'+this.nome+'" telefone="'+this.telefone+'" celular="'+this.celular+'">Selecionar</a></td>';
+                encontrados += '<td><a href="#" class="selecionar" title="Selecionar" paciente_id="'+this.id+'" nome="'+this.nome+'" telefone="'+this.telefone+'" celular="'+this.celular+'"><i class="fas fa-user-check"></i></a></td>';
                 encontrados += '</tr>';
             });
             $('#encontrados').html(encontrados);
@@ -171,12 +176,13 @@ $("#localizar").on("keyup", function(){
 
 function selecionarPaciente(){
     $(".selecionar").on("click", function(){
-        $("#user_id").val($(this).attr('user_id'));
+        $("#paciente_id").val($(this).attr('paciente_id'));
         $("#nome_paciente").val($(this).attr('nome')).prop('readonly', true);
         $("#telefone").val($(this).attr('telefone'));
         $("#celular").val($(this).attr('celular'));
         $("#dadosPaciente").show();
         $("#buscaPacientes, #pacientesEncontrados").hide();
+        $("#salvarConsultar").show();
     });
 }
 

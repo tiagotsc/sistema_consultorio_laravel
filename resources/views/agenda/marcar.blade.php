@@ -75,7 +75,7 @@
             <div class="form-group col-md-2">
             {!! Form::label('celular', 'Celular') !!}
             {!! Form::text('celular', '', ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
-            <input type="hidden" id="user_id" name="user_id">
+            <input type="hidden" id="paciente_id" name="paciente_id">
             </div>
         </div>
         <div id="horarios" class="row">
