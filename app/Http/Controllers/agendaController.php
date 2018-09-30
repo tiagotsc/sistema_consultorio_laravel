@@ -10,6 +10,7 @@ use App\Agenda;
 use App\Paciente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AgendaController extends Controller
 {
@@ -20,18 +21,57 @@ class AgendaController extends Controller
      */
     public function index(Request $request)
     {
+        $agendaConfig = AgendaConfig::first();
+        #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
+        $horas = DB::table('agendas')->distinct()->select(DB::raw('substr(horario, 1, 5) as horario'))->orderBy('horario')->pluck('horario','horario')->prepend('', '');
         $dataEscolhida = $request->dia.'/'.$request->mes.'/'.$request->ano;
-        return view('agenda.index', ['data' => $dataEscolhida, 'tipo' => $request->tipo]);
+        return view('agenda.index', ['data' => $dataEscolhida, 'tipo' => $request->tipo, 'horas'=> $horas]);
+    }
+
+    public function getpesq(Request $request){
+        /*$dados = Paciente::select('id','matricula','nome','cpf','rg','telefone','celular','status')
+                            #->where('horario','like',$request->input('horario').'%')
+                            ->where('nome','like','%'.$request->input('input_dado').'%')
+                            ->orWhere('cpf','like','%'.$request->input('input_dado').'%')
+                            ->orWhere('rg','like','%'.$request->input('input_dado').'%')
+                            ->orWhere('telefone','like','%'.$request->input('input_dado').'%')
+                            ->orWhere('celular','like','%'.$request->input('input_dado').'%')
+                            ->get();*/
+        $buscar = $request->input('input_dado');
+        $horario = $request->input('horario');
+        $dados = Agenda::join('pacientes', 'pacientes.id', '=', 'agendas.paciente_id')
+                        ->select('agendas.id','agendas.horario','pacientes.matricula','pacientes.nome','pacientes.cpf','pacientes.rg','pacientes.telefone','pacientes.celular','pacientes.status')
+                        ->where('agendas.horario','like',$horario.'%')
+                        ->where(function ($query) use($buscar) {
+                            $query->where('pacientes.nome','like','%'.$buscar.'%')
+                            ->orWhere('pacientes.cpf','like','%'.$buscar.'%')
+                            ->orWhere('pacientes.rg','like','%'.$buscar.'%')
+                            ->orWhere('pacientes.telefone','like','%'.$buscar.'%')
+                            ->orWhere('pacientes.celular','like','%'.$buscar.'%');
+                        })
+                        
+                        ->get();#echo '<pre>';
+                        #print_r($dados); exit();
+        return json_encode(array('data' => $dados));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tela de marcação de consulta.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $especialidades = Especialidade::whereHas('users', function ($query) {
+            $query->whereNotNull('user_id');
+        })->orderBy('nome')->pluck('nome', 'id')->prepend('Selecione...', '');
+        #$agendaConfig = AgendaConfig::first();
+        #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
+        return view('agenda.create',[
+                                        'dataSelecionada' => $request->input('valores'), 
+                                        #'horas' => $horas,
+                                        'especialidades' => $especialidades
+                                    ]);
     }
 
     /**
@@ -41,31 +81,36 @@ class AgendaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        #echo strtoupper($this->removeAcentos($request->input('nome_paciente'))); echo '<br>';
-        #echo '<pre>'; print_r($_POST); exit();
-        if($request->input('paciente_id') != ''){ #Atualizar
-            $paciente = Paciente::find($request->input('paciente_id'));
-            $paciente->telefone = $request->input('telefone');
-            $paciente->celular = $request->input('celular');
-        }else{ # Insere
-            $dadoPaciente['nome'] = $this->removeAcentos($request->input('nome_paciente'));
-            $dadoPaciente['telefone'] = $request->input('telefone');
-            $dadoPaciente['celular'] = $request->input('celular');
-            $paciente = new Paciente($dadoPaciente);
+    {   try{
+            if($request->input('paciente_id') != ''){ #Atualizar
+                $paciente = Paciente::find($request->input('paciente_id'));
+                $paciente->telefone = $request->input('telefone');
+                $paciente->celular = $request->input('celular');
+            }else{ # Insere
+                $dadoPaciente['nome'] = strtoupper($this->removeAcentos($request->input('nome_paciente')));
+                $dadoPaciente['telefone'] = $request->input('telefone');
+                $dadoPaciente['celular'] = $request->input('celular');
+                $paciente = new Paciente($dadoPaciente);
+            }
+            $paciente->save();
+            $dados['data'] = $request->input('data_marcar');
+            $dados['plano_saude'] = $request->input('plano');
+            $dados['especialidade_id'] = $request->input('especialidade');
+            $dados['medico_id'] = $request->input('medico');
+            $dados['horario'] = $request->input('horario_marcado');
+            $dados['paciente_id'] = $paciente->id;
+            $dados['marcou_user_id'] = Auth::id();
+            $agenda = new Agenda($dados);
+            $data = explode('/',$request->input('data_marcar'));
+            if($agenda->save()){
+                $msg = 'alert-success|Consulta marcada com sucesso!';
+            }else{
+                $msg = 'alert-warning|Erro ao marcar consulta! Se o erro persistir, entre em contato com o administrador.';
+            }
+        }catch(Throwable $e){
+            report($e);
+            $msg = 'alert-warning|Erro ao marcar consulta! Se o erro persistir, entre em contato com o administrador.';
         }
-        $paciente->save();
-        $dados['data'] = $request->input('data_marcar');
-        $dados['plano_saude'] = $request->input('plano');
-        $dados['especialidade_id'] = $request->input('especialidade');
-        $dados['medico_id'] = $request->input('medico');
-        $dados['horario'] = $request->input('horario_marcado');
-        $dados['paciente_id'] = $paciente->id;
-        $dados['marcou_user_id'] = Auth::id();
-        $agenda = new Agenda($dados);
-        $agenda->save();
-        $data = explode('/',$request->input('data_marcar'));
-        $msg = 'alert-success|Consulta marcada com sucesso!';
         return redirect()->route('agenda.index', ['tipo'=>'secretaria','dia' => $data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
@@ -112,26 +157,6 @@ class AgendaController extends Controller
     public function destroy($id)
     {
         //
-    }
-    
-    /**
-     * Tela de marcar consulta
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function marcar(Request $request)
-    {
-        $especialidades = Especialidade::whereHas('users', function ($query) {
-            $query->whereNotNull('user_id');
-        })->orderBy('nome')->pluck('nome', 'id')->prepend('Selecione...', '');
-        $agendaConfig = AgendaConfig::first();
-        $horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
-        return view('agenda.marcar',[
-                                        'dataSelecionada' => $request->input('valores'), 
-                                        'horas' => $horas,
-                                        'especialidades' => $especialidades
-                                    ]);
     }
 
     public function getMedicos($idEspecialidade)

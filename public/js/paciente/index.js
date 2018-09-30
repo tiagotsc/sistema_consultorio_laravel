@@ -46,7 +46,10 @@ table = $('#frm-pesq').DataTable({
         },
         {
            targets: 2,
-           data: 'status',
+           //data: 'status',
+           data: 'status', render: function (data, type, row) {
+                return type === 'display' ? (data == 'A' ? "Ativo" : "Inativo"): '';
+            },
            className: 'dt-body-center' // Centraliza o conteúdo da TD
         },
         {

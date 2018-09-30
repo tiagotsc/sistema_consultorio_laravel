@@ -94,5 +94,5 @@
   <!--<script src="{{ asset('js/agenda/marcar.js') }}"></script>-->
   <script>
 //var url = "/scripts/script.js";
-$.getScript($("#base_url").val()+'/js/agenda/marcar.js');
+$.getScript($("#base_url").val()+'/js/agenda/create.js');
 </script>

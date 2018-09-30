@@ -22,14 +22,19 @@ class Paciente extends Model
         });
         self::saving(function($model){ // Insert ou Update
             $model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('d/m/Y', $model->dataNasc): null;
-            $model->status = substr($model->status,0,1);
+            #$model->status = (strlen($model->status) > 1)? substr($model->status,0,1): $model->status;
             return $model;
         });
 
         self::retrieved(function($model){ // Select
             $model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('Y-m-d', $model->dataNasc)->format('d/m/Y'): null;
-            $model->status = ($model->status == 'A')? 'Ativo': 'Inativo';
+            #$model->status = ($model->status == 'A')? 'Ativo': 'Inativo';
             return $model;
         });
+    }
+
+    public function getStatusNomeAttribute($valor)
+    {
+        return ($valor == 'A')? 'Ativo': 'Inativo';
     }
 }

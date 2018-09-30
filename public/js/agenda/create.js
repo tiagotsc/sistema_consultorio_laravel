@@ -129,6 +129,7 @@ $("#primeira_vez").on("change", function(){
             $("#localizar").val('');
             $("#dadosPaciente").hide();
             $("#buscaPacientes").show();
+            $("#localizar").val('').show();
 
         }
     }else{
@@ -186,6 +187,3 @@ function selecionarPaciente(){
     });
 }
 
-/*$("#salvarConsultar").on("click", function(){
-    alert('Salvando');
-});*/

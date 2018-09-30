@@ -32,7 +32,7 @@
         </div>
         <div class="form-group col-md-3">
         {!! Form::label('rg', 'RG') !!}
-        {!! Form::text('rg', null, ['class' => 'cpf form-control', 'maxlength' => '15', 'placeholder' => 'Preencha...']) !!}
+        {!! Form::text('rg', null, ['class' => 'form-control', 'maxlength' => '15', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-6">
         {!! Form::label('email', 'Email') !!}

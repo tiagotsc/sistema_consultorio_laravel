@@ -24,11 +24,12 @@ Route::group(['middleware' => 'auth'], function(){
 
     // Agenda
     Route::get('agenda/{tipo}/{dia}/{mes}/{ano}', 'AgendaController@index')->where(['dia' => '[0-9]{2}', 'mes' => '[0-9]{2}', 'ano' => '[0-9]{4}'])->name('agenda.index');
-    Route::get('agenda/marcar', 'AgendaController@marcar')->name('agenda.marcar');
+    Route::get('agenda/create', 'AgendaController@create')->name('agenda.create');
     Route::post('agenda/store', 'AgendaController@store')->name('agenda.store');
     Route::get('agenda/medicos/{idEspecialidade?}', 'AgendaController@getMedicos')->name('agenda.getMedicos');
     Route::get('agenda/horarios/disponiveis', 'AgendaController@getHorariosDisponiveis')->name('agenda.getHorariosDisponiveis');
     Route::get('agenda/paciente/busca', 'AgendaController@pacienteBusca')->name('agenda.pacienteBusca');
+    Route::post('/agenda/getpesq', 'AgendaController@getpesq')->name('agenda.getpesq');
     
     // Agenda config
     Route::resource('agendaconfig', 'AgendaConfigController');

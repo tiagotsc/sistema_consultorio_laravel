@@ -30,6 +30,10 @@
         {!! Form::label('cpf', 'CPF') !!}
         {!! Form::text('cpf', old('cpf'), ['class' => 'cpf form-control', 'maxlength' => '20', 'placeholder' => 'Preencha...']) !!}
         </div>
+        <div class="form-group col-md-3">
+        {!! Form::label('rg', 'RG') !!}
+        {!! Form::text('rg', old('rg'), ['class' => 'form-control', 'maxlength' => '15', 'placeholder' => 'Preencha...']) !!}
+        </div>
         <div class="form-group col-md-6">
         {!! Form::label('email', 'Email') !!}
         {!! Form::text('email', old('email'), ['class' => 'form-control', 'maxlength' => '255', 'placeholder' => 'Preencha...']) !!}
