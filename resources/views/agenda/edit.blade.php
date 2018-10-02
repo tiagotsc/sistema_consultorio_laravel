@@ -94,5 +94,11 @@
   <!--<script src="{{ asset('js/agenda/marcar.js') }}"></script>-->
   <script>
 //var url = "/scripts/script.js";
-$.getScript($("#base_url").val()+'/js/agenda/create.js');
+$.getScript('/js/app.js', function()
+{
+   $.getScript('/js/agenda/edit.js', function()
+   {
+       // run script that depends on scripta.js and scriptb.js
+   });
+});
 </script>

@@ -14,6 +14,7 @@
     <div class="row">
         <div class="form-group col-md-9">
         <input type="hidden" id="rota_cadastra_consulta" value="{{route('agenda.create')}}">
+        <input type="hidden" id="rota_edita_consulta" value="{{route('agenda.edit',['id' => 0])}}">
         <input type="hidden" id="rota_pesquisa_consulta" value="{{route('agenda.getpesq')}}">
         {!! Form::token() !!}
         {!! Form::label('input_dado', 'Pesquise paciente por:') !!}

@@ -19,6 +19,7 @@ class Agenda extends Model
 
         self::retrieved(function($model){ // Select
             $model->horario = substr($model->horario,0, 5);
+            $model->data = ($model->data != null)? Carbon::createFromFormat('Y-m-d', $model->data)->format('d/m/Y'): null;
             return $model;
         });
     }

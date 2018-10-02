@@ -60,7 +60,7 @@ table = $('#frm-pesq').DataTable({
                if ( type === 'display' ) {
                    var bt = '';
                     if($("#all_permissions").val().indexOf('paciente-editar') > -1){
-                        bt += '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="'+$("#base_url").val()+'/paciente/'+data+'/edit" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
+                        bt += '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="#" idEdit="'+data+'" class="editar marginIcon menu-item"><i data-toggle="modal" data-target="#modalDefault" class="fas fa-edit fa-lg"></i></a>';
                     }
                     if($("#all_permissions").val().indexOf('paciente-apagar') > -1){
                         bt += '<a idDel="'+data+'" titulo="'+row.nome+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i title="Apagar" data-toggle="tooltip" data-placement="bottom" class="fas fa-trash-alt fa-lg"></a>';
@@ -78,6 +78,16 @@ table = $('#frm-pesq').DataTable({
 $("#pesq").on('click', function(){
     table.clear().draw();
     table.ajax.reload();
+});
+
+$('#frm-pesq tbody').on( 'click', '.editar', function (event) { 
+    event.preventDefault(); 
+    //alert($("#rota_edita_consulta").val());
+    //alert($("#rota_edita_consulta").val().replace('0',$(this).attr('idEdit')));
+    montaModalDefault($("#rota_edita_consulta").val().replace('0',$(this).attr('idEdit')),'');
+    //$("#frm-deletar").attr('action',$("#rota-deletar").val().replace(0, $(this).attr('idDel')));
+    //$("#del-id").val($(this).attr('idDel'));
+    //$("#del-nome").val($(this).attr('titulo'));
 });
 
 $('#frm-pesq tbody').on( 'click', '.apagar', function (event) { 

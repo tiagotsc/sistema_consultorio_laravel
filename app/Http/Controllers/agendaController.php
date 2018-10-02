@@ -133,7 +133,18 @@ class AgendaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $agenda = Agenda::find($id);
+        #echo '<pre>'; print_r($agenda);exit();
+        $especialidades = Especialidade::whereHas('users', function ($query) {
+            $query->whereNotNull('user_id');
+        })->orderBy('nome')->pluck('nome', 'id')->prepend('Selecione...', '');
+        #$agendaConfig = AgendaConfig::first();
+        #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
+        return view('agenda.create',[
+                                        'dataSelecionada' => $agenda->data, 
+                                        #'horas' => $horas,
+                                        'especialidades' => $especialidades
+                                    ]);
     }
 
     /**
