@@ -7,7 +7,7 @@
          <h4>Agenta {{ $tipo }} - {{ $data }}</h4>
         </div>
         <div class="col-md-6 text-right">
-         <a id="modalMarcar" data-selecionada="{{ $data }}" class="menu-item" href="#" data-toggle="modal" data-target="#modalDefault">Marcar consulta <i class="fas fa-plus"></i></a>
+         <a id="modalMarcar" data-selecionada="{{ $data }}" href="#">Marcar consulta <i class="fas fa-plus"></i></a>
         </div>
     </div>
     <hr>

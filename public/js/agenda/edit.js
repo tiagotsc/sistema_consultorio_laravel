@@ -1,4 +1,4 @@
-$("#buscaPacientes,#pacientesEncontrados,#dadosPaciente").hide();
+$("#buscaPacientes,#pacientesEncontrados").hide();
 $("#frmMarcar").validate({
 	debug: false,
 	errorClass: 'error',
@@ -20,9 +20,6 @@ $("#frmMarcar").validate({
 	  .parents('.form-group').removeClass('has-error');
 	},
 	rules: {
-        primeira_vez: {
-            required: true
-        },
         data_marcar: {
             required: true
         },
@@ -40,9 +37,6 @@ $("#frmMarcar").validate({
         }
 	},
 	messages: {
-		primeira_vez: {
-			required: "Selecione, por favor!"
-        },
         data_marcar: {
 			required: "Informe, por favor!"
         },
@@ -116,76 +110,6 @@ $("#medico").on("change", function(){
         });
     }
 });
-
-$("#primeira_vez").on("change", function(){
-    $("#nome_paciente, #telefone, #celular, #paciente_id").val('');
-    if($(this).val() != ''){
-        if($(this).val() == 'S'){
-            $("#nome_paciente").prop('readonly', false);
-            $("#dadosPaciente").show();
-            $("#localizar").val('').hide();
-            $("#buscaPacientes").hide();
-        }else{
-            $("#localizar").val('');
-            $("#dadosPaciente").hide();
-            $("#buscaPacientes").show();
-            $("#localizar").val('').show();
-
-        }
-    }else{
-        $("#buscaPacientes,#pacientesEncontrados,#dadosPaciente").hide();
-    }
-});
-
-$("#localizar").on("keyup", function(){
-    if($(this).val().length > 0){
-        $("#salvarConsultar").hide();
-    }
-    if($(this).val().length >= 3){
-        $("#pacientesEncontrados").show();
-        $('#encontrados').html('<tr><th colspan="5">Buscando paciente, aguarde...</th></tr>');
-        $.get( $("#rota_paciente_busca").val(),{
-            dadoBusca: $(this).val()
-        }, function( data ) {
-            var encontrados = '<tr>';
-                encontrados += '<th>Nome</th>';
-                encontrados += '<th>CPF</th>';
-                encontrados += '<th>Fixo</th>';
-                encontrados += '<th>Celular</th>';
-                encontrados += '<th>Ação</th>';
-                encontrados += '</tr>';
-            $( data ).each(function() {
-                encontrados += '<tr>';
-                encontrados += '<td>'+this.nome+'</td>';
-                encontrados += '<td>'+this.cpf+'</td>';
-                encontrados += '<td>'+this.telefone+'</td>';
-                encontrados += '<td>'+this.celular+'</td>';
-                encontrados += '<td><a href="#" class="selecionar" title="Selecionar" paciente_id="'+this.id+'" nome="'+this.nome+'" telefone="'+this.telefone+'" celular="'+this.celular+'"><i class="fas fa-user-check"></i></a></td>';
-                encontrados += '</tr>';
-            });
-            $('#encontrados').html(encontrados);
-            selecionarPaciente();
-            loadingHide();
-        }, "json" )
-        .fail(function() {
-            alert( "Erro ao localizar paciente!" );
-        });
-    }else{
-        $("#pacientesEncontrados").hide();
-    }
-});
-
-function selecionarPaciente(){
-    $(".selecionar").on("click", function(){
-        $("#paciente_id").val($(this).attr('paciente_id'));
-        $("#nome_paciente").val($(this).attr('nome')).prop('readonly', true);
-        $("#telefone").val($(this).attr('telefone'));
-        $("#celular").val($(this).attr('celular'));
-        $("#dadosPaciente").show();
-        $("#buscaPacientes, #pacientesEncontrados").hide();
-        $("#salvarConsultar").show();
-    });
-}
 
 /*$("#salvarConsultar").on("click", function(){
     alert('Salvando');
