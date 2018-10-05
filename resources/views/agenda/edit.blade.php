@@ -75,6 +75,11 @@
             <div class="form-group col-md-1">
                 <label><input type="radio" checked class="horario_marcado" name="horario_marcado" value="{{$dados->horario}}"> {{$dados->horario}}</label>
             </div>
+        @foreach ($horarios as $hora)
+            <div class="form-group col-md-1">
+                <label><input type="radio" class="horario_marcado" name="horario_marcado" value="{{$hora}}"> {{$hora}}</label>
+            </div>
+        @endforeach
         </div>
       </div>
       <div class="modal-footer">

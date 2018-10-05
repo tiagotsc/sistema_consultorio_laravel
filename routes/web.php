@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('agenda/{id}/edit', 'AgendaController@edit')->name('agenda.edit');
     Route::put('agenda/update', 'AgendaController@update')->name('agenda.update');
     Route::get('agenda/medicos/{idEspecialidade?}', 'AgendaController@getMedicos')->name('agenda.getMedicos');
-    Route::get('agenda/horarios/disponiveis', 'AgendaController@getHorariosDisponiveis')->name('agenda.getHorariosDisponiveis');
+    Route::get('agenda/horarios/disponiveis/ajax', 'AgendaController@ajaxHorariosDisponiveis')->name('agenda.getHorariosDisponiveis');
     Route::get('agenda/paciente/busca', 'AgendaController@pacienteBusca')->name('agenda.pacienteBusca');
     Route::post('/agenda/getpesq', 'AgendaController@getpesq')->name('agenda.getpesq');
     

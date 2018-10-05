@@ -134,20 +134,18 @@ class AgendaController extends Controller
     public function edit($id)
     {
         $agenda = Agenda::find($id);
+        $horarios = $this->horariosDisponiveis($agenda->data, $agenda->medico_id, $agenda->especialidade_id);
         $idEspecialidade = $agenda->especialidade_id;
-        #echo '<pre>'; print_r($agenda);exit();
         $especialidades = Especialidade::whereHas('users', function ($query) {
             $query->whereNotNull('user_id');
         })->orderBy('nome')->pluck('nome', 'id')->prepend('Selecione...', '');
         $medicos = User::whereHas('especialidades', function ($query) use($idEspecialidade) {
             $query->where('especialidade_id', $idEspecialidade);
         })->orderBy('name')->pluck('name', 'id')->prepend('Selecione...', '');
-        #$agendaConfig = AgendaConfig::first();
-        #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         return view('agenda.edit',[
                                         'dataSelecionada' => $agenda->data, 
                                         'dados' => $agenda,
-                                        #'horas' => $horas,
+                                        'horarios' => $horarios,
                                         'especialidades' => $especialidades,
                                         'medicos' => $medicos
                                     ]);
@@ -184,9 +182,25 @@ class AgendaController extends Controller
         return response()->json($medicos);
     }
 
-    public function getHorariosDisponiveis(Request $request)
+    public function horariosDisponiveis($dataInformada, $medicoId, $especialidadeId)
     {
         $agendaConfig = AgendaConfig::first();
+        $todosHorarios = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
+        
+        $data = Carbon::createFromFormat('d/m/Y', $dataInformada)->format('Y-m-d'); 
+        $medico = $medicoId;
+        $especialidades = $especialidadeId;
+
+        $horariosMarcados = Agenda::select(DB::raw('substr(horario, 1, 5) as horario'))
+                        ->where([['data', $data],['medico_id', $medico], ['especialidade_id', $especialidadeId]])
+                        ->pluck('horario')->toArray();
+        return ($horariosMarcados)? array_values(array_diff($todosHorarios, $horariosMarcados)): $todosHorarios;
+    }
+
+    public function ajaxHorariosDisponiveis(Request $request)
+    {
+        $horariosDisponiveis = $this->horariosDisponiveis($request->data, $request->medico, $request->especialidade);
+        /*$agendaConfig = AgendaConfig::first();
         $todosHorarios = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         
         $data = Carbon::createFromFormat('d/m/Y', $request->data)->format('Y-m-d'); 
@@ -196,7 +210,7 @@ class AgendaController extends Controller
         $horariosMarcados = Agenda::select('horario')
                         ->where([['medico_id', $request->medico], ['especialidade_id', $request->especialidade]])
                         ->pluck('horario')->toArray();
-        $horariosDisponiveis = array_values(array_diff($todosHorarios, $horariosMarcados));
+        $horariosDisponiveis = array_values(array_diff($todosHorarios, $horariosMarcados));*/
         return response()->json($horariosDisponiveis);
     }
 
