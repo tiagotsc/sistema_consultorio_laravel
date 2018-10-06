@@ -24,7 +24,8 @@ $("#frmMarcar").validate({
             required: true
         },
         data_marcar: {
-            required: true
+            required: true,
+            minlength: 10
         },
         especialidade: {
             required: true
@@ -44,7 +45,8 @@ $("#frmMarcar").validate({
 			required: "Selecione, por favor!"
         },
         data_marcar: {
-			required: "Informe, por favor!"
+            required: "Informe, por favor!",
+            minlength: "Data incompleta!"
         },
         especialidade: {
             required: "Selecione, por favor!"
@@ -70,7 +72,7 @@ $("#salvarConsultar").on("click", function(){
 });
 
 $("#especialidade").on("change", function(){
-    $('#medico').html('');
+    $('#medico,#horarios').html('');
     if($(this).val() != ''){
         loadingShow('Carregando médicos...');
         var comboMedico = '<option>selecione...</option>';
@@ -89,31 +91,8 @@ $("#especialidade").on("change", function(){
 
 $("#medico").on("change", function(){
     $('#horarios').html('');
-    loadingShow('Carregando horários...');
     if($(this).val() != ''){
-        var horarios = '';
-        $.get( $("#rota_horarios_disponiveis").val(),{
-            data: $("#data_marcar").val(),
-            medico: $("#medico").val(),
-            especialidade: $("#especialidade").val()
-        }, function( data ) {
-            $( data ).each(function(k,v) {
-                horarios += '<div class="form-group col-md-1">';
-                horarios += '<label><input type="radio" class="horario_marcado" name="horario_marcado" value="'+v+'"> '+v+'</label>';
-                horarios += '</div>';
-            });
-            $('#horarios').html(horarios);
-            $(".horario_marcado" ).rules( "add", {
-                required: true,
-                messages: {
-                  required: "Marque."
-                }
-            });
-            loadingHide();
-        }, "json" )
-        .fail(function() {
-            alert( "Erro ao oberter horários!" );
-        });
+        horariosDisponiveis($("#data_marcar").val(),$("#medico").val(),$("#especialidade").val());
     }
 });
 
@@ -186,4 +165,59 @@ function selecionarPaciente(){
         $("#salvarConsultar").show();
     });
 }
+
+function horariosDisponiveis(dataInput, medicoInput, especialidadeInput){
+    if(dataInput !='' || medicoInput !='' || especialidadeInput !=''){
+        $('#horarios').html('');
+        loadingShow('Carregando horários...');
+        var horarios = '';
+        $.get( $("#rota_horarios_disponiveis").val(),{
+            data: dataInput,
+            medico: medicoInput,
+            especialidade: especialidadeInput
+        }, function( data ) {
+            $( data ).each(function(k,v) {
+                horarios += '<div class="form-group col-md-1">';
+                horarios += '<label><input type="radio" class="horario_marcado" name="horario_marcado" value="'+v+'"> '+v+'</label>';
+                horarios += '</div>';
+            });
+            if(horarios == ''){
+                horarios += '<div class="form-group col-md-12"><strong>Agenda lotada, nesse dia!</strong></div>';
+                $("#salvarConsultar").hide();
+            }else{
+                $("#salvarConsultar").show();
+            }
+            $('#horarios').html(horarios);
+            $(".horario_marcado" ).rules( "add", {
+                required: true,
+                messages: {
+                    required: "Marque."
+                }
+            });
+            loadingHide();
+        }, "json" )
+        .fail(function() {
+            alert( "Erro ao oberter horários!" );
+        });
+    }
+}
+$('.dataConsulta').mask('00/00/0000');
+$('.dataConsulta').datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose: 'true',
+    language: 'pt-BR',
+    weekStart: 0,
+    /*startDate:'0d',*/
+    todayHighlight: true
+}).on('changeDate', function(valor) {
+    horariosDisponiveis($(this).val(),$("#medico").val(),$("#especialidade").val());
+});
+
+$("#data_marcar").on("keyup",function(){
+    if($(this).val() != '' && $(this).val().length == 10){
+        horariosDisponiveis($(this).val(),$("#medico").val(),$("#especialidade").val());
+    }else{
+        $('#horarios').html('');
+    }
+});
 

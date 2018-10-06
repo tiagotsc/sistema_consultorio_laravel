@@ -22,7 +22,7 @@
             </div>
             <div class="form-group col-md-2">
             {!! Form::label('data_marcar', 'Data') !!}<span class="obrigatorio">*</span>
-            {!! Form::text('data_marcar', $dataSelecionada, ['class' => 'form-control data', 'placeholder' => 'Preencha...']) !!}
+            {!! Form::text('data_marcar', $dataSelecionada, ['class' => 'form-control dataConsulta', 'placeholder' => 'Preencha...']) !!}
             </div>
             <div class="form-group col-md-2">
             {!! Form::label('plano', 'Plano de saúde') !!}<span class="obrigatorio">*</span>

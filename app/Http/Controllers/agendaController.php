@@ -184,6 +184,9 @@ class AgendaController extends Controller
 
     public function horariosDisponiveis($dataInformada, $medicoId, $especialidadeId)
     {
+        if(!preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/', $dataInformada)){
+            return array();
+        }
         $agendaConfig = AgendaConfig::first();
         $todosHorarios = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         

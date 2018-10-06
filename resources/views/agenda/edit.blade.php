@@ -12,7 +12,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      {!! Form::open(['id' => 'frmMarcar', 'route' => ['agenda.update', $dados->id], 'method' => 'put', 'id' => 'frm', 'class' => 'form']) !!}
+      {!! Form::open(['id' => 'frmMarcar', 'route' => ['agenda.update', $dados->id], 'method' => 'put', 'class' => 'form']) !!}
       <div class="modal-body">
         <div class="row">
             <div class="form-group col-md-2">
@@ -22,7 +22,7 @@
             </div>
             <div class="form-group col-md-2">
             {!! Form::label('data_marcar', 'Data') !!}<span class="obrigatorio">*</span>
-            {!! Form::text('data_marcar', $dados->data, ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
+            {!! Form::text('data_marcar', $dados->data, ['class' => 'form-control dataConsulta', 'placeholder' => 'Preencha...']) !!}
             </div>
             <div class="form-group col-md-2">
             {!! Form::label('plano', 'Plano saúde') !!}<span class="obrigatorio">*</span>
@@ -87,7 +87,7 @@
         <input type="hidden" id="rota_horarios_disponiveis" value="{{route('agenda.getHorariosDisponiveis')}}">
         <input type="hidden" id="rota_paciente_busca" value="{{route('agenda.pacienteBusca')}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" id="salvarConsultar" class="btn btn-primary">Salvar</button>
+        <button type="button" id="salvarConsultar" class="btn btn-primary">Alterar</button>
       </div>
       {!! Form::close() !!}
     </div>
