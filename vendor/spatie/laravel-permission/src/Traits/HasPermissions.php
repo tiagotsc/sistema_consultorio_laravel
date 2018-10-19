@@ -244,10 +244,13 @@ trait HasPermissions
      */
     public function getAllPermissions(): Collection
     {
-        return $this->permissions
-            ->merge($this->getPermissionsViaRoles())
-            ->sort()
-            ->values();
+        $permissions = $this->permissions;
+
+        if ($this->roles) {
+            $permissions = $permissions->merge($this->getPermissionsViaRoles());
+        }
+
+        return $permissions->sort()->values();
     }
 
     /**
@@ -273,7 +276,18 @@ trait HasPermissions
             ->map->id
             ->all();
 
-        $this->permissions()->sync($permissions, false);
+        $model = $this->getModel();
+
+        if ($model->exists) {
+            $this->permissions()->sync($permissions, false);
+        } else {
+            $class = \get_class($model);
+
+            $class::saved(
+                function ($model) use ($permissions) {
+                    $model->permissions()->sync($permissions, false);
+                });
+        }
 
         $this->forgetCachedPermissions();
 

@@ -11,7 +11,6 @@ return array(
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Lavary\\Menu\\' => array($vendorDir . '/lavary/laravel-menu/src'),
     'JakubOnderka\\PhpConsoleHighlighter' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
-    'JakubOnderka\\PhpConsoleColor' => array($vendorDir . '/jakub-onderka/php-console-color/src'),
     'Doctrine\\DBAL\\' => array($vendorDir . '/doctrine/dbal/lib'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
 );
