@@ -81,6 +81,40 @@
     </div>
     -->
 </div>
+<!-- Modal Alterar status -->
+<div class="modal fade" id="modalStatus" tabindex="-1" role="dialog" aria-labelledby="modalStatus" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalStatus">Alterar status</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+              <div class="form-group col-md-12">
+              {!! Form::label('altera_status_paciente', 'Paciente') !!}
+              {!! Form::text('altera_status_paciente', null, ['class' => 'form-control', 'readonly'=>true]) !!}
+              </div>
+              <div class="form-group col-md-6">
+                  {!! Form::label('altera_status_horario', 'Horário') !!}
+                  {!! Form::text('altera_status_horario', null, ['class' => 'form-control', 'readonly'=>true]) !!}
+                  </div>
+              <div class="form-group col-md-6">
+              {!! Form::label('agenda_status_id', 'Status') !!}
+              {!! Form::select('agenda_status_id', $agendaStatus, null, ['class' => 'form-control']) !!}
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" id="altera_status_agenda_id" name="altera_status_agenda_id">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Alterar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('footerScrits')

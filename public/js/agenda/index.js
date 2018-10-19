@@ -36,19 +36,22 @@ table = $('#frm-pesq').DataTable({
     columnDefs: [
         {
            targets: 0, 
-           data: 'matricula', 
+           data: 'horario', 
            className: 'dt-body-center'
         },
         {
-           targets: 1, 
-           data: 'nome',
-           className: 'dt-body-center' // Centraliza o conteúdo da TD
+            targets: 1, 
+            data: 'nome',
+            render: function ( data, type, row ) { //dump(row);
+                return 'Paciente: '+data+'<br>Doutor(a): '+row['medico']+'<br>Especialidade: '+row['especialidade'];
+            },
+           className: 'dt-body-left' // Centraliza o conteúdo da TD
         },
         {
            targets: 2,
-           //data: 'status',
-           data: 'status', render: function (data, type, row) {
-                return type === 'display' ? (data == 'A' ? "Ativo" : "Inativo"): '';
+           data: 'status',
+            render: function ( data, type, row ) { //dump(row);
+            return '<a href="#" class="status" agenda_id="'+row['id']+'" status_id="'+row['status_id']+'" horario="'+row['horario']+'" paciente="'+row['nome']+'">'+data+'</a>';
             },
            className: 'dt-body-center' // Centraliza o conteúdo da TD
         },
@@ -124,4 +127,20 @@ $("#salvar").on("click", function(){
     alert('Salvando');
 });
 
+$('#frm-pesq tbody').on( 'click', '.status', function (event) { 
+    //loadingShow();
+    event.preventDefault(); 
+    $("#altera_status_paciente").val($(this).attr('paciente'));
+    $("#altera_status_horario").val($(this).attr('horario'));
+    $("#altera_status_agenda_id").val($(this).attr('agenda_id'));
+    $('#modalStatus').modal('show');
+});
+
+function dump(obj) {
+    var out = '';
+    for (var i in obj) {
+    out += i + ": " + obj[i] + "\n";
+    }
+   alert(out);
+   }
 

@@ -7,6 +7,7 @@ use App\AgendaConfig;
 use App\Especialidade;
 use App\User;
 use App\Agenda;
+use App\AgendaStatus;
 use App\Paciente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -21,26 +22,35 @@ class AgendaController extends Controller
      */
     public function index(Request $request)
     {
+        $AgendaStatus = AgendaStatus::pluck('nome','id');
         $agendaConfig = AgendaConfig::first();
         #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         $horas = DB::table('agendas')->distinct()->select(DB::raw('substr(horario, 1, 5) as horario'))->orderBy('horario')->pluck('horario','horario')->prepend('', '');
         $dataEscolhida = $request->dia.'/'.$request->mes.'/'.$request->ano;
-        return view('agenda.index', ['data' => $dataEscolhida, 'tipo' => $request->tipo, 'horas'=> $horas]);
+        return view('agenda.index', ['data' => $dataEscolhida, 'tipo' => $request->tipo, 'horas'=> $horas, 'agendaStatus'=>$AgendaStatus]);
     }
 
     public function getpesq(Request $request){
-        /*$dados = Paciente::select('id','matricula','nome','cpf','rg','telefone','celular','status')
-                            #->where('horario','like',$request->input('horario').'%')
-                            ->where('nome','like','%'.$request->input('input_dado').'%')
-                            ->orWhere('cpf','like','%'.$request->input('input_dado').'%')
-                            ->orWhere('rg','like','%'.$request->input('input_dado').'%')
-                            ->orWhere('telefone','like','%'.$request->input('input_dado').'%')
-                            ->orWhere('celular','like','%'.$request->input('input_dado').'%')
-                            ->get();*/
         $buscar = $request->input('input_dado');
         $horario = $request->input('horario');
         $dados = Agenda::join('pacientes', 'pacientes.id', '=', 'agendas.paciente_id')
-                        ->select('agendas.id','agendas.horario','pacientes.matricula','pacientes.nome','pacientes.cpf','pacientes.rg','pacientes.telefone','pacientes.celular','pacientes.status')
+                        ->join('agenda_status','agenda_status.id','=','agendas.agenda_status_id')
+                        ->join('users', 'users.id','=','agendas.medico_id')
+                        ->join('especialidades','especialidades.id','=','agendas.especialidade_id')
+                        ->select(
+                                    'agendas.id',
+                                    'agendas.horario',
+                                    'pacientes.matricula',
+                                    'pacientes.nome',
+                                    'pacientes.cpf',
+                                    'pacientes.rg',
+                                    'pacientes.telefone',
+                                    'pacientes.celular',
+                                    'agenda_status.nome as status',
+                                    'users.name as medico',
+                                    'especialidades.nome as especialidade',
+                                    'agenda_status.id as status_id'
+                                    )
                         ->where('agendas.horario','like',$horario.'%')
                         ->where(function ($query) use($buscar) {
                             $query->where('pacientes.nome','like','%'.$buscar.'%')
@@ -49,10 +59,11 @@ class AgendaController extends Controller
                             ->orWhere('pacientes.telefone','like','%'.$buscar.'%')
                             ->orWhere('pacientes.celular','like','%'.$buscar.'%');
                         })
-                        
+                        ->orderBy('agendas.horario')
                         ->get();#echo '<pre>';
                         #print_r($dados); exit();
-        return json_encode(array('data' => $dados));
+        #return json_encode(array('data' => $dados));
+        return response()->json(['data' => $dados]);
     }
 
     /**
