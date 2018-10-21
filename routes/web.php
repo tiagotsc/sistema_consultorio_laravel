@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('agenda/horarios/disponiveis/ajax', 'AgendaController@ajaxHorariosDisponiveis')->name('agenda.getHorariosDisponiveis');
     Route::get('agenda/paciente/busca', 'AgendaController@pacienteBusca')->name('agenda.pacienteBusca');
     Route::post('/agenda/getpesq', 'AgendaController@getpesq')->name('agenda.getpesq');
+    Route::post('/agenda/alteraStatus', 'AgendaController@alteraStatus')->name('agenda.alteraStatus');
     
     // Agenda config
     Route::resource('agendaconfig', 'AgendaConfigController');

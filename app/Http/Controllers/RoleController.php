@@ -74,7 +74,7 @@ class RoleController extends Controller
             }else{
                 $msg = 'alert-warning|Erro ao criar role! Se o erro persistir, entre em contato com o administrador.';
             }
-        } catch (Exception $e) {
+        } catch (Throwable  $e) {
             report($e);
             $msg = 'alert-warning|Erro ao criar role! Se o erro persistir, entre em contato com o administrador.';
         }
@@ -134,7 +134,7 @@ class RoleController extends Controller
             }else{
                 $msg = 'alert-warning|Erro ao alterar role! Se o erro persistir, entre em contato com o administrador.';
             }
-        } catch (Exception $e) {
+        } catch (Throwable  $e) {
             report($e);
             $msg = 'alert-warning|Erro ao alterar role! Se o erro persistir, entre em contato com o administrador.';
         }

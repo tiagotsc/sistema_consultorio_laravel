@@ -13,6 +13,7 @@
     <hr>
     <div class="row">
         <div class="form-group col-md-9">
+        <input type="hidden" id="todas_sequencias" value="{{$todasSequencias}}">
         <input type="hidden" id="rota_cadastra_consulta" value="{{route('agenda.create')}}">
         <input type="hidden" id="rota_edita_consulta" value="{{route('agenda.edit',['id' => 0])}}">
         <input type="hidden" id="rota_pesquisa_consulta" value="{{route('agenda.getpesq')}}">
@@ -91,6 +92,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        {!! Form::open(['id' => 'frmAlteraStatus', 'route' => 'agenda.alteraStatus']) !!}
         <div class="modal-body">
           <div class="row">
               <div class="form-group col-md-12">
@@ -103,15 +105,17 @@
                   </div>
               <div class="form-group col-md-6">
               {!! Form::label('agenda_status_id', 'Status') !!}
-              {!! Form::select('agenda_status_id', $agendaStatus, null, ['class' => 'form-control']) !!}
+              {!! Form::select('agenda_status_id', array(), null, ['class' => 'form-control']) !!}
               </div>
           </div>
         </div>
         <div class="modal-footer">
+            <input type="hidden" name="data" value="{{ $data }}">
           <input type="hidden" id="altera_status_agenda_id" name="altera_status_agenda_id">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Alterar</button>
+          <button type="button" id="bt-status-altera" class="btn btn-primary">Alterar</button>
         </div>
+        {!! Form::close() !!}
       </div>
     </div>
   </div>

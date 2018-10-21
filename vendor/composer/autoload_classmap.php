@@ -7,10 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AgendaConfigTableSeeder' => $baseDir . '/database/seeds/AgendaConfigTableSeeder.php',
+    'AgendaStatusSequenciaTableSeeder' => $baseDir . '/database/seeds/AgendaStatusSequenciaTableSeeder.php',
     'AgendaStatusTableSeeder' => $baseDir . '/database/seeds/AgendaStatusTableSeeder.php',
     'App\\Agenda' => $baseDir . '/app/Agenda.php',
     'App\\AgendaConfig' => $baseDir . '/app/AgendaConfig.php',
     'App\\AgendaStatus' => $baseDir . '/app/AgendaStatus.php',
+    'App\\AgendaStatusSequencia' => $baseDir . '/app/AgendaStatusSequencia.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Especialidade' => $baseDir . '/app/Especialidade.php',
     'App\\Estado' => $baseDir . '/app/Estado.php',

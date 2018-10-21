@@ -11,7 +11,7 @@ use App\AgendaStatus;
 use App\Paciente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use DB;
 
 class AgendaController extends Controller
 {
@@ -22,12 +22,23 @@ class AgendaController extends Controller
      */
     public function index(Request $request)
     {
+        if(auth()->user()->medico == 'S'){
+            $usuarioTipo = 'medico';
+        }else{
+            $usuarioTipo = 'secretaria';
+        }
+        $todosStatus = AgendaStatus::/*where([['status','A'],['usuario_tipo','like','%'.$usuarioTipo.'%']])->*/get();
+        $todasSequencias = array();
+        foreach($todosStatus as $status){
+            $todasSequencias[$status->id] = $status->statusSequencia($usuarioTipo)->pluck('agenda_status.nome',DB::raw("concat('_',agenda_status.id) id"))->toArray();
+        }
+        #dd($todasSequencias);
         $AgendaStatus = AgendaStatus::pluck('nome','id');
         $agendaConfig = AgendaConfig::first();
         #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         $horas = DB::table('agendas')->distinct()->select(DB::raw('substr(horario, 1, 5) as horario'))->orderBy('horario')->pluck('horario','horario')->prepend('', '');
         $dataEscolhida = $request->dia.'/'.$request->mes.'/'.$request->ano;
-        return view('agenda.index', ['data' => $dataEscolhida, 'tipo' => $request->tipo, 'horas'=> $horas, 'agendaStatus'=>$AgendaStatus]);
+        return view('agenda.index', ['data' => $dataEscolhida, 'tipo' => $request->tipo, 'horas'=> $horas, 'agendaStatus'=>$AgendaStatus, 'todasSequencias' => json_encode($todasSequencias)]);
     }
 
     public function getpesq(Request $request){
@@ -191,6 +202,24 @@ class AgendaController extends Controller
             $query->where('especialidade_id', $idEspecialidade);
         })->orderBy('name')->get();
         return response()->json($medicos);
+    }
+
+    public function alteraStatus(Request $request)
+    {
+        try {
+            $agenda = Agenda::find($request->input('altera_status_agenda_id'));
+            $dados['agenda_status_id'] = $request->input('agenda_status_id');
+            if($agenda->update($dados)){
+                $msg = 'alert-success|Status da consulta alterada com sucesso!';
+            }else{
+                $msg = 'alert-warning|Erro ao alterar status da consulta! Se o erro persistir, entre em contato com o administrador.';
+            }
+        } catch (Throwable  $e) {
+            report($e);
+            $msg = 'alert-warning|Erro ao alterar status da consulta! Se o erro persistir, entre em contato com o administrador.';
+        }
+        $data = explode('/',$request->input('data'));
+        return redirect()->route('agenda.index',['tipo'=>'secretaria','dia'=>$data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
     public function horariosDisponiveis($dataInformada, $medicoId, $especialidadeId)

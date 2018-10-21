@@ -16,6 +16,7 @@ class CreateAgendaStatusTable extends Migration
         Schema::create('agenda_status', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome', 100)->nullable();
+            $table->string('usuario_tipo');
             $table->enum('status', ['A', 'I'])->default('A');
             $table->timestamps();
         });

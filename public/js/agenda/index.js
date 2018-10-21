@@ -1,3 +1,4 @@
+var todasSequencias = JSON.parse($("#todas_sequencias").val());
 var table;
 table = $('#frm-pesq').DataTable({
     language: { // Traduz o plugin
@@ -123,13 +124,17 @@ $("#modalMarcar").on("click", function(){
     $('#modalDefault').modal('show');
 });
 
-$("#salvar").on("click", function(){
-    alert('Salvando');
-});
-
 $('#frm-pesq tbody').on( 'click', '.status', function (event) { 
     //loadingShow();
     event.preventDefault(); 
+    var statusRegistro = $(this).attr('status_id');
+    var comboStatus = '';
+    $.each(todasSequencias[statusRegistro], function( index, value ) {
+        var idStatus = index.replace('_','');
+        var marcado = statusRegistro == idStatus ? "selected" : "";
+        comboStatus += '<option value="'+idStatus+'" '+marcado+'>'+value+'</option>';
+    });
+    $("#agenda_status_id").html(comboStatus);
     $("#altera_status_paciente").val($(this).attr('paciente'));
     $("#altera_status_horario").val($(this).attr('horario'));
     $("#altera_status_agenda_id").val($(this).attr('agenda_id'));
@@ -144,3 +149,7 @@ function dump(obj) {
    alert(out);
    }
 
+$("#bt-status-altera").on("click", function(){
+    $(this).prop('disabled', true).html('Aguarde...');
+    $('#frmAlteraStatus').submit();
+});

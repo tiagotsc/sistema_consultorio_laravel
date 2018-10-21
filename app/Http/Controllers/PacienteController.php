@@ -68,7 +68,7 @@ class PacienteController extends Controller
             }else{
                 $msg = 'alert-warning|Erro ao criar paciente! Se o erro persistir, entre em contato com o administrador.';
             }
-        } catch (Exception $e) {
+        } catch (Throwable  $e) {
             report($e);
             $msg = 'alert-warning|Erro ao criar paciente! Se o erro persistir, entre em contato com o administrador.';
         }
@@ -119,7 +119,7 @@ class PacienteController extends Controller
             }else{
                 $msg = 'alert-warning|Erro ao alterar paciente! Se o erro persistir, entre em contato com o administrador.';
             }
-        } catch (Exception $e) {
+        } catch (Throwable  $e) {
             report($e);
             $msg = 'alert-warning|Erro ao alterar paciente! Se o erro persistir, entre em contato com o administrador.';
         }
@@ -141,7 +141,7 @@ class PacienteController extends Controller
             }else{
                 $msg = 'alert-warning|Erro ao excluir paciente! Se o erro persistir, entre em contato com o administrador.';
             }
-        } catch (Exception $e) {
+        } catch (Throwable  $e) {
             report($e);
             $msg = 'alert-warning|Erro ao excluir paciente! Se o erro persistir, entre em contato com o administrador.';
         }
