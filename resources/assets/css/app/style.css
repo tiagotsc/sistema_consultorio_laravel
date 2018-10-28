@@ -762,3 +762,12 @@ header .navbar .dropdown-menu a {
   opacity: 0;
   visibility: hidden;
 }
+
+#visitante-top-bar{
+    height:43px;
+}
+#visitante-footer{
+    position: absolute; 
+    bottom: 0px; 
+    width: 100%;
+}

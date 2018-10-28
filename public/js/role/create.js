@@ -1,5 +1,4 @@
-buscaCep(".cep","#endereco","#bairro","#cidade","#estado_id");
-
+$('.marcado').shiftcheckbox();
 $("#frm").validate({
 	debug: false,
 	errorClass: 'error',
@@ -38,4 +37,37 @@ $("#salvar").on("click", function(){
 		$(this).prop('disabled', true).html('Aguarde...');
 		$('#frm').submit();
 	}
+});
+
+$("#permissoes_grupo").on("change",function(){
+    $("#todos").prop('checked', false);
+    if($(this).val() != 0){
+        var escolhido = $('input.'+$(this).val()+'_checkbox').length;
+        var escolhidoMarcado = $('input.'+$(this).val()+'_checkbox:checked').length;
+        if(escolhido == escolhidoMarcado){
+            $("#todos").prop('checked', true);
+        }
+        $(".permissao_item").hide();
+        $("."+$(this).val()).show();
+    }else{
+        var todosCheckbox = $(".marcado").length;
+        var todosCheckboxMarcados = $("input.marcado:checked").length;
+        if(todosCheckbox == todosCheckboxMarcados){
+            $("#todos").prop('checked', true);
+        }
+        $(".permissao_item").show();
+    }
+});
+
+$("#todos").on("click", function(){
+    var seletor = '.marcado';
+    if($("#permissoes_grupo").val() != 0){ 
+        seletor = '.'+$("#permissoes_grupo").val()+'_checkbox';
+    }
+    
+    if($(this).prop('checked') == true){
+        $(seletor).prop('checked', true);
+    }else{
+        $(seletor).prop('checked', false);
+    }
 });

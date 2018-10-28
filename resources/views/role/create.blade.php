@@ -17,14 +17,26 @@
         {!! Form::label('name', 'Nome') !!}<span class="obrigatorio">*</span>
         {!! Form::text('name', '', ['class' => 'form-control', 'maxlength' => '200', 'placeholder' => 'Preencha...']) !!}
         </div>
-        <div class="form-group col-md-3">
-            <label>Permission:</label>
-            <br/>
-            @foreach($permission as $value)
-                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
-                {{ $value->name }}</label>
-            <br/>
-            @endforeach
+        <div class="form-group col-md-6">
+        {!! Form::label('permissoes_grupo', 'Filtrar permissões por') !!}
+        {!! Form::select('permissoes_grupo', $permissoesGrupo, null, ['class' => 'form-control', 'readonly' => false]) !!}
+        </div>
+        <div class="form-group col-md-6">
+            <label>Permissões:</label>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <label>
+                        {{ Form::checkbox('todos', null, false, array('id' => 'todos')) }} <b>Marcar / Desmarcar todos</b>
+                    </label>
+                </li>
+                @foreach($permission as $value)
+                <li class="list-group-item permissao_item {{$value->grupo}}">
+                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'marcado '.$value->grupo.'_checkbox')) }}
+                    {{ $value->name }}
+                    </label>
+                </li>
+                @endforeach
+            </ul>
         </div>
     </div>
     <div class="row">

@@ -35,13 +35,11 @@ class User extends Authenticatable
         });
         self::saving(function($model){ // Insert ou Update
             $model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('d/m/Y', $model->dataNasc): null;
-            $model->status = ($model->status == 'Ativo')? 'A': 'I';
             return $model;
         });
 
         self::retrieved(function($model){ // Select
             $model->dataNasc = ($model->dataNasc != null)? Carbon::createFromFormat('Y-m-d', $model->dataNasc)->format('d/m/Y'): null;
-            $model->status = ($model->status == 'A')? 'Ativo': 'Inativo';
             return $model;
         });
     }

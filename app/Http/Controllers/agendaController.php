@@ -58,6 +58,7 @@ class AgendaController extends Controller
                                     'pacientes.telefone',
                                     'pacientes.celular',
                                     'agenda_status.nome as status',
+                                    'agendas.medico_id',
                                     'users.name as medico',
                                     'especialidades.nome as especialidade',
                                     'agenda_status.id as status_id'
@@ -85,7 +86,7 @@ class AgendaController extends Controller
     public function create(Request $request)
     {
         $especialidades = Especialidade::whereHas('users', function ($query) {
-            $query->whereNotNull('user_id');
+           $query->whereNotNull('user_id');
         })->orderBy('nome')->pluck('nome', 'id')->prepend('Selecione...', '');
         #$agendaConfig = AgendaConfig::first();
         #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
@@ -133,7 +134,7 @@ class AgendaController extends Controller
             report($e);
             $msg = 'alert-warning|Erro ao marcar consulta! Se o erro persistir, entre em contato com o administrador.';
         }
-        return redirect()->route('agenda.index', ['tipo'=>'secretaria','dia' => $data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
+        return redirect()->route('agenda.index', ['dia' => $data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
     /**
@@ -191,9 +192,21 @@ class AgendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        try {
+            $data = explode('/',$request->data);
+            $agenda = Agenda::find($id);
+            if($agenda->delete()){
+                $msg = 'alert-success|Consulta excluída com sucesso!';
+            }else{
+                $msg = 'alert-warning|Erro ao excluir consulta! Se o erro persistir, entre em contato com o administrador.';
+            }
+        } catch (Throwable  $e) {
+            report($e);
+            $msg = 'alert-warning|Erro ao excluir consulta! Se o erro persistir, entre em contato com o administrador.';
+        }
+        return redirect()->route('agenda.index', ['dia' => $data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
     public function getMedicos($idEspecialidade)
@@ -204,10 +217,10 @@ class AgendaController extends Controller
         return response()->json($medicos);
     }
 
-    public function alteraStatus(Request $request)
+    public function alteraStatus(Request $request, $id)
     {
         try {
-            $agenda = Agenda::find($request->input('altera_status_agenda_id'));
+            $agenda = Agenda::find($id);
             $dados['agenda_status_id'] = $request->input('agenda_status_id');
             if($agenda->update($dados)){
                 $msg = 'alert-success|Status da consulta alterada com sucesso!';
@@ -219,7 +232,7 @@ class AgendaController extends Controller
             $msg = 'alert-warning|Erro ao alterar status da consulta! Se o erro persistir, entre em contato com o administrador.';
         }
         $data = explode('/',$request->input('data'));
-        return redirect()->route('agenda.index',['tipo'=>'secretaria','dia'=>$data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
+        return redirect()->route('agenda.index',['dia'=>$data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
     public function horariosDisponiveis($dataInformada, $medicoId, $especialidadeId)

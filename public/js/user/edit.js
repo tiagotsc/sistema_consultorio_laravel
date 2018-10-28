@@ -77,7 +77,7 @@ $("#salvar").on("click", function(){
 });
 
 $("#medico").on("change", function(){
-    if($(this).val() == 'S'){ // É médico
+    if($(this).val() == 'S'){ /* É médico */
         $("#divEspecialidade").show();
     }else{
         $("#divEspecialidade").hide();

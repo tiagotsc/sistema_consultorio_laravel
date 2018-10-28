@@ -4,7 +4,7 @@
 <div class="col-md-8 border-right">
     <div class="row">
         <div class="col-md-6">
-         <h4>Agenta {{ $tipo }} - {{ $data }}</h4>
+         <h4>Agenda {{ $tipo }} - {{ $data }}</h4>
         </div>
         <div class="col-md-6 text-right">
          <a id="modalMarcar" data-selecionada="{{ $data }}" href="#">Marcar consulta <i class="fas fa-plus"></i></a>
@@ -82,6 +82,7 @@
     </div>
     -->
 </div>
+<input type="hidden" id="rota_altera_status" value="{{route('agenda.alteraStatus',['id' => 0])}}">
 <!-- Modal Alterar status -->
 <div class="modal fade" id="modalStatus" tabindex="-1" role="dialog" aria-labelledby="modalStatus" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -92,7 +93,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        {!! Form::open(['id' => 'frmAlteraStatus', 'route' => 'agenda.alteraStatus']) !!}
+        {!! Form::open(['id' => 'frmAlteraStatus', 'method' => 'put', 'url' => '']) !!}
         <div class="modal-body">
           <div class="row">
               <div class="form-group col-md-12">
@@ -111,7 +112,7 @@
         </div>
         <div class="modal-footer">
             <input type="hidden" name="data" value="{{ $data }}">
-          <input type="hidden" id="altera_status_agenda_id" name="altera_status_agenda_id">
+          <input type="hidden" id="altera_status_medico_id" name="altera_status_medico_id">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
           <button type="button" id="bt-status-altera" class="btn btn-primary">Alterar</button>
         </div>
@@ -119,6 +120,10 @@
       </div>
     </div>
   </div>
+<div id="modalAgendaFicha" class="modal" tabindex="-1" role="dialog">
+    
+</div>
+<input type="hidden" id="rota-deletar" value='{{route("agenda.destroy", 0)}}?data={{$data}}' >
 @endsection
 
 @section('footerScrits')

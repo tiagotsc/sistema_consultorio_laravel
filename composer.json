@@ -12,6 +12,7 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "5.7.*",
         "lavary/laravel-menu": "^1.7",
+        "pusher/pusher-php-server": "^3.2",
         "spatie/laravel-permission": "^2.17"
     },
     "require-dev": {

@@ -45,3 +45,8 @@ select[readonly] {
 #logout_link{
     color: black;
 }
+
+.modal-full {
+    min-width: 100%;
+    margin: 0;
+}

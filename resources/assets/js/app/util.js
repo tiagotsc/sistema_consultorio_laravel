@@ -55,3 +55,22 @@ function buscaCep(elemento,endereco,bairro,cidade,estado){
 
 }
 
+function montaModalDefault(caminho, parametros){
+    loadingShow();
+    //$( "#modalDefault" ).html( '' );
+	$.get(caminho, { valores: parametros }, function( data ) {
+        $( "#modalDefault" ).html( data );
+        $('#modalDefault').modal('show');
+        loadingHide();
+    }).fail(function() {
+        alert( "Error! Recarrega a página, por favor!" );
+    });
+}
+
+function dump(obj) {
+    var out = '';
+    for (var i in obj) {
+    out += i + ": " + obj[i] + "\n";
+    }
+   alert(out);
+}

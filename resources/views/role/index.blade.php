@@ -28,7 +28,7 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Ação</th>
+                <th width="15px">Ação</th>
             </tr>
         </thead>
     </table>

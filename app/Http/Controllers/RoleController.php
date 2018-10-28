@@ -48,8 +48,13 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
-        return view('role.create', ['permission' => $permission]);
+        $permissoesGrupo = Permission::distinct()
+                            ->select(DB::raw("SUBSTRING(name, 1, LOCATE('-', name) - 1) grupo"))
+                            ->orderBy('grupo')
+                            ->pluck('grupo','grupo')->prepend('Todos');
+        $permission = Permission::select('id','name', DB::raw("SUBSTRING(name, 1, LOCATE('-', name) - 1) grupo"))->orderBy('name')->get();
+        
+        return view('role.create', ['permission' => $permission, 'permissoesGrupo' => $permissoesGrupo]);
     }
 
     /**
@@ -72,11 +77,11 @@ class RoleController extends Controller
             if($role){
                 $msg = 'alert-success|Role criado com sucesso!';
             }else{
-                $msg = 'alert-warning|Erro ao criar role! Se o erro persistir, entre em contato com o administrador.';
+                $msg = 'alert-warning|Erro ao criar perfil! Se o erro persistir, entre em contato com o administrador.';
             }
         } catch (Throwable  $e) {
             report($e);
-            $msg = 'alert-warning|Erro ao criar role! Se o erro persistir, entre em contato com o administrador.';
+            $msg = 'alert-warning|Erro ao criar perfil! Se o erro persistir, entre em contato com o administrador.';
         }
         return redirect()->route('roles.index')->with('alertMessage', $msg);
     }
@@ -101,11 +106,15 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $permission = Permission::get();
+        $permissoesGrupo = Permission::distinct()
+                            ->select(DB::raw("SUBSTRING(name, 1, LOCATE('-', name) - 1) grupo"))
+                            ->orderBy('grupo')
+                            ->pluck('grupo','grupo')->prepend('Todos');
+        $permission = Permission::select('id','name', DB::raw("SUBSTRING(name, 1, LOCATE('-', name) - 1) grupo"))->orderBy('name')->get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
             ->pluck('role_has_permissions.permission_id')
             ->toArray();
-        return view('role.edit', ['role' => $role, 'permission' => $permission, 'rolePermissions' => $rolePermissions]);
+        return view('role.edit', ['role' => $role, 'permission' => $permission, 'rolePermissions' => $rolePermissions, 'permissoesGrupo' => $permissoesGrupo]);
     }
 
     /**
@@ -132,11 +141,11 @@ class RoleController extends Controller
             if($role){
                 $msg = 'alert-success|Role alterada com sucesso!';
             }else{
-                $msg = 'alert-warning|Erro ao alterar role! Se o erro persistir, entre em contato com o administrador.';
+                $msg = 'alert-warning|Erro ao alterar perfil! Se o erro persistir, entre em contato com o administrador.';
             }
         } catch (Throwable  $e) {
             report($e);
-            $msg = 'alert-warning|Erro ao alterar role! Se o erro persistir, entre em contato com o administrador.';
+            $msg = 'alert-warning|Erro ao alterar perfil! Se o erro persistir, entre em contato com o administrador.';
         }
         return redirect()->route('roles.edit', ['id' => $role->id])->with('alertMessage', $msg);
     }

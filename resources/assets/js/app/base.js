@@ -22,8 +22,8 @@ $(".responsive-calendar").responsiveCalendar({
     /*time: '2018-07',*/
     onDayClick: function(events) { 
         loadingShow();
-        var formataDia = $(this).data('day');
-        var formataMes = $(this).data('month');
+        let formataDia = $(this).data('day');
+        let formataMes = $(this).data('month');
         
         if($(this).data('day') < 10){
             formataDia = '0'+$(this).data('day');
@@ -36,14 +36,21 @@ $(".responsive-calendar").responsiveCalendar({
         var dataCompleta = formataDia+'/'+formataMes+'/'+$(this).data('year');
         /*$(window.document.location).attr('href','http://localhost/consultorio/agenda/secretaria/'+data);*/
         /*alert($(this).data('day')+'/'+$(this).data('month')+'/'+$(this).data('year'));*/
-        $(location).attr('href', '/agenda/secretaria/'+dataCompleta);
+        $(location).attr('href', '/agenda/'+dataCompleta);
     }
 });
 
 $(".menu-item").on("click", function(){
     loadingShow();
 });
-$("a[active='sim']").css('color', '#007bff'); // Deixa o link do menu ativo destacado
+$("a[active='sim']").css('color', '#007bff'); /* Deixa o link do menu ativo destacado*/
+
+$("#apagar").on("click", function(){
+    $(this).prop('disabled', true).val('Aguarde...');
+    $("#frm-deletar").submit();
+});
+
+
 /*
 $(".cep").on('keyup', function(){
     if($(this).val().length == 9){ // CEP Completo

@@ -1,10 +1,4 @@
-<style>
-.modal-full {
-    min-width: 100%;
-    margin: 0;
-}
-</style>
-<div class="modal-dialog modal-full" role="document" style="width: 100%">
+<div class="modal-dialog modal-full" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Marcar consulta</h5>
@@ -93,15 +87,14 @@
 </div>
 <!--<script src="/js/app.js"></script>-->
 <script>
-//var url = "/scripts/script.js";
-//$.getScript('/js/app.js');
-//$.getScript('/js/agenda/create.js');
+/*$.getScript('/js/app.js');*/
+/*$.getScript('/js/agenda/create.js');*/
 
-$.getScript('/js/app.js', function()
-{
+//$.getScript('/js/personalizado.js', function()
+//{
    $.getScript('/js/agenda/create.js', function()
    {
-       // run script that depends on scripta.js and scriptb.js
+       /* run script that depends on scripta.js and scriptb.js*/
    });
-});
+//});
 </script>

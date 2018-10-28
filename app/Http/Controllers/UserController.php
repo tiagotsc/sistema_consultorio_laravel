@@ -37,7 +37,7 @@ class UserController extends Controller
     }
 
     public function getpesq(Request $request){
-        $dados = User::select('id','matricula','name','status')->where('name','like','%'.$request->input('nome_cpf').'%')->get();
+        $dados = User::select('id','matricula','name', 'medico','status')->where('name','like','%'.$request->input('nome_cpf').'%')->get();
         return json_encode(array('data' => $dados));
     }
 
@@ -136,10 +136,8 @@ class UserController extends Controller
         $perfis = $request->input('perfis');
         try {
             $user = User::find($id);
-            $dados = $request->except(['_token', 'especialidade','perfis']);
-            if($request->input('password')){
-                $dados['password'] = bcrypt($request->input('password'));
-            }
+            $dados = $request->except(['_method', '_token', 'especialidade','perfis']);
+            $dados['password'] = ($request->input('password'))? bcrypt($request->input('password')): $user->password;
             if($user->update($dados)){
                 $user->especialidades()->sync($especialidades);
                 $user->syncRoles($perfis);

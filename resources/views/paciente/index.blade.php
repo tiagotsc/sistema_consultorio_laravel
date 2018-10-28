@@ -35,29 +35,6 @@
         </thead>
     </table>
 </div>
-<div id="modalApagar" class="modal" tabindex="-1" role="dialog">
-    {!! Form::open(['id' => 'frm-deletar', 'route' => ['paciente.destroy', 0]]) !!}
-    <input type="hidden" name="_method" value="DELETE">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Deseja excluir o paciente?</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p><input id="del-nome" class="form-control" type="text" readonly></p>
-        </div>
-        <div class="modal-footer">
-            <input id="del-id" type="hidden">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            <input id="apagar" type="submit" class="btn btn-primary" value="Apagar">
-        </div>
-        </div>
-    </div>
-    {!! Form::close() !!}
-</div>
 <input type="hidden" id="rota-deletar" value='{{route("paciente.destroy", 0)}}' >
 @endsection
 @section('footerScrits')
