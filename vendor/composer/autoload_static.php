@@ -382,7 +382,7 @@ class ComposerStaticInit8e08334551c7b2726141b829e2777081
         'App\\Estado' => __DIR__ . '/../..' . '/app/Estado.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AgendaConfigController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgendaConfigController.php',
-        'App\\Http\\Controllers\\AgendaController' => __DIR__ . '/../..' . '/app/Http/Controllers/agendaController.php',
+        'App\\Http\\Controllers\\AgendaController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgendaController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',

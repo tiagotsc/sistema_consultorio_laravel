@@ -11,58 +11,67 @@ class EspecialidadesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('especialidades')->insert(['nome' => 'Acupuntura']);
-		DB::table('especialidades')->insert(['nome' => 'Alergia e Imunologia']);
-		DB::table('especialidades')->insert(['nome' => 'Anestesiologia']);
-		DB::table('especialidades')->insert(['nome' => 'Angiologia']);
-		DB::table('especialidades')->insert(['nome' => 'Cancerologia (oncologia)']);
-		DB::table('especialidades')->insert(['nome' => 'Cardiologia']);
-		DB::table('especialidades')->insert(['nome' => 'Cirurgia Cardiovascular']);
-		DB::table('especialidades')->insert(['nome' => 'Cirurgia da Mão']);
-		DB::table('especialidades')->insert(['nome' => 'Cirurgia de cabeça e pescoço']);
-		DB::table('especialidades')->insert(['nome' =>  'Cirurgia do Aparelho Digestivo']);
-		DB::table('especialidades')->insert(['nome' =>  'Cirurgia Geral']);
-		DB::table('especialidades')->insert(['nome' =>  'Cirurgia Pediátrica']);
-		DB::table('especialidades')->insert(['nome' =>  'Cirurgia Plástica']);
-		DB::table('especialidades')->insert(['nome' =>  'Cirurgia Torácica']);
-		DB::table('especialidades')->insert(['nome' =>  'Cirurgia Vascular']);
-		DB::table('especialidades')->insert(['nome' =>  'Clínica Médica (Medicina interna) ']);
-		DB::table('especialidades')->insert(['nome' =>  'Coloproctologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Dermatologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Endocrinologia e Metabologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Endoscopia']);
-		DB::table('especialidades')->insert(['nome' =>  'Gastroenterologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Genética médica']);
-		DB::table('especialidades')->insert(['nome' =>  'Geriatria']);
-		DB::table('especialidades')->insert(['nome' =>  'Ginecologia e obstetrícia']);
-		DB::table('especialidades')->insert(['nome' =>  'Hematologia e Hemoterapia']);
-		DB::table('especialidades')->insert(['nome' =>  'Homeopatia']);
-		DB::table('especialidades')->insert(['nome' =>  'Infectologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Mastologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Medicina de Família e Comunidade']);
-		DB::table('especialidades')->insert(['nome' =>  'Medicina do Trabalho']);
-		DB::table('especialidades')->insert(['nome' =>  'Medicina do Tráfego']);
-		DB::table('especialidades')->insert(['nome' =>  'Medicina Esportiva']);
-		DB::table('especialidades')->insert(['nome' =>  'Medicina Física e Reabilitação']);
-		DB::table('especialidades')->insert(['nome' =>  'Medicina Intensiva']);
-		DB::table('especialidades')->insert(['nome' =>  'Medicina Legal e Perícia Médica (ou medicina forense)']);
-		DB::table('especialidades')->insert(['nome' =>  'Medicina Nuclear']);
-		DB::table('especialidades')->insert(['nome' =>  'Medicina Preventiva e Social']);
-		DB::table('especialidades')->insert(['nome' =>  'Nefrologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Neurocirurgia']);
-		DB::table('especialidades')->insert(['nome' =>  'Neurologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Nutrologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Oftalmologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Ortopedia e Traumatologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Otorrinolaringologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Patologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Patologia Clínica/Medicina laboratorial']);
-		DB::table('especialidades')->insert(['nome' =>  'Pediatria']);
-		DB::table('especialidades')->insert(['nome' =>  'Pneumologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Psiquiatria']);
-		DB::table('especialidades')->insert(['nome' =>  'Radiologia e Diagnóstico por Imagem']);
-		DB::table('especialidades')->insert(['nome' =>  'Radioterapia']);
-		DB::table('especialidades')->insert(['nome' =>  'Reumatologia']);
-		DB::table('especialidades')->insert(['nome' =>  'Urologia']);
+        $todasEspecialidades = DB::table('especialidades')->pluck('nome')->toArray();
+        $especialidades = [
+            ['nome' => 'Acupuntura', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Alergia e Imunologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Anestesiologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Angiologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Cancerologia (oncologia)', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Cardiologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Cirurgia Cardiovascular', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Cirurgia da Mão', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Cirurgia de cabeça e pescoço', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Cirurgia do Aparelho Digestivo', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Cirurgia Geral', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Cirurgia Pediátrica', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Cirurgia Plástica', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Cirurgia Torácica', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Cirurgia Vascular', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Clínica Médica (Medicina interna) ', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Coloproctologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Dermatologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Endocrinologia e Metabologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Endoscopia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Gastroenterologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Genética médica', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Geriatria', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Ginecologia e obstetrícia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Hematologia e Hemoterapia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Homeopatia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Infectologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Mastologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Medicina de Família e Comunidade', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Medicina do Trabalho', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Medicina do Tráfego', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Medicina Esportiva', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Medicina Física e Reabilitação', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Medicina Intensiva', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Medicina Legal e Perícia Médica (ou medicina forense)', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Medicina Nuclear', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Medicina Preventiva e Social', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Nefrologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Neurocirurgia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Neurologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Nutrologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Oftalmologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Ortopedia e Traumatologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Otorrinolaringologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Patologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Patologia Clínica/Medicina laboratorial', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Pediatria', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Pneumologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Psiquiatria', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Radiologia e Diagnóstico por Imagem', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Radioterapia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Reumatologia', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Urologia', 'created_at' => NOW(), 'updated_at' => NOW()]
+        ];
+        
+        foreach($especialidades as $esp){
+            if(!in_array($esp['nome'], $todasEspecialidades)){
+                DB::table('especialidades')->insert($esp);
+            }
+        }
     }
 }

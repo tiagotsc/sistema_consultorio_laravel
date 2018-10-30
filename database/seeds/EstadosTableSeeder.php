@@ -10,34 +10,43 @@ class EstadosTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        DB::table('estados')->insert(['nome' => 'ACRE', 'sigla' => 'AC']);
-        DB::table('estados')->insert(['nome' => 'ALAGOAS', 'sigla' => 'AL']);
-        DB::table('estados')->insert(['nome' => 'AMAPÁ', 'sigla' => 'AP']);
-        DB::table('estados')->insert(['nome' => 'AMAZONAS', 'sigla' => 'AM']);
-        DB::table('estados')->insert(['nome' => 'BAHIA', 'sigla' => 'BA']);
-        DB::table('estados')->insert(['nome' => 'CEARÁ', 'sigla' => 'CE']);
-        DB::table('estados')->insert(['nome' => 'DISTRITO FEDERAL', 'sigla' => 'DF']);
-        DB::table('estados')->insert(['nome' => 'ESPÍRITO SANTO', 'sigla' => 'ES']);
-        DB::table('estados')->insert(['nome' => 'GOIÁS', 'sigla' => 'GO']);
-        DB::table('estados')->insert(['nome' =>  'MARANHÃO', 'sigla' => 'MA']);
-        DB::table('estados')->insert(['nome' =>  'MATO GROSSO', 'sigla' => 'MT']);
-        DB::table('estados')->insert(['nome' =>  'MATO GROSSO DO SUL', 'sigla' => 'MS']);
-        DB::table('estados')->insert(['nome' =>  'MINAS GERAIS', 'sigla' => 'MG']);
-        DB::table('estados')->insert(['nome' =>  'PARÁ', 'sigla' => 'PR']);
-        DB::table('estados')->insert(['nome' =>  'PARAÍBA', 'sigla' => 'PB']);
-        DB::table('estados')->insert(['nome' =>  'PARANÁ', 'sigla' => 'PA']);
-        DB::table('estados')->insert(['nome' =>  'PERNAMBUCO', 'sigla' => 'PE']);
-        DB::table('estados')->insert(['nome' =>  'PIAUÍ', 'sigla' => 'PI']);
-        DB::table('estados')->insert(['nome' =>  'RIO DE JANEIRO', 'sigla' => 'RJ']);
-        DB::table('estados')->insert(['nome' =>  'RIO GRANDE DO NORTE', 'sigla' => 'RN']);
-        DB::table('estados')->insert(['nome' =>  'RIO GRANDE DO SUL', 'sigla' => 'RS']);
-        DB::table('estados')->insert(['nome' =>  'RONDÔNIA', 'sigla' => 'RO']);
-        DB::table('estados')->insert(['nome' =>  'RORAIMA', 'sigla' => 'RR']);
-        DB::table('estados')->insert(['nome' =>  'SANTA CATARINA', 'sigla' => 'SC']);
-        DB::table('estados')->insert(['nome' =>  'SÃO PAULO', 'sigla' => 'SP']);
-        DB::table('estados')->insert(['nome' =>  'SERGIPE', 'sigla' => 'SE']);
-        DB::table('estados')->insert(['nome' =>  'TOCANTINS', 'sigla' => 'TO']);
+    {   
+        $todosEstados = DB::table('estados')->pluck('nome')->toArray();
+        $estados = [
+            ['nome' => 'Acre', 'sigla' => 'AC', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Alagoas', 'sigla' => 'AL', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Amapá', 'sigla' => 'AP', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Amazonas', 'sigla' => 'AM', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Bahia', 'sigla' => 'BA', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Ceará', 'sigla' => 'CE', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Distrito Federal', 'sigla' => 'DF', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Espírito Santo', 'sigla' => 'ES', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Goiás', 'sigla' => 'GO', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Maranhão', 'sigla' => 'MA', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Mato Grosso', 'sigla' => 'MT', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Mato GRosso do Sul', 'sigla' => 'MS', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Minas Gerais', 'sigla' => 'MG', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Pará', 'sigla' => 'PR', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Paraíba', 'sigla' => 'PB', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Paraná', 'sigla' => 'PA', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Pernambuco', 'sigla' => 'PE', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Piauí', 'sigla' => 'PI', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Rio de Janeiro', 'sigla' => 'RJ', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Rio Grande do Norte', 'sigla' => 'RN', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Rio Grande do Sul', 'sigla' => 'RS', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Rondônia', 'sigla' => 'RO', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Roraima', 'sigla' => 'RR', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Santa Catarina', 'sigla' => 'SC', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'São Paulo', 'sigla' => 'SP', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Sergipe', 'sigla' => 'SE', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' =>  'Tocantins', 'sigla' => 'TO', 'created_at' => NOW(), 'updated_at' => NOW()]
+        ];
 
+        foreach($estados as $est){
+            if(!in_array($est['nome'], $todosEstados)){
+                DB::table('estados')->insert($est);
+            }
+        }
+        
     }
 }

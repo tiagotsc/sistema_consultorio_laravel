@@ -18,7 +18,7 @@ return array(
     'App\\Estado' => $baseDir . '/app/Estado.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AgendaConfigController' => $baseDir . '/app/Http/Controllers/AgendaConfigController.php',
-    'App\\Http\\Controllers\\AgendaController' => $baseDir . '/app/Http/Controllers/agendaController.php',
+    'App\\Http\\Controllers\\AgendaController' => $baseDir . '/app/Http/Controllers/AgendaController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',

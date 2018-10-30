@@ -10,14 +10,20 @@ class AgendaStatusTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        DB::table('agenda_status')->insert([
-            ['nome' => 'Marcado', 'usuario_tipo' => 'secretaria'],
-            ['nome' => 'Desistiu', 'usuario_tipo' => 'secretaria'],
-            ['nome' => 'Presente', 'usuario_tipo' => 'secretaria,medico'],
-            ['nome' => 'Chamado', 'usuario_tipo' => 'medico'],
-            ['nome' => 'Em atendimento', 'usuario_tipo' => 'secretaria'],
-            ['nome' => 'Finalizado', 'usuario_tipo' => 'medico']
-        ]);
+    {   
+        $todosStatus = DB::table('agenda_status')->pluck('nome')->toArray();
+        $status = [
+            ['nome' => 'Marcado', 'usuario_tipo' => 'secretaria', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Desistiu', 'usuario_tipo' => 'secretaria', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Presente', 'usuario_tipo' => 'secretaria,medico', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Chamado', 'usuario_tipo' => 'medico', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Em atendimento', 'usuario_tipo' => 'secretaria', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['nome' => 'Finalizado', 'usuario_tipo' => 'medico', 'created_at' => NOW(), 'updated_at' => NOW()]
+        ];
+        foreach($status as $st){
+            if(!in_array($st['nome'], $todosStatus)){
+                DB::table('agenda_status')->insert($st);
+            }
+        }
     }
 }

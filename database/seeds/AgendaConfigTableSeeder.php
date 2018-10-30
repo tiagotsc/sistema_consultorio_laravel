@@ -11,6 +11,7 @@ class AgendaConfigTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('agenda_configs')->insert(['inicio' => '09:00', 'fim' => '18:00', 'intervalo' => '15']);
+        DB::table('agenda_configs')->delete();
+        DB::table('agenda_configs')->insert(['inicio' => '09:00', 'fim' => '18:00', 'intervalo' => '15', 'created_at' => NOW(), 'updated_at' => NOW()]);
     }
 }

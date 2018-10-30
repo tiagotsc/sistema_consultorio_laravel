@@ -11,6 +11,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(FuncionariosTableSeeder::class);
+        $this->call([
+                        AgendaConfigTableSeeder::class,
+                        AgendaStatusTableSeeder::class,
+                        AgendaStatusSequenciaTableSeeder::class,
+                        EspecialidadesTableSeeder::class,
+                        EstadosTableSeeder::class,
+                        PermissionTableSeeder::class,
+                    ]);
     }
 }
