@@ -34,7 +34,7 @@
     <table id="frm-pesq" class="display">
         <thead>
             <tr>
-                <th>Matrícula</th>
+                <th>Horário</th>
                 <th>Nome</th>
                 <th>Status</th>
                 <th>Ação</th>

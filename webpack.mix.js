@@ -42,6 +42,7 @@ mix.scripts([
     'resources/assets/js/app/jquery.validate.min.js',
     'resources/assets/js/app/responsive-calendar.min.js',
     'resources/assets/js/app/jquery.shiftcheckbox.js',
+    'resources/assets/js/app/notify.min.js',
     'resources/assets/js/app/util.js',
     'resources/assets/js/app/base.js'
 ], 'public/js/personalizado.js');

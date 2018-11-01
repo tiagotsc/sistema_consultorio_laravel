@@ -11,6 +11,7 @@ use App\AgendaStatus;
 use App\Paciente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Events\AgendaStatusEvento;
 use DB;
 
 class AgendaController extends Controller
@@ -218,11 +219,17 @@ class AgendaController extends Controller
     }
 
     public function alteraStatus(Request $request, $id)
-    {
+    { 
         try {
+            if(auth()->user()->medico == 'S'){
+                $usuarioTipo = 'medico';
+            }else{
+                $usuarioTipo = 'secretaria';
+            }
             $agenda = Agenda::find($id);
             $dados['agenda_status_id'] = $request->input('agenda_status_id');
             if($agenda->update($dados)){
+                broadcast(new AgendaStatusEvento($agenda,$usuarioTipo))->toOthers();
                 $msg = 'alert-success|Status da consulta alterada com sucesso!';
             }else{
                 $msg = 'alert-warning|Erro ao alterar status da consulta! Se o erro persistir, entre em contato com o administrador.';

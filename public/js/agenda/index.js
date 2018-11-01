@@ -1,3 +1,4 @@
+$.notify("Hello World", "success");
 var todasSequencias = JSON.parse($("#todas_sequencias").val());
 var table;
 table = $('#frm-pesq').DataTable({
