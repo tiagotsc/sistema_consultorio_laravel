@@ -1,4 +1,4 @@
-$.notify("Hello World", "success");
+
 var todasSequencias = JSON.parse($("#todas_sequencias").val());
 var table;
 table = $('#frm-pesq').DataTable({
@@ -61,7 +61,11 @@ table = $('#frm-pesq').DataTable({
            orderable: false, /* Habilita ou desabilita ordenação da coluna*/
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
-                   var bt = '';
+                   var bt = ''; 
+                    if($('#user_type').val() == 'Medico' && row.status == 'Presente'){ 
+                        var linkAtende = $('#rota_atende').val().replace('0',data);
+                        bt += '<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="atenderId'+data+' marginIcon"><i class="fas fa-sign-in-alt fa-lg"></i></a>';
+                    }
                     if($("#all_permissions").val().indexOf('paciente-editar') > -1){
                         bt += '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="#" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
                     }
@@ -122,3 +126,38 @@ $("#bt-status-altera").on("click", function(){
     $(this).prop('disabled', true).html('Aguarde...');
     $('#frmAlteraStatus').submit();
 });
+
+// Enable pusher logging - don't include this in production
+      // Pusher.logToConsole = true;
+
+      var pusher = new Pusher($("#pusher_key").val(), {
+        cluster: $("#pusher_cluster").val(),
+        encrypted: true
+      });
+
+      // Subscribe to the channel we specified in our Laravel Event
+      var channel = pusher.subscribe('agendaStatus'+$("#user_type").val()+'.'+$("#user_id").val());
+
+      // Bind a function to a Event (the full Laravel class)
+      channel.bind('App\\Events\\AgendaStatusEvento', function(data) {
+        //$.notify("Hello World", "success");
+        $('a[agenda_id="'+data.agenda.id+'"]').attr('status_id',data.agenda.status_id).html(data.agenda.status_nome);
+        $('.atenderId'+data.agenda.id).remove();
+        if($('#user_type').val() == 'Medico' && data.agenda.status_nome == 'Presente'){ 
+            var linkAtende = $('#rota_atende').val().replace('0',data.agenda.id);
+            $('a[idedit="'+data.agenda.id+'"]').parent().prepend('<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="marginIcon atenderId'+data.agenda.id+'"><i class="fas fa-sign-in-alt fa-lg"></i></a>');
+        }
+        $.notify("Dr(a): O status do paciente "+data.agenda.paciente+" marcado às "+data.agenda.horario+", mudou para "+data.agenda.status_nome+".", "info");
+      });
+
+      /*
+    Debuga objeto javascript
+*/
+
+function dump(obj) {
+    var out = '';
+    for (var i in obj) {
+        out += i + ": " + obj[i] + "\n";
+    }
+    alert(out);
+}

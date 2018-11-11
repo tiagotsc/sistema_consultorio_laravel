@@ -39,7 +39,14 @@ class AgendaController extends Controller
         #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         $horas = DB::table('agendas')->distinct()->select(DB::raw('substr(horario, 1, 5) as horario'))->orderBy('horario')->pluck('horario','horario')->prepend('', '');
         $dataEscolhida = $request->dia.'/'.$request->mes.'/'.$request->ano;
-        return view('agenda.index', ['data' => $dataEscolhida, 'tipo' => $request->tipo, 'horas'=> $horas, 'agendaStatus'=>$AgendaStatus, 'todasSequencias' => json_encode($todasSequencias)]);
+        return view('agenda.index', [
+                                        'data' => $dataEscolhida, 
+                                        'tipo' => ucfirst($usuarioTipo), 
+                                        'horas' => $horas, 
+                                        'agendaStatus' => $AgendaStatus, 
+                                        'userId' => Auth::id(),
+                                        'todasSequencias' => json_encode($todasSequencias)
+                                    ]);
     }
 
     public function getpesq(Request $request){
@@ -240,6 +247,11 @@ class AgendaController extends Controller
         }
         $data = explode('/',$request->input('data'));
         return redirect()->route('agenda.index',['dia'=>$data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
+    }
+
+    public function atende()
+    {
+        
     }
 
     public function horariosDisponiveis($dataInformada, $medicoId, $especialidadeId)

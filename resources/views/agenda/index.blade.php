@@ -4,7 +4,7 @@
 <div class="col-md-8 border-right">
     <div class="row">
         <div class="col-md-6">
-         <h4>Agenda {{ $tipo }} - {{ $data }}</h4>
+         <h4>Agenda - {{ $data }}</h4>
         </div>
         <div class="col-md-6 text-right">
          <a id="modalMarcar" data-selecionada="{{ $data }}" href="#">Marcar consulta <i class="fas fa-plus"></i></a>
@@ -13,10 +13,15 @@
     <hr>
     <div class="row">
         <div class="form-group col-md-9">
+        <input type="hidden" id="pusher_key" value="{{config('broadcasting.connections.pusher.key')}}">
+        <input type="hidden" id="pusher_cluster" value="{{config('broadcasting.connections.pusher.options.cluster')}}">
+        <input type="hidden" id="user_id" value="6">
+        <input type="hidden" id="user_type" value="Medico">
         <input type="hidden" id="todas_sequencias" value="{{$todasSequencias}}">
         <input type="hidden" id="rota_cadastra_consulta" value="{{route('agenda.create')}}">
         <input type="hidden" id="rota_edita_consulta" value="{{route('agenda.edit',['id' => 0])}}">
         <input type="hidden" id="rota_pesquisa_consulta" value="{{route('agenda.getpesq')}}">
+        <input type="hidden" id="rota_atende" value="{{route('agenda.atende',['id' => 0])}}">
         {!! Form::token() !!}
         {!! Form::label('input_dado', 'Pesquise paciente por:') !!}
         {!! Form::text('input_dado', '', ['class' => 'form-control', 'maxlength' => '200','placeholder' => 'Nome, CPF, RG, Telefone ou Celular']) !!}
@@ -120,9 +125,6 @@
       </div>
     </div>
   </div>
-<div id="modalAgendaFicha" class="modal" tabindex="-1" role="dialog">
-    
-</div>
 <input type="hidden" id="rota-deletar" value='{{route("agenda.destroy", 0)}}?data={{$data}}' >
 @endsection
 

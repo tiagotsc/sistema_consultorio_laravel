@@ -30,6 +30,7 @@ class AgendaStatusEvento implements ShouldBroadcast
             'id' => $agenda->id,
             'status_id' => $agenda->agenda_status_id,
             'status_nome' => $agenda->status->nome,
+            'paciente' => $agenda->paciente->nome,
             'data' => Carbon::parse($agenda->data)->format('d/m/Y'),
             'horario' => $agenda->horario,
             'medico_id' => $agenda->medico_id,
