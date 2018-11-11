@@ -253,6 +253,7 @@
     <script src="{{ asset('js/base.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>-->
     <script src="{{ asset('js/personalizado.js') }}"></script>
+    <script src="{{ asset('js/pusher.min.js') }}"></script>
     <script src="{{ asset('js/datatable/DataTables/datatables.min.js') }}"></script>
     @show
   </body>

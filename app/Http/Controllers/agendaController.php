@@ -112,7 +112,8 @@ class AgendaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   try{
+    {   
+        try{
             if($request->input('paciente_id') != ''){ #Atualizar
                 $paciente = Paciente::find($request->input('paciente_id'));
                 $paciente->telefone = $request->input('telefone');
@@ -191,7 +192,37 @@ class AgendaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            if($request->input('paciente_id') != ''){ #Atualizar
+                $paciente = Paciente::find($request->input('paciente_id'));
+                $paciente->telefone = $request->input('telefone');
+                $paciente->celular = $request->input('celular');
+            }else{ # Insere
+                $dadoPaciente['nome'] = strtoupper($this->removeAcentos($request->input('nome_paciente')));
+                $dadoPaciente['telefone'] = $request->input('telefone');
+                $dadoPaciente['celular'] = $request->input('celular');
+                $paciente = new Paciente($dadoPaciente);
+            }
+            $paciente->save();
+            $dados['data'] = $request->input('data_marcar');
+            $dados['plano_saude'] = $request->input('plano');
+            $dados['especialidade_id'] = $request->input('especialidade');
+            $dados['medico_id'] = $request->input('medico');
+            $dados['horario'] = $request->input('horario_marcado');
+            $dados['paciente_id'] = $paciente->id;
+            $dados['marcou_user_id'] = Auth::id();
+            $data = explode('/',$request->input('data_marcar'));
+            $agenda = Agenda::find($id);
+            if($agenda->update($dados)){
+                $msg = 'alert-success|Consulta alterada com sucesso!';
+            }else{
+                $msg = 'alert-warning|Erro ao alterar consulta! Se o erro persistir, entre em contato com o administrador.';
+            }
+        }catch(Throwable $e){
+            report($e);
+            $msg = 'alert-warning|Erro ao alterar consulta! Se o erro persistir, entre em contato com o administrador.';
+        }
+        return redirect()->route('agenda.index', ['dia' => $data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
     /**
@@ -251,7 +282,7 @@ class AgendaController extends Controller
 
     public function atende()
     {
-        
+
     }
 
     public function horariosDisponiveis($dataInformada, $medicoId, $especialidadeId)

@@ -57,11 +57,11 @@
             </div>
             <div class="form-group col-md-2">
             {!! Form::label('telefone', 'Telefone') !!}
-            {!! Form::text('telefone', $dados->paciente->telefone, ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
+            {!! Form::text('telefone', $dados->paciente->telefone, ['class' => 'form-control telefone', 'placeholder' => 'Preencha...']) !!}
             </div>
             <div class="form-group col-md-2">
             {!! Form::label('celular', 'Celular') !!}
-            {!! Form::text('celular', $dados->paciente->celular, ['class' => 'form-control', 'placeholder' => 'Preencha...']) !!}
+            {!! Form::text('celular', $dados->paciente->celular, ['class' => 'form-control celular', 'placeholder' => 'Preencha...']) !!}
             <input type="hidden" id="paciente_id" name="paciente_id" value="{{$dados->paciente->id}}">
             </div>
         </div>
