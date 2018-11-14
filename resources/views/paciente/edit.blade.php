@@ -87,6 +87,8 @@
             {!! Form::button('Salvar', ['id' => 'salvar', 'class' => 'btn btn-success']); !!}
         </div>
     </div>
+    {!! Form::hidden('redirect', $redirect) !!}
+    {!! Form::hidden('novoPaciente', 'N') !!}
     {!! Form::hidden('id', old('id')) !!}
     {!! Form::close() !!}
 </div>

@@ -37,13 +37,16 @@ table = $('#frm-pesq').DataTable({
         {
            targets: 0, 
            data: 'horario', 
+           render: function ( data, type, row ) { 
+                return '<span class="agenda-hora" id="'+row.id+'">'+data+'</span>';
+            },
            className: 'dt-body-center'
         },
         {
             targets: 1, 
             data: 'nome',
             render: function ( data, type, row ) { 
-                return 'Paciente: '+data+'<br>Doutor(a): '+row['medico']+'<br>Especialidade: '+row['especialidade'];
+                return '<span class="agenda-dados" id="'+row.id+'">Paciente: '+data+'<br>Doutor(a): '+row['medico']+'<br>Especialidade: '+row['especialidade']+'</span>';
             },
            className: 'dt-body-left' /* Centraliza o conteúdo da TD*/
         },
@@ -65,6 +68,10 @@ table = $('#frm-pesq').DataTable({
                     if($('#user_type').val() == 'Medico' && row.status == 'Presente'){ 
                         var linkAtende = $('#rota_atende').val().replace('0',data);
                         bt += '<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="atenderId'+data+' marginIcon"><i class="fas fa-sign-in-alt fa-lg"></i></a>';
+                    }
+                    if($("#all_permissions").val().indexOf('paciente-editar') > -1 && row.novo == 'S'){
+                        var linkEditar = $("#rota-paciente-editar").val().replace('0',row.paciente_id);
+                        bt += '<a title="Ficha incompleta" data-toggle="tooltip" data-placement="bottom" href="'+linkEditar+'" class="marginIcon"><i class="fas fa-address-book fa-lg"></i></a>';
                     }
                     if($("#all_permissions").val().indexOf('paciente-editar') > -1){
                         bt += '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="#" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
@@ -127,31 +134,49 @@ $("#bt-status-altera").on("click", function(){
     $('#frmAlteraStatus').submit();
 });
 
+function verificaHorarios(dataSelecionada, dataAtual, agendaHorarios, agendaDados){
+
+    if(agendaHorarios.length != 0){
+        $.each(agendaHorarios, function() {
+            console.log($(this).html());
+        });
+    }
+        
+    //console.log(moment().format('LTS'));
+    //if(moment(dataCompleta,"DD/MM/YYYY").isBefore($('input[name="data_atual"]').val())){
+      //  $.notify("Data inferior a data atual", "warn");
+    //}
+}
+var dataSel = $('input[name="data"]').val().split('/').reverse().join('-');
+var dataAtual = $('input[name="data_atual"]').val();
+if(dataSel == dataAtual){
+    self.setInterval(function(){verificaHorarios(dataSel, dataAtual, $('.agenda-hora'), $('.agenda-dados'))}, 1000);
+}
 // Enable pusher logging - don't include this in production
-      // Pusher.logToConsole = true;
+// Pusher.logToConsole = true;
 
-      var pusher = new Pusher($("#pusher_key").val(), {
-        cluster: $("#pusher_cluster").val(),
-        encrypted: true
-      });
+var pusher = new Pusher($("#pusher_key").val(), {
+cluster: $("#pusher_cluster").val(),
+encrypted: true
+});
 
-      // Subscribe to the channel we specified in our Laravel Event
-      var channel = pusher.subscribe('agendaStatus'+$("#user_type").val()+'.'+$("#user_id").val());
+// Subscribe to the channel we specified in our Laravel Event
+var channel = pusher.subscribe('agendaStatus'+$("#user_type").val()+'.'+$("#user_id").val());
 
-      // Bind a function to a Event (the full Laravel class)
-      channel.bind('App\\Events\\AgendaStatusEvento', function(data) {
-        //$.notify("Hello World", "success");
-        $('a[agenda_id="'+data.agenda.id+'"]').attr('status_id',data.agenda.status_id).html(data.agenda.status_nome);
-        $('.atenderId'+data.agenda.id).remove();
-        if($('#user_type').val() == 'Medico' && data.agenda.status_nome == 'Presente'){ 
-            var linkAtende = $('#rota_atende').val().replace('0',data.agenda.id);
-            $('a[idedit="'+data.agenda.id+'"]').parent().prepend('<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="marginIcon atenderId'+data.agenda.id+'"><i class="fas fa-sign-in-alt fa-lg"></i></a>');
-        }
-        $.notify("Dr(a): O status do paciente "+data.agenda.paciente+" marcado às "+data.agenda.horario+", mudou para "+data.agenda.status_nome+".", "info");
-      });
+// Bind a function to a Event (the full Laravel class)
+channel.bind('App\\Events\\AgendaStatusEvento', function(data) {
+//$.notify("Hello World", "success");
+$('a[agenda_id="'+data.agenda.id+'"]').attr('status_id',data.agenda.status_id).html(data.agenda.status_nome);
+$('.atenderId'+data.agenda.id).remove();
+if($('#user_type').val() == 'Medico' && data.agenda.status_nome == 'Presente'){ 
+    var linkAtende = $('#rota_atende').val().replace('0',data.agenda.id);
+    $('a[idedit="'+data.agenda.id+'"]').parent().prepend('<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="marginIcon atenderId'+data.agenda.id+'"><i class="fas fa-sign-in-alt fa-lg"></i></a>');
+}
+$.notify("Dr(a): O status do paciente "+data.agenda.paciente+" marcado às "+data.agenda.horario+", mudou para "+data.agenda.status_nome+".", "info");
+});
 
-      /*
-    Debuga objeto javascript
+/*
+Debuga objeto javascript
 */
 
 function dump(obj) {

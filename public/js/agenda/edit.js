@@ -133,7 +133,7 @@ $.getScript('/js/personalizado.js', function()
         autoclose: 'true',
         language: 'pt-BR',
         weekStart: 0,
-        /*startDate:'0d',*/
+        startDate:'0d',
         todayHighlight: true
     }).on('changeDate', function(valor) {
         horariosDisponiveis($(this).val(),$("#medico").val(),$("#especialidade").val());

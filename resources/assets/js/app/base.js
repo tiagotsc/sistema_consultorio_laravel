@@ -1,3 +1,5 @@
+moment.locale('pt-br');
+
 $('.data').datepicker({
     format: 'dd/mm/yyyy',
     autoclose: 'true',
@@ -21,7 +23,7 @@ $(".responsive-calendar").responsiveCalendar({
     translateMonths: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
     /*time: '2018-07',*/
     onDayClick: function(events) { 
-        loadingShow();
+        
         let formataDia = $(this).data('day');
         let formataMes = $(this).data('month');
         
@@ -34,9 +36,12 @@ $(".responsive-calendar").responsiveCalendar({
         }
         
         var dataCompleta = formataDia+'/'+formataMes+'/'+$(this).data('year');
-        /*$(window.document.location).attr('href','http://localhost/consultorio/agenda/secretaria/'+data);*/
-        /*alert($(this).data('day')+'/'+$(this).data('month')+'/'+$(this).data('year'));*/
-        $(location).attr('href', '/agenda/'+dataCompleta);
+        if(moment(dataCompleta,"DD/MM/YYYY").isBefore($('input[name="data_atual"]').val())){
+            $.notify("Data inferior a data atual", "warn");
+        }else{
+            loadingShow();
+            $(location).attr('href', '/agenda/'+dataCompleta);
+        }
     }
 });
 

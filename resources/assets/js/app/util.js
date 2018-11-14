@@ -67,6 +67,39 @@ function montaModalDefault(caminho, parametros){
     });
 }
 
+// Mostra o limite de caracteres, conforme digitado
+$.fn.textareaLimit = function() {
+    return this.each(function() {
+        var limiteMaximo = $(this).attr('maxlength');
+        if(limiteMaximo !== undefined){
+            $(this).after("<span>"+limiteMaximo+"</span> Caracter(es) restante(s)");
+            $(this).on("keyup", function(){
+                var textlen = limiteMaximo - $(this).val().length;
+                $(this).next().text(textlen);
+            });
+        }
+    });
+};
+
+// Verificador de horário
+$.fn.horario = function() {
+    return this.each(function() {
+        $(this).on("keyup", function(){
+            var value = $(this).val();
+            if(value.length == 2){
+                if(parseInt(value, 10) > 23){ // Se a hora for incorreta, limpa o campo
+                    $(this).val('23');
+                }
+            }
+            if(value.length == 5){
+                if(parseInt(value.substring(3, 5),10) > 59){
+                    $(this).val(value.substring(0, 2)+':');
+                }
+            }
+        });
+    });
+};
+
 function dump(obj) {
     var out = '';
     for (var i in obj) {

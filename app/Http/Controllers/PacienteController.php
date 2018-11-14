@@ -8,6 +8,7 @@ use App\Estado;
 use App\Paciente;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Illuminate\Support\Facades\URL;
 
 class PacienteController extends Controller
 {
@@ -94,11 +95,16 @@ class PacienteController extends Controller
      */
     public function edit($id)
     {
+        $redirect = '';
+        if(strpos(URL::previous(), 'agenda')){
+            $redirect = URL::previous();
+        }
         $paciente = Paciente::find($id);
         $estados = Estado::where('status','A')->orderBy('nome')->pluck('sigla', 'id')->prepend('', '');
         return view('paciente.edit', [
             'paciente' => $paciente,
-            'estados' => $estados
+            'estados' => $estados,
+            'redirect' => $redirect
             ]);
     }
 
@@ -113,7 +119,7 @@ class PacienteController extends Controller
     {
         try {
             $paciente = Paciente::find($id);
-            $dados = $request->all();
+            $dados = $request->except('redirect');
             if($paciente->update($dados)){
                 $msg = 'alert-success|Paciente alterado com sucesso!';
             }else{
@@ -122,6 +128,9 @@ class PacienteController extends Controller
         } catch (Throwable  $e) {
             report($e);
             $msg = 'alert-warning|Erro ao alterar paciente! Se o erro persistir, entre em contato com o administrador.';
+        }
+        if($request->input('redirect') != ''){
+            return redirect($request->input('redirect'));
         }
         return redirect()->route('paciente.edit', ['id' => $paciente->id])->with('alertMessage', $msg);
     }

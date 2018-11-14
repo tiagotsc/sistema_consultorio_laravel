@@ -60,11 +60,13 @@ class AgendaController extends Controller
                                     'agendas.id',
                                     'agendas.horario',
                                     'pacientes.matricula',
+                                    'agendas.paciente_id',
                                     'pacientes.nome',
                                     'pacientes.cpf',
                                     'pacientes.rg',
                                     'pacientes.telefone',
                                     'pacientes.celular',
+                                    'pacientes.novoPaciente as novo',
                                     'agenda_status.nome as status',
                                     'agendas.medico_id',
                                     'users.name as medico',
@@ -96,10 +98,14 @@ class AgendaController extends Controller
         $especialidades = Especialidade::whereHas('users', function ($query) {
            $query->whereNotNull('user_id');
         })->orderBy('nome')->pluck('nome', 'id')->prepend('Selecione...', '');
+        $data = $request->input('valores');
+        if($data < date('d/m/Y')){
+            $data = date('d/m/Y');
+        }
         #$agendaConfig = AgendaConfig::first();
         #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         return view('agenda.create',[
-                                        'dataSelecionada' => $request->input('valores'), 
+                                        'dataSelecionada' => $data, 
                                         #'horas' => $horas,
                                         'especialidades' => $especialidades
                                     ]);
