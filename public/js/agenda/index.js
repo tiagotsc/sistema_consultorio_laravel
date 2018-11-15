@@ -38,7 +38,7 @@ table = $('#frm-pesq').DataTable({
            targets: 0, 
            data: 'horario', 
            render: function ( data, type, row ) { 
-                return '<span class="agenda-hora" id="'+row.id+'">'+data+'</span>';
+                return '<span class="agenda-hora agenda-dados'+row.id+' agenda-todos" id="'+row.id+'" status="'+row.status+'">'+data+'</span>';
             },
            className: 'dt-body-center'
         },
@@ -46,7 +46,7 @@ table = $('#frm-pesq').DataTable({
             targets: 1, 
             data: 'nome',
             render: function ( data, type, row ) { 
-                return '<span class="agenda-dados" id="'+row.id+'">Paciente: '+data+'<br>Doutor(a): '+row['medico']+'<br>Especialidade: '+row['especialidade']+'</span>';
+                return '<span class="agenda-dados'+row.id+' agenda-todos" id="'+row.id+'">Paciente: '+data+'<br>Doutor(a): '+row['medico']+'<br>Especialidade: '+row['especialidade']+'</span>';
             },
            className: 'dt-body-left' /* Centraliza o conteúdo da TD*/
         },
@@ -74,7 +74,7 @@ table = $('#frm-pesq').DataTable({
                         bt += '<a title="Ficha incompleta" data-toggle="tooltip" data-placement="bottom" href="'+linkEditar+'" class="marginIcon"><i class="fas fa-address-book fa-lg"></i></a>';
                     }
                     if($("#all_permissions").val().indexOf('paciente-editar') > -1){
-                        bt += '<a title="Editar" data-toggle="tooltip" data-placement="bottom" href="#" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
+                        bt += '<a title="Editar consulta" data-toggle="tooltip" data-placement="bottom" href="#" idEdit="'+data+'" class="editar marginIcon"><i class="fas fa-edit fa-lg"></i></a>';
                     }
                     if($("#all_permissions").val().indexOf('paciente-apagar') > -1){
                         bt += '<a idDel="'+data+'" titulo="'+row.nome+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i title="Apagar" data-toggle="tooltip" data-placement="bottom" class="fas fa-trash-alt fa-lg"></a>';
@@ -137,8 +137,17 @@ $("#bt-status-altera").on("click", function(){
 function verificaHorarios(dataSelecionada, dataAtual, agendaHorarios, agendaDados){
 
     if(agendaHorarios.length != 0){
-        $.each(agendaHorarios, function() {
-            console.log($(this).html());
+        $(".agenda-todos").css('color','black');
+        
+        $.each(agendaHorarios, function() {//console.log(moment().format('DD/MM/YYYY H:mm')+' - '+moment().format('YYYY-MM-DD '+$(this).html()));
+            if(moment().isAfter(moment().format('YYYY-MM-DD '+$(this).html())) && $(this).attr('status') == 'Presente'){
+                $(".agenda-dados"+$(this).attr('id')).css('color','red');
+            }
+            if(moment().isAfter(moment().format('YYYY-MM-DD '+$(this).html())) && $(this).attr('status') == 'Marcado'){
+                $(".agenda-dados"+$(this).attr('id')).css('color','gray');
+            }
+            //console.log( moment().isBefore(moment().format('YYYY-MM-DD '+$(this).html())) );
+            //console.log($(this).html());
         });
     }
         
@@ -147,8 +156,10 @@ function verificaHorarios(dataSelecionada, dataAtual, agendaHorarios, agendaDado
       //  $.notify("Data inferior a data atual", "warn");
     //}
 }
-var dataSel = $('input[name="data"]').val().split('/').reverse().join('-');
-var dataAtual = $('input[name="data_atual"]').val();
+//var dataSel = $('input[name="data"]').val().split('/').reverse().join('-');
+//var dataAtual = $('input[name="data_atual"]').val();
+var dataSel = $("input[name='data']").val()
+var dataAtual = moment().format('DD/MM/YYYY');
 if(dataSel == dataAtual){
     self.setInterval(function(){verificaHorarios(dataSel, dataAtual, $('.agenda-hora'), $('.agenda-dados'))}, 1000);
 }

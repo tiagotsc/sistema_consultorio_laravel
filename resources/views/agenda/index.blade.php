@@ -117,7 +117,6 @@
         </div>
         <div class="modal-footer">
             <input type="hidden" name="data" value="{{ $data }}">
-            <input type="hidden" name="data_atual" value="{{ date('Y-m-d') }}">
             <input type="hidden" id="altera_status_medico_id" name="altera_status_medico_id">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             <button type="button" id="bt-status-altera" class="btn btn-primary">Alterar</button>
@@ -126,6 +125,7 @@
       </div>
     </div>
   </div>
+    <input type="hidden" name="data_atual" value="{{ date('Y-m-d') }}">
     <input type="hidden" id="rota-paciente-editar" value='{{route("paciente.edit", 0)}}' >
     <input type="hidden" id="rota-deletar" value='{{route("agenda.destroy", 0)}}?data={{$data}}' >
 @endsection

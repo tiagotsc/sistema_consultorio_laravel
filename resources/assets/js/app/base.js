@@ -36,7 +36,7 @@ $(".responsive-calendar").responsiveCalendar({
         }
         
         var dataCompleta = formataDia+'/'+formataMes+'/'+$(this).data('year');
-        if(moment(dataCompleta,"DD/MM/YYYY").isBefore($('input[name="data_atual"]').val())){
+        if(moment().isAfter(dataCompleta.split('/').reverse().join('-')+' 23:59:00')){
             $.notify("Data inferior a data atual", "warn");
         }else{
             loadingShow();
