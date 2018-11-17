@@ -33,6 +33,9 @@ $("#frm").validate({
         medico: {
 			required: true
         },
+        estado_id: {
+			required: true
+        },
         password: {
 			required: true
         },
@@ -60,6 +63,9 @@ $("#frm").validate({
             email: "Informe um email válido, por favor!"
         },
         medico: {
+			required: "Selecione, por favor!",
+        },
+        estado: {
 			required: "Selecione, por favor!",
         },
         password: {

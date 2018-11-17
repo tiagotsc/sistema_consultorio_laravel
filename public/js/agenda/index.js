@@ -64,7 +64,7 @@ table = $('#frm-pesq').DataTable({
            orderable: false, /* Habilita ou desabilita ordenação da coluna*/
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
-                   var bt = ''; 
+                   var bt = '<span id="botoes_id'+data+'">'; 
                     if($('#user_type').val() == 'Medico' && row.status == 'Presente'){ 
                         var linkAtende = $('#rota_atende').val().replace('0',data);
                         bt += '<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="atenderId'+data+' marginIcon"><i class="fas fa-sign-in-alt fa-lg"></i></a>';
@@ -79,6 +79,7 @@ table = $('#frm-pesq').DataTable({
                     if($("#all_permissions").val().indexOf('paciente-apagar') > -1){
                         bt += '<a idDel="'+data+'" titulo="'+row.nome+'" href="#" data-toggle="modal" data-target="#modalApagar" class="apagar"><i title="Apagar" data-toggle="tooltip" data-placement="bottom" class="fas fa-trash-alt fa-lg"></a>';
                     }
+                    bt += '</span>';
                    return bt;
                }
                return data;
@@ -177,6 +178,7 @@ var channel = pusher.subscribe('agendaStatus'+$("#user_type").val()+'.'+$("#user
 // Bind a function to a Event (the full Laravel class)
 channel.bind('App\\Events\\AgendaStatusEvento', function(data) {
 //$.notify("Hello World", "success");
+$('.agenda-dados'+data.agenda.id).attr('status', data.agenda.status_nome);
 $('a[agenda_id="'+data.agenda.id+'"]').attr('status_id',data.agenda.status_id).html(data.agenda.status_nome);
 $('.atenderId'+data.agenda.id).remove();
 if($('#user_type').val() == 'Medico' && data.agenda.status_nome == 'Presente'){ 

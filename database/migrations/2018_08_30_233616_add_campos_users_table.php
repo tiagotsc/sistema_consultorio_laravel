@@ -14,17 +14,17 @@ class AddCamposUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('matricula', 15)->unique()->nullable();
-            $table->string('telefone', 15)->nullable();
-            $table->string('celular', 15)->nullable();
-            $table->string('cpf', 15)->nullable();
-            $table->string('endereco')->nullable();
-            $table->string('endNumero', 50)->nullable();
-            $table->string('cidade', 100)->nullable();
-            $table->string('bairro', 100)->nullable();
-            $table->char('cep', 9)->nullable();
-            $table->enum('medico', ['S', 'N']);
-            $table->date('dataNasc')->nullable();
+            $table->string('matricula', 15)->unique()->after('name')->nullable();
+            $table->string('telefone', 15)->after('matricula')->nullable();
+            $table->string('celular', 15)->after('telefone')->nullable();
+            $table->string('cpf', 15)->after('celular')->nullable();
+            $table->string('endereco')->after('cpf')->nullable();
+            $table->string('endNumero', 50)->after('endereco')->nullable();
+            $table->string('cidade', 100)->after('endNumero')->nullable();
+            $table->string('bairro', 100)->after('cidade')->nullable();
+            $table->char('cep', 9)->after('bairro')->nullable();
+            $table->enum('medico', ['S', 'N'])->after('cep');
+            $table->date('dataNasc')->after('medico')->nullable();
             $table->unsignedInteger('estado_id')->nullable();
             $table->foreign('estado_id')->references('id')->on('estados');
         });

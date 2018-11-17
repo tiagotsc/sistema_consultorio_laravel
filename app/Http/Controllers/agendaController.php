@@ -16,13 +16,31 @@ use DB;
 
 class AgendaController extends Controller
 {
+    public function __construct()
+    {
+        
+        /*dd( Auth::user()->name );
+        $estado = Auth::user()->estado->sigla;
+        $timezone = getTimezone($estado);
+        date_default_timezone_set($timezone);
+        #date_default_timezone_set("Asia/Bangkok");
+        echo date_default_timezone_get();
+        exit;*/
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {   
+        if($request->dia == null or $request->mes == null or $request->ano === null){
+            $timezone = User::find(Auth::id())->estado->timezone;   
+            date_default_timezone_set($timezone);
+            $dia = date('d');
+            $mes = date('m');
+            $ano = date('Y');
+        }
         if(auth()->user()->medico == 'S'){
             $usuarioTipo = 'medico';
         }else{
@@ -38,7 +56,7 @@ class AgendaController extends Controller
         $agendaConfig = AgendaConfig::first();
         #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         $horas = DB::table('agendas')->distinct()->select(DB::raw('substr(horario, 1, 5) as horario'))->orderBy('horario')->pluck('horario','horario')->prepend('', '');
-        $dataEscolhida = $request->dia.'/'.$request->mes.'/'.$request->ano;
+        $dataEscolhida = $dia.'/'.$mes.'/'.$ano;
         return view('agenda.index', [
                                         'data' => $dataEscolhida, 
                                         'tipo' => ucfirst($usuarioTipo), 
@@ -264,6 +282,8 @@ class AgendaController extends Controller
 
     public function alteraStatus(Request $request, $id)
     { 
+        $timezone = User::find(Auth::id())->estado->timezone;   
+        date_default_timezone_set($timezone);
         try {
             if(auth()->user()->medico == 'S'){
                 $usuarioTipo = 'medico';
@@ -272,6 +292,9 @@ class AgendaController extends Controller
             }
             $agenda = Agenda::find($id);
             $dados['agenda_status_id'] = $request->input('agenda_status_id');
+            if($request->input('agenda_status_id') == 3){ # Presente
+                $dados['hora_presenca'] = date('H:i:s');
+            }
             if($agenda->update($dados)){
                 broadcast(new AgendaStatusEvento($agenda,$usuarioTipo))->toOthers();
                 $msg = 'alert-success|Status da consulta alterada com sucesso!';

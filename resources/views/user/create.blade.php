@@ -75,7 +75,7 @@
         {!! Form::text('cidade', null, ['class' => 'form-control', 'readonly' => true, 'maxlength' => '100', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-3">
-        {!! Form::label('estado_id', 'Estado') !!}
+        {!! Form::label('estado_id', 'Estado') !!}<span class="obrigatorio">*</span>
         {!! Form::select('estado_id', $estados, null, ['class' => 'form-control', 'readonly' => true]) !!}
         </div>
         <div class="form-group col-md-4">

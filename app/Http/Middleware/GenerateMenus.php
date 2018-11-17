@@ -18,15 +18,15 @@ class GenerateMenus
     public function handle($request, Closure $next)
     {#echo \Request::url();exit();
         \Menu::make('MenuTopo', function ($menu) {
-            $menu->add('Agenda', ['url'  => '#', 'class' => 'nav-item dropdown'])
+            $menu->add('Agenda', ['route'  => 'agenda.index', 'class' => 'nav-item dropdown'])
                     ->data('permission', 'menu-agenda')
                     ->link->attr(['class'=> 'nav-link']);
-                    $menu->agenda->add('Secretária', ''/*['route'  => 'usuario.index']*/)
+                    /*$menu->agenda->add('Secretária', '')
                     ->data('permission', 'agenda-secretaria')
                     ->link->attr(['class'=> 'dropdown-item']);
-                    $menu->agenda->add('Médico', ''/*['route'  => 'roles.create']*/)
+                    $menu->agenda->add('Médico', '')
                     ->data('permission', 'agenda-medico')
-                    ->link->attr(['class'=> 'dropdown-item']);
+                    ->link->attr(['class'=> 'dropdown-item']);*/
 
             $menu->add('Pacientes', ['route'  => 'paciente.index', 'class' => 'nav-item dropdown'])
                     ->data('permission', 'paciente-listar')

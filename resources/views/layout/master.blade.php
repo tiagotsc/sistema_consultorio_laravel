@@ -163,11 +163,12 @@
         </div>
         </section>
         <!-- END section -->
-
+<!--
         <a href="#" class="cta-link" data-toggle="modal" data-target="#modalDefault">
         <span class="sub-heading">Ready to Visit?</span>
         <span class="heading">Make an Appointment</span>
         </a>
+-->
         <!-- END cta-link -->
         
         @section('footer')

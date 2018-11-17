@@ -33,6 +33,9 @@ $("#frm").validate({
         medico: {
 			required: true
         },
+        estado_id: {
+			required: true
+        },
         'especialidade[]':{
             required:{
                 depends: function(element){
@@ -57,6 +60,9 @@ $("#frm").validate({
             email: "Informe um email válido, por favor!"
         },
         medico: {
+			required: "Selecione, por favor!",
+        },
+        estado_id: {
 			required: "Selecione, por favor!",
         },
         'especialidade[]':{

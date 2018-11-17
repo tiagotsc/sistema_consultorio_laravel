@@ -17,6 +17,7 @@ class CreateEstadosTable extends Migration
             $table->increments('id');
             $table->string('nome', 100)->nullable();
             $table->char('sigla', 2)->nullable();
+            $table->string('timezone', 150)->nullable();
             $table->enum('status', ['A', 'I'])->default('A');
             $table->timestamps();
         });
