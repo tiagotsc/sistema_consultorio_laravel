@@ -34,12 +34,11 @@ class AgendaController extends Controller
      */
     public function index(Request $request)
     {   
+        $dia = $request->dia; $mes = $request->mes; $ano = $request->ano;
         if($request->dia == null or $request->mes == null or $request->ano === null){
             $timezone = User::find(Auth::id())->estado->timezone;   
             date_default_timezone_set($timezone);
-            $dia = date('d');
-            $mes = date('m');
-            $ano = date('Y');
+            $dia = date('d'); $mes = date('m'); $ano = date('Y');
         }
         if(auth()->user()->medico == 'S'){
             $usuarioTipo = 'medico';
@@ -309,9 +308,15 @@ class AgendaController extends Controller
         return redirect()->route('agenda.index',['dia'=>$data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
-    public function atende()
+    public function atende($id)
     {
-
+        $timezone = User::find(Auth::id())->estado->timezone;   
+        date_default_timezone_set($timezone);
+        $agenda = Agenda::find($id);
+        $agenda->hora_inicio = date('H:i:s');
+        $agenda->save();
+        echo 'Em atendimento';
+        exit;
     }
 
     public function horariosDisponiveis($dataInformada, $medicoId, $especialidadeId)

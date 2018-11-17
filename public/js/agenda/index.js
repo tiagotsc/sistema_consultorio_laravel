@@ -185,7 +185,7 @@ if($('#user_type').val() == 'Medico' && data.agenda.status_nome == 'Presente'){
     var linkAtende = $('#rota_atende').val().replace('0',data.agenda.id);
     $('a[idedit="'+data.agenda.id+'"]').parent().prepend('<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="marginIcon atenderId'+data.agenda.id+'"><i class="fas fa-sign-in-alt fa-lg"></i></a>');
 }
-$.notify("Dr(a): O status do paciente "+data.agenda.paciente+" marcado às "+data.agenda.horario+", mudou para "+data.agenda.status_nome+".", "info");
+$.notify("Dr(a): O paciente "+data.agenda.paciente+" marcado às "+data.agenda.horario+" esta "+data.agenda.status_nome+".", "info");
 });
 
 /*
