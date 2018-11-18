@@ -15,13 +15,13 @@
         <div class="form-group col-md-9">
         <input type="hidden" id="pusher_key" value="{{config('broadcasting.connections.pusher.key')}}">
         <input type="hidden" id="pusher_cluster" value="{{config('broadcasting.connections.pusher.options.cluster')}}">
-        <input type="hidden" id="user_id" value="6">
-        <input type="hidden" id="user_type" value="Medico">
+        <input type="hidden" id="user_id" value="{{$userId}}">
+        <input type="hidden" id="user_type" value="{{$tipo}}">
         <input type="hidden" id="todas_sequencias" value="{{$todasSequencias}}">
         <input type="hidden" id="rota_cadastra_consulta" value="{{route('agenda.create')}}">
         <input type="hidden" id="rota_edita_consulta" value="{{route('agenda.edit',['id' => 0])}}">
         <input type="hidden" id="rota_pesquisa_consulta" value="{{route('agenda.getpesq')}}">
-        <input type="hidden" id="rota_atende" value="{{route('agenda.atende',['id' => 0])}}">
+        <input type="hidden" id="rota_atende" value="{{route('atendimento.edit',['id' => 0])}}">
         {!! Form::token() !!}
         {!! Form::label('input_dado', 'Pesquise paciente por:') !!}
         {!! Form::text('input_dado', '', ['class' => 'form-control', 'maxlength' => '200','placeholder' => 'Nome, CPF, RG, Telefone ou Celular']) !!}

@@ -82,3 +82,24 @@ function getTimezone($siglaEstado){
         );
     return $timezones[$siglaEstado];
 }
+
+
+function formataData($data, $tipo = 'BR'){
+
+    if($tipo == 'USA'){
+        if(strlen($data) > 10){
+            $inicio = explode(' ', $data);
+            $data = implode('-',array_reverse(explode('/', $inicio[0]))).' '.$inicio[1];
+        }else{
+            $data = implode('-',array_reverse(explode('/', $data)));
+        }
+    }else{
+        if(strlen($data) > 10){ 
+            $inicio = explode(' ', $data);
+            $data = implode('/',array_reverse(explode('-', $inicio[0]))).' '.$inicio[1];
+        }else{
+            $data = implode('/',array_reverse(explode('-', $data)));
+        }
+    }
+    return $data;
+}

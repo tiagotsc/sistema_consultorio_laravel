@@ -30,6 +30,7 @@ table = $('#frm-pesq').DataTable({
             data._token = $( "input[name='_token']" ).val();
             data.input_dado = $("#input_dado").val();
             data.horario = $("#horario").val();
+            data.data = $("input[name='data']").val();
         }
     },
     processing: true,
@@ -65,10 +66,14 @@ table = $('#frm-pesq').DataTable({
            render: function ( data, type, row ) { 
                if ( type === 'display' ) {
                    var bt = '<span id="botoes_id'+data+'">'; 
-                    if($('#user_type').val() == 'Medico' && row.status == 'Presente'){ 
+                    if($('#user_type').val() == 'Medico' && row.status == 'Presente'){
+                        bt += '<a title="Chamar paciente" data-toggle="tooltip" data-placement="bottom" href="#" id="'+data+'" horario="'+row['horario']+'" paciente="'+row['nome']+'" class="chamar chamarId'+data+' marginIcon"><i class="fas fa-assistive-listening-systems"></i></a>';
+                    }
+                    if($('#user_type').val() == 'Medico' && (row.status == 'Chamado' || row.status == 'Em atendimento')){ 
                         var linkAtende = $('#rota_atende').val().replace('0',data);
                         bt += '<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="atenderId'+data+' marginIcon"><i class="fas fa-sign-in-alt fa-lg"></i></a>';
                     }
+                    
                     if($("#all_permissions").val().indexOf('paciente-editar') > -1 && row.novo == 'S'){
                         var linkEditar = $("#rota-paciente-editar").val().replace('0',row.paciente_id);
                         bt += '<a title="Ficha incompleta" data-toggle="tooltip" data-placement="bottom" href="'+linkEditar+'" class="marginIcon"><i class="fas fa-address-book fa-lg"></i></a>';
@@ -106,6 +111,18 @@ $('#frm-pesq tbody').on( 'click', '.apagar', function (event) {
     $("#del-nome").val($(this).attr('titulo'));
 });
 
+$('#frm-pesq tbody').on( 'click', '.chamar', function (event) { 
+    event.preventDefault(); 
+    var rota = $("#rota_altera_status").val().replace('0',$(this).attr('id'));
+    $("#frmAlteraStatus").attr('action',rota);
+    var comboStatus = '<option value="4" selected>Chamado</option>';
+    $("#agenda_status_id").html(comboStatus);
+    $("#altera_status_paciente").val($(this).attr('paciente'));
+    $("#altera_status_horario").val($(this).attr('horario'));
+    $("#altera_status_medico_id").val($("#user_id").val());
+    $("#frmAlteraStatus").submit();
+});
+
 
 $("#modalMarcar").on("click", function(event){
     event.preventDefault();
@@ -135,17 +152,30 @@ $("#bt-status-altera").on("click", function(){
     $('#frmAlteraStatus').submit();
 });
 
-function verificaHorarios(dataSelecionada, dataAtual, agendaHorarios, agendaDados){
+function verificaAgenda(dataSelecionada, dataAtual, agendaHorarios, agendaDados){
 
     if(agendaHorarios.length != 0){
-        $(".agenda-todos").css('color','black');
-        
+        $(".agenda-todos").css({'color':'black','text-decoration':'none','font-weight':'normal'});
+        $(".editar,.apagar").show();
         $.each(agendaHorarios, function() {//console.log(moment().format('DD/MM/YYYY H:mm')+' - '+moment().format('YYYY-MM-DD '+$(this).html()));
-            if(moment().isAfter(moment().format('YYYY-MM-DD '+$(this).html())) && $(this).attr('status') == 'Presente'){
+            if(moment().isAfter(moment().format('YYYY-MM-DD '+$(this).html())) && $(this).attr('status') == 'Presente'){ // Se estiver presente e atrasado
                 $(".agenda-dados"+$(this).attr('id')).css('color','red');
             }
             if(moment().isAfter(moment().format('YYYY-MM-DD '+$(this).html())) && $(this).attr('status') == 'Marcado'){
                 $(".agenda-dados"+$(this).attr('id')).css('color','gray');
+            }
+            if($(this).attr('status') == 'Chamado'){
+                $(".agenda-dados"+$(this).attr('id')).css('font-weight', 'bold');
+            }
+
+            if($(this).attr('status') == 'Desistiu'){
+                $(".agenda-dados"+$(this).attr('id')).css('text-decoration','line-through');
+            }
+
+            if($(this).attr('status') == 'Em atendimento'){
+                $(".agenda-dados"+$(this).attr('id')).css('color','Navy');
+                $("a[idEdit='"+$(this).attr('id')+"']").hide();
+                $("a[idDel='"+$(this).attr('id')+"']").hide();
             }
             //console.log( moment().isBefore(moment().format('YYYY-MM-DD '+$(this).html())) );
             //console.log($(this).html());
@@ -162,7 +192,7 @@ function verificaHorarios(dataSelecionada, dataAtual, agendaHorarios, agendaDado
 var dataSel = $("input[name='data']").val()
 var dataAtual = moment().format('DD/MM/YYYY');
 if(dataSel == dataAtual){
-    self.setInterval(function(){verificaHorarios(dataSel, dataAtual, $('.agenda-hora'), $('.agenda-dados'))}, 1000);
+    self.setInterval(function(){verificaAgenda(dataSel, dataAtual, $('.agenda-hora'), $('.agenda-dados'))}, 1000);
 }
 // Enable pusher logging - don't include this in production
 // Pusher.logToConsole = true;
@@ -172,20 +202,34 @@ cluster: $("#pusher_cluster").val(),
 encrypted: true
 });
 
+var setCanal = $("#user_type").val() == 'Medico' ? $("#user_type").val()+'.'+$("#user_id").val() : '';
 // Subscribe to the channel we specified in our Laravel Event
-var channel = pusher.subscribe('agendaStatus'+$("#user_type").val()+'.'+$("#user_id").val());
+var channel = pusher.subscribe('agendaStatus'+setCanal);
 
 // Bind a function to a Event (the full Laravel class)
 channel.bind('App\\Events\\AgendaStatusEvento', function(data) {
-//$.notify("Hello World", "success");
-$('.agenda-dados'+data.agenda.id).attr('status', data.agenda.status_nome);
-$('a[agenda_id="'+data.agenda.id+'"]').attr('status_id',data.agenda.status_id).html(data.agenda.status_nome);
-$('.atenderId'+data.agenda.id).remove();
-if($('#user_type').val() == 'Medico' && data.agenda.status_nome == 'Presente'){ 
-    var linkAtende = $('#rota_atende').val().replace('0',data.agenda.id);
-    $('a[idedit="'+data.agenda.id+'"]').parent().prepend('<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="marginIcon atenderId'+data.agenda.id+'"><i class="fas fa-sign-in-alt fa-lg"></i></a>');
-}
-$.notify("Dr(a): O paciente "+data.agenda.paciente+" marcado às "+data.agenda.horario+" esta "+data.agenda.status_nome+".", "info");
+    if(moment().format('DD/MM/YYYY') == data.agenda.data){
+        //$.notify("Hello World", "success");
+        $('.agenda-dados'+data.agenda.id).attr('status', data.agenda.status_nome);
+        $('a[agenda_id="'+data.agenda.id+'"]').attr('status_id',data.agenda.status_id).html(data.agenda.status_nome);
+        $('.chamarId'+data.agenda.id).remove(); 
+        $('.atenderId'+data.agenda.id).remove(); 
+        if(data.medicoId == $("#user_id").val()){
+            if($('#user_type').val() == 'Medico' && data.agenda.status_nome == 'Presente'){ 
+                $('#botoes_id'+data.agenda.id).prepend('<a title="Chamar paciente" data-toggle="tooltip" data-placement="bottom" href="#" id="'+data.agenda.id+'" horario="'+data.agenda.horario+'" paciente="'+data.agenda.paciente+'" class="chamar chamarId'+data.agenda.id+' marginIcon"><i class="fas fa-assistive-listening-systems"></i></a>');
+            }
+            /*if($('#user_type').val() == 'Medico' && data.agenda.status_nome == 'Presente'){ 
+                var linkAtende = $('#rota_atende').val().replace('0',data.agenda.id);
+                $('#botoes_id'+data.agenda.id).prepend('<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="marginIcon atenderId'+data.agenda.id+'"><i class="fas fa-sign-in-alt fa-lg"></i></a>');
+            }*/
+
+            $.notify("Dr(a): O paciente "+data.agenda.paciente+" marcado às "+data.agenda.horario+" mudou para "+data.agenda.status_nome+".", "info");
+        }
+        if($("#user_type").val() == 'Secretaria' && data.agenda.status_id == 4){ // Chamado
+            $.notify("O paciente "+data.agenda.paciente+" marcado às "+data.agenda.horario+" esta sendo chamado.", "info");
+        }
+        $('[data-toggle="tooltip"]').tooltip();
+    }
 });
 
 /*

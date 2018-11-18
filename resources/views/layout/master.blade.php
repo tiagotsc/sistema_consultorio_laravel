@@ -238,6 +238,7 @@
         </div>
         <input type="hidden" id="base_url" value="{{ url('/') }}">
         <input type="hidden" id="all_permissions" value="{{ $permissoes }}">
+        <input type="hidden" id="todos_agendamentos" value="{{ $agendamentos }}">
     </div>
     @section('footerScrits')
     <!--<script src="{{ asset('js/jquery.min.js') }}"></script>

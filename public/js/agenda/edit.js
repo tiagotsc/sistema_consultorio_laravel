@@ -93,7 +93,7 @@ $.getScript('/js/personalizado.js', function()
     });
 
     function horariosDisponiveis(dataInput, medicoInput, especialidadeInput){
-        if(dataInput !='' || medicoInput !='' || especialidadeInput !=''){
+        if(dataInput !='' && medicoInput !='' && especialidadeInput !=''){
             $('#horarios').html('');
             loadingShow('Carregando horários...');
             var horarios = '';
@@ -146,6 +146,11 @@ $.getScript('/js/personalizado.js', function()
             $('#horarios').html('');
         }
     });
+
+    if($("#agenda_status").val() == 2){ // Desistiu
+        $("#medico").val('');
+        $('#horarios').html('');
+    }
 
     /*$("#salvarConsultar").on("click", function(){
         alert('Salvando');

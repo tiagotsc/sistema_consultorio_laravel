@@ -141,10 +141,11 @@ $.getScript('/js/personalizado.js', function()
                     encontrados += '<td>'+this.cpf+'</td>';
                     encontrados += '<td>'+this.telefone+'</td>';
                     encontrados += '<td>'+this.celular+'</td>';
-                    encontrados += '<td><a href="#" class="selecionar" title="Selecionar" paciente_id="'+this.id+'" nome="'+this.nome+'" telefone="'+this.telefone+'" celular="'+this.celular+'"><i class="fas fa-user-check"></i></a></td>';
+                    encontrados += '<td><a href="#" class="selecionar" title="Selecionar" data-toggle="tooltip" data-placement="bottom" paciente_id="'+this.id+'" nome="'+this.nome+'" telefone="'+this.telefone+'" celular="'+this.celular+'"><i class="fas fa-user-check"></i></a></td>';
                     encontrados += '</tr>';
                 });
                 $('#encontrados').html(encontrados);
+                $('[data-toggle="tooltip"]').tooltip();
                 selecionarPaciente();
                 loadingHide();
             }, "json" )
@@ -169,7 +170,7 @@ $.getScript('/js/personalizado.js', function()
     }
 
     function horariosDisponiveis(dataInput, medicoInput, especialidadeInput){
-        if(dataInput !='' || medicoInput !='' || especialidadeInput !=''){
+        if(dataInput !='' && medicoInput !='' && especialidadeInput !=''){
             $('#horarios').html('');
             loadingShow('Carregando horários...');
             var horarios = '';

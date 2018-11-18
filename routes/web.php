@@ -34,7 +34,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('agenda/paciente/busca', 'AgendaController@pacienteBusca')->name('agenda.pacienteBusca');
     Route::post('/agenda/getpesq', 'AgendaController@getpesq')->name('agenda.getpesq');
     Route::put('/agenda/alteraStatus/{id}', 'AgendaController@alteraStatus')->name('agenda.alteraStatus');
-    Route::get('agenda/atende/{id}', 'AgendaController@atende')->name('agenda.atende');
+    #Route::get('agenda/atende/{id}', 'AgendaController@atende')->name('agenda.atende');
+
+    // Atendimento
+    Route::resource('atendimento', 'AtendimentoController');
     
     // Agenda config
     Route::resource('agendaconfig', 'AgendaConfigController');

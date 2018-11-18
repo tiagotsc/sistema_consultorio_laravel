@@ -77,6 +77,7 @@
         </div>
       </div>
       <div class="modal-footer">
+        <input type="hidden" id="agenda_status" value="{{$dados->agenda_status_id}}">
         <input type="hidden" id="rota_medico_espec" value="{{route('agenda.getMedicos')}}">
         <input type="hidden" id="rota_horarios_disponiveis" value="{{route('agenda.getHorariosDisponiveis')}}">
         <input type="hidden" id="rota_paciente_busca" value="{{route('agenda.pacienteBusca')}}">

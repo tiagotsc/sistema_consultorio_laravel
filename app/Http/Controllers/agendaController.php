@@ -36,8 +36,8 @@ class AgendaController extends Controller
     {   
         $dia = $request->dia; $mes = $request->mes; $ano = $request->ano;
         if($request->dia == null or $request->mes == null or $request->ano === null){
-            $timezone = User::find(Auth::id())->estado->timezone;   
-            date_default_timezone_set($timezone);
+            #$timezone = User::find(Auth::id())->estado->timezone;   
+            #date_default_timezone_set($timezone);
             $dia = date('d'); $mes = date('m'); $ano = date('Y');
         }
         if(auth()->user()->medico == 'S'){
@@ -67,8 +67,14 @@ class AgendaController extends Controller
     }
 
     public function getpesq(Request $request){
+        if(auth()->user()->medico == 'S'){
+            $idMedico = Auth::id();
+        }else{
+            $idMedico = false;
+        }
         $buscar = $request->input('input_dado');
         $horario = $request->input('horario');
+        $data = formataData($request->input('data'),'USA');
         $dados = Agenda::join('pacientes', 'pacientes.id', '=', 'agendas.paciente_id')
                         ->join('agenda_status','agenda_status.id','=','agendas.agenda_status_id')
                         ->join('users', 'users.id','=','agendas.medico_id')
@@ -89,7 +95,11 @@ class AgendaController extends Controller
                                     'users.name as medico',
                                     'especialidades.nome as especialidade',
                                     'agenda_status.id as status_id'
-                                    )
+                        );
+        if($idMedico){
+            $dados = $dados->where('agendas.medico_id',$idMedico);
+        }
+        $dados = $dados->where('agendas.data',$data)
                         ->where('agendas.horario','like',$horario.'%')
                         ->where(function ($query) use($buscar) {
                             $query->where('pacientes.nome','like','%'.$buscar.'%')
@@ -236,6 +246,9 @@ class AgendaController extends Controller
             $dados['marcou_user_id'] = Auth::id();
             $data = explode('/',$request->input('data_marcar'));
             $agenda = Agenda::find($id);
+            if($agenda->agenda_status_id == 2){ # Desistiu
+                $dados['agenda_status_id'] = 1; # Marcado
+            }
             if($agenda->update($dados)){
                 $msg = 'alert-success|Consulta alterada com sucesso!';
             }else{
@@ -281,8 +294,8 @@ class AgendaController extends Controller
 
     public function alteraStatus(Request $request, $id)
     { 
-        $timezone = User::find(Auth::id())->estado->timezone;   
-        date_default_timezone_set($timezone);
+        #$timezone = User::find(Auth::id())->estado->timezone;   
+        #date_default_timezone_set($timezone);
         try {
             if(auth()->user()->medico == 'S'){
                 $usuarioTipo = 'medico';
@@ -308,17 +321,6 @@ class AgendaController extends Controller
         return redirect()->route('agenda.index',['dia'=>$data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
-    public function atende($id)
-    {
-        $timezone = User::find(Auth::id())->estado->timezone;   
-        date_default_timezone_set($timezone);
-        $agenda = Agenda::find($id);
-        $agenda->hora_inicio = date('H:i:s');
-        $agenda->save();
-        echo 'Em atendimento';
-        exit;
-    }
-
     public function horariosDisponiveis($dataInformada, $medicoId, $especialidadeId)
     {
         if(!preg_match('/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/', $dataInformada)){
@@ -332,7 +334,12 @@ class AgendaController extends Controller
         $especialidades = $especialidadeId;
 
         $horariosMarcados = Agenda::select(DB::raw('substr(horario, 1, 5) as horario'))
-                        ->where([['data', $data],['medico_id', $medico], ['especialidade_id', $especialidadeId]])
+                        ->where([
+                                    ['data', $data],
+                                    ['medico_id', $medico], 
+                                    ['agenda_status_id','!=',2] # Desistiu
+                                    #['especialidade_id', $especialidadeId]
+                                ])
                         ->pluck('horario')->toArray();
         return ($horariosMarcados)? array_values(array_diff($todosHorarios, $horariosMarcados)): $todosHorarios;
     }

@@ -17075,7 +17075,7 @@ $('.cpf').mask('000.000.000-00');
 $(".responsive-calendar").responsiveCalendar({
     startFromSunday: true,
     translateMonths: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-    /*time: '2018-07',*/
+    time: moment().format('YYYY-MM'),
     onDayClick: function(events) { 
         
         let formataDia = $(this).data('day');
@@ -17096,7 +17096,8 @@ $(".responsive-calendar").responsiveCalendar({
             loadingShow();
             $(location).attr('href', '/agenda/'+dataCompleta);
         }
-    }
+    },
+    events: JSON.parse($("#todos_agendamentos").val())
 });
 
 $(".menu-item").on("click", function(){
