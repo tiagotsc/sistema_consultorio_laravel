@@ -71,13 +71,21 @@ $("#add_receita").on("click", function(event){
         source: false
     });
     var contReceita = $(".receita_adicionada").length + 1;
-    var textarea = '<div class="col-md-12">';
+    var textarea = '<div class="form-group col-md-12">';
         textarea += '<textarea rows="8" name="receita['+contReceita+']" class="receita_adicionada" class="form-control"></textarea>';
         textarea += '</textarea>';
         //textarea += '<p title="Remover receita" data-toggle="tooltip" data-placement="bottom"><a href="#"><i class="fas fa-minus-circle"></i></a></p>';
         textarea += '</div>';
     $("#receitas").append(textarea);
     $("textarea[name='receita["+contReceita+"]']").after('<a href="#" class="remove_receita"><i title="Remover receita" data-toggle="tooltip" data-placement="bottom" class="fas fa-minus-circle"></i></a>');
+    
+    $("textarea[name='receita["+contReceita+"]']").rules( "add", {
+        required: true,
+        messages: {
+            required: "Informe, por favor!"
+        }
+    });
+    
     $('[data-toggle="tooltip"]').tooltip();
     $(".remove_receita").on("click", function(event){
         event.preventDefault(); 
