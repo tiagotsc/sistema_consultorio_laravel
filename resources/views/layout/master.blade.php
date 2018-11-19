@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @section('headerCss')
     <!--<link href="{{ asset('css/font.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('css/personalizado.css') }}">
     <link rel="stylesheet" href="{{ asset('fonts/fontawesome/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/datatable/DataTables/datatables.min.css') }}">
+    @show
   </head>
   <body>
     <div id="app">

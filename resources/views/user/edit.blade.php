@@ -95,7 +95,7 @@
     </div>
     <div class="row">
         <div class="form-group col-md-12 text-right">
-            {!! Form::button('Salvar', ['id' => 'salvar', 'class' => 'btn btn-success']); !!}
+            {!! Form::button('Salvar', ['id' => 'salvar', 'class' => 'btn btn-primary']); !!}
         </div>
     </div>
     {!! Form::hidden('id', old('id')) !!}

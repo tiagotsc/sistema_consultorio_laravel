@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\AgendaConfig;
-use App\Especialidade;
-use App\User;
 use App\Agenda;
-use App\AgendaStatus;
+use App\User;
 use App\Paciente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -81,8 +78,7 @@ class AtendimentoController extends Controller
                 broadcast(new AgendaStatusEvento($agenda,$usuarioTipo))->toOthers();
             }
         }
-        echo 'Em atendimento';
-        exit;
+        return view('atendimento.edit',['dados' => $agenda]);
     }
 
     /**
@@ -93,8 +89,26 @@ class AtendimentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {echo '<pre>'; print_r($_POST); exit;
+        try {
+            $timezone = User::find(Auth::id())->estado->timezone;   
+            date_default_timezone_set($timezone);
+            $data = explode('/',$request->input('data_consulta'));
+            $agenda = Agenda::find($id);
+            $agenda->agenda_status_id = 6; # Finalizado
+            $agenda->hora_fim = date('H:i:s');
+            $agenda->medico_anotacoes = $request->input('medico_anotacoes');
+            if($agenda->save()){
+                broadcast(new AgendaStatusEvento($agenda,'medico'))->toOthers();
+                $msg = 'alert-success|Consulta concluída com sucesso!';
+            }else{
+                $msg = 'alert-warning|Erro ao concluir consulta! Se o erro persistir, entre em contato com o administrador.';
+            }
+        } catch (Throwable  $e) {
+            report($e);
+            $msg = 'alert-warning|Erro ao concluir consulta! Se o erro persistir, entre em contato com o administrador.';
+        }
+        return redirect()->route('agenda.index', ['dia' => $data[0],'mes'=>$data[1],'ano'=>$data[2]])->with('alertMessage', $msg);
     }
 
     /**

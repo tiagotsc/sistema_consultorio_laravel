@@ -69,9 +69,10 @@ table = $('#frm-pesq').DataTable({
                     if($('#user_type').val() == 'Medico' && row.status == 'Presente'){
                         bt += '<a title="Chamar paciente" data-toggle="tooltip" data-placement="bottom" href="#" id="'+data+'" horario="'+row['horario']+'" paciente="'+row['nome']+'" class="chamar chamarId'+data+' marginIcon"><i class="fas fa-assistive-listening-systems"></i></a>';
                     }
-                    if($('#user_type').val() == 'Medico' && (row.status == 'Chamado' || row.status == 'Em atendimento')){ 
+                    if($('#user_type').val() == 'Medico' && (row.status == 'Chamado' || row.status == 'Em atendimento' || row.status == 'Finalizado')){ 
+                        var icone = row.status == 'Finalizado'? '<i class="fas fa-search fa-lg"></i>': '<i class="fas fa-sign-in-alt fa-lg"></i>';
                         var linkAtende = $('#rota_atende').val().replace('0',data);
-                        bt += '<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="atenderId'+data+' marginIcon"><i class="fas fa-sign-in-alt fa-lg"></i></a>';
+                        bt += '<a title="Atender paciente" data-toggle="tooltip" data-placement="bottom" href="'+linkAtende+'" class="atenderId'+data+' marginIcon">'+icone+'</a>';
                     }
                     
                     if($("#all_permissions").val().indexOf('paciente-editar') > -1 && row.novo == 'S'){
@@ -168,7 +169,7 @@ function verificaAgenda(dataSelecionada, dataAtual, agendaHorarios, agendaDados)
                 $(".agenda-dados"+$(this).attr('id')).css('font-weight', 'bold');
             }
 
-            if($(this).attr('status') == 'Desistiu'){
+            if($(this).attr('status') == 'Desistiu' || $(this).attr('status') == 'Finalizado'){
                 $(".agenda-dados"+$(this).attr('id')).css('text-decoration','line-through');
             }
 

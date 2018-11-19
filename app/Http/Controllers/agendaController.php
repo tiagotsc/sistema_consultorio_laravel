@@ -36,8 +36,8 @@ class AgendaController extends Controller
     {   
         $dia = $request->dia; $mes = $request->mes; $ano = $request->ano;
         if($request->dia == null or $request->mes == null or $request->ano === null){
-            #$timezone = User::find(Auth::id())->estado->timezone;   
-            #date_default_timezone_set($timezone);
+            $timezone = User::find(Auth::id())->estado->timezone;   
+            date_default_timezone_set($timezone);
             $dia = date('d'); $mes = date('m'); $ano = date('Y');
         }
         if(auth()->user()->medico == 'S'){
@@ -294,8 +294,8 @@ class AgendaController extends Controller
 
     public function alteraStatus(Request $request, $id)
     { 
-        #$timezone = User::find(Auth::id())->estado->timezone;   
-        #date_default_timezone_set($timezone);
+        $timezone = User::find(Auth::id())->estado->timezone;   
+        date_default_timezone_set($timezone);
         try {
             if(auth()->user()->medico == 'S'){
                 $usuarioTipo = 'medico';
