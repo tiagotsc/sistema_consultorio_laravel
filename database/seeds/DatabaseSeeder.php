@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
                         EspecialidadesTableSeeder::class,
                         EstadosTableSeeder::class,
                         PermissionTableSeeder::class,
+                        RelatorioCamposTableSeeder::class,
+						UsuarioAdminTableSeeder::class
                     ]);
     }
 }

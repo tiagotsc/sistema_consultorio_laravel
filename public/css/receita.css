@@ -1,0 +1,38 @@
+/*CSS para impressão*/
+@media print {
+    .logo {
+        display: inline-block;
+        padding-top: .3125rem;
+        padding-bottom: .3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+    }
+    .cabecalho{
+        text-align: center;
+    }
+    .paciente{
+        text-align: left;
+    }
+    .doutor{
+        font-size:12px;
+    }
+    .endereco{
+        font-size:10px;
+    }
+    .receita{
+        padding: 20px 10px;
+        line-height: 150%;
+        font-size: 17px;
+    }
+    .assinatura{
+        border-top:1px solid; 
+        text-align:center; 
+        width:250px; 
+        float: right; 
+        position: absolute; /*Testar com pdf*/
+        bottom: 60px; /*Testar com pdf*/
+        right: 80px; /*Testar com pdf*/
+    }
+}

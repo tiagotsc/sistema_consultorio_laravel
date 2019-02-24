@@ -54,4 +54,10 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Estado', 'id', 'estado_id');
     }
+
+    public function unidades()
+    {
+        return $this->belongsToMany('App\Unidade', 'unidade_users', 'user_id', 'unidade_id')
+                ->withTimestamps();
+    }
 }

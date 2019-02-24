@@ -48,4 +48,15 @@ class Agenda extends Model
     {
         return $this->hasOne('App\User', 'id', 'marcou_user_id');
     }
+
+    public function receitas()
+    {                               # agenda_id = campo da tabela receitas | Id = Primary key tabela receitas
+        return $this->hasMany('App\Receita', 'agenda_id', 'id');
+    }
+
+    public function sms()
+    {                                              
+        #return $this->hasMany('App\AgendaSms', 'agenda_id', 'id');
+        return $this->belongsTo('App\AgendaSms', 'id', 'agenda_id');
+    }
 }

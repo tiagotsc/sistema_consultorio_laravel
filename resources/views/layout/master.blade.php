@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <title>Colorlib Medi+</title>
+    <title>Consultório Online+</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -28,9 +28,9 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-5">
                 <ul class="social list-unstyled">
-                    <li><a href="#"><span class="fa fa-facebook"></span></a></li>
+                    <!--<li><a href="#"><span class="fa fa-facebook"></span></a></li>
                     <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-                    <li><a href="#"><span class="fa fa-instagram"></span></a></li>
+                    <li><a href="#"><span class="fa fa-instagram"></span></a></li>-->
                 </ul>
                 </div>
                 <div class="col-md-6 col-sm-6 col-7 text-right">
@@ -61,7 +61,7 @@
         </div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-            <a class="navbar-brand" href="index.html">Medi<span>+</span>  </a>
+            <a class="navbar-brand" href="{{url('')}}">Consultório Online<span>+</span>  </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -141,7 +141,7 @@
                     <!-- Responsive calendar - START -->
                     <div class="responsive-calendar">
                         <div class="controls">
-                            <a style="float:left" class="pull-left floatLeft" data-go="prev"><div class="btn btn-primary">Anterior</div></a>
+                            <a class="pull-left floatLeft" data-go="prev"><div class="btn btn-primary">Anterior</div></a>
                             <h4><span id="calendario-ano" data-head-year></span> <span id="calendario-mes" data-head-month></span></h4>
                             <a class="pull-right floatRight" data-go="next"><div class="btn btn-primary">Próximo</div></a>
                         </div><hr/>
@@ -159,6 +159,35 @@
                         </div>
                     </div>
                     <!-- Responsive calendar - END -->
+                    <div class="border-top bigMarginTop">
+                        <h6 class="text-right"><strong id="data_estatistica">{{date('d/m/Y')}}</strong></h6>
+                        <p>
+                            <h6>Atendidos <i data-toggle="tooltip" data-placement="bottom" title="Pacientes em que a consulta foi concluída" class="fas fa-info-circle floatRight"></i></h6>
+                            <div class="progress">
+                                <div id="atendidos" data-toggle="tooltip" data-placement="bottom" title="0%" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </p>
+                        <p>
+                            <h6>Ausentes <i data-toggle="tooltip" data-placement="bottom" title="Pacientes marcados que ainda não estão presente" class="fas fa-info-circle floatRight"></i></h6>
+                            <div class="progress">
+                                <div id="ausentes" data-toggle="tooltip" data-placement="bottom" title="0%" class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </p>
+                        <p>
+                            <h6>Desistiu <i data-toggle="tooltip" data-placement="bottom" title="Pacientes que desmarcaram" class="fas fa-info-circle floatRight"></i></h6>
+                            <div class="progress">
+                                <div id="desistiu" data-toggle="tooltip" data-placement="bottom" title="0%" class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </p>
+                        <!--
+                        <p>
+                            <h6>Atrasados <i data-toggle="tooltip" data-placement="bottom" title="Pacientes que chegaram atrasados" class="fas fa-info-circle floatRight"></i></h6>
+                            <div class="progress">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </p>
+                        -->
+                    </div>
                 </div>
             @show
             </div>
@@ -181,12 +210,12 @@
                 <hr class="border-t">
             </div>
             <div class="col-md-6 col-sm-12 copyright">
-                <p>&copy; 2018 Colorlib Medi+. Designed &amp; Developed by <a href="https://colorlib.com/">Colorlib</a></p>
+                <p>&copy; {{date('Y')}} Consultório Online+. Desenvolvido por: <a target="_blank" href="https://github.com/tiagotsc">Tiago Costa</a></p>
             </div>
             <div class="col-md-6 col-sm-12 text-md-right text-sm-left">
-                <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
+                <!--<a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
                 <a href="#" class="p-2"><span class="fa fa-twitter"></span></a>
-                <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>
+                <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>-->
             </div>
             </div>
         </div>
@@ -201,7 +230,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Aguarde...</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -210,8 +239,8 @@
                     <p><input type="text"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!--<button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
                 </div>
                 </div>
             </div>
@@ -241,6 +270,10 @@
         <input type="hidden" id="base_url" value="{{ url('/') }}">
         <input type="hidden" id="all_permissions" value="{{ $permissoes }}">
         <input type="hidden" id="todos_agendamentos" value="{{ $agendamentos }}">
+        <input type="hidden" id="rota_estatistica" value="{{ route('agenda.estatistica') }}">
+        <input type="hidden" id="pusher_key" value="{{config('broadcasting.connections.pusher.key')}}">
+        <input type="hidden" id="pusher_cluster" value="{{config('broadcasting.connections.pusher.options.cluster')}}">
+        <input type="hidden" id="data_hoje" value="{{$data_hoje}}">
     </div>
     @section('footerScrits')
     <!--<script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -256,8 +289,8 @@
     <script src="{{ asset('js/util.js') }}"></script>
     <script src="{{ asset('js/base.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>-->
-    <script src="{{ asset('js/personalizado.js') }}"></script>
     <script src="{{ asset('js/pusher.min.js') }}"></script>
+    <script src="{{ asset('js/personalizado.js') }}"></script>
     <script src="{{ asset('js/datatable/DataTables/datatables.min.js') }}"></script>
     @show
   </body>

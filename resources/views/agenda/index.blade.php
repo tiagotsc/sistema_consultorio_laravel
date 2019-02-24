@@ -12,9 +12,7 @@
     </div>
     <hr>
     <div class="row">
-        <div class="form-group col-md-9">
-        <input type="hidden" id="pusher_key" value="{{config('broadcasting.connections.pusher.key')}}">
-        <input type="hidden" id="pusher_cluster" value="{{config('broadcasting.connections.pusher.options.cluster')}}">
+        <div class="form-group col-md-5">
         <input type="hidden" id="user_id" value="{{$userId}}">
         <input type="hidden" id="user_type" value="{{$tipo}}">
         <input type="hidden" id="todas_sequencias" value="{{$todasSequencias}}">
@@ -26,7 +24,11 @@
         {!! Form::label('input_dado', 'Pesquise paciente por:') !!}
         {!! Form::text('input_dado', '', ['class' => 'form-control', 'maxlength' => '200','placeholder' => 'Nome, CPF, RG, Telefone ou Celular']) !!}
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-5">
+            {!! Form::label('unidade', 'Unidade') !!}
+            {!! Form::select('unidade', $unidades, $unidadeSession, ['class' => 'form-control']) !!}
+            </div>
+        <div class="form-group col-md-2">
         {!! Form::label('horario', 'Horário') !!}
         {!! Form::select('horario', $horas, null, ['class' => 'form-control']) !!}
         </div>
@@ -128,6 +130,7 @@
     <input type="hidden" name="data_atual" value="{{ date('Y-m-d') }}">
     <input type="hidden" id="rota-paciente-editar" value='{{route("paciente.edit", 0)}}' >
     <input type="hidden" id="rota-deletar" value='{{route("agenda.destroy", 0)}}?data={{$data}}' >
+    <input type="hidden" id="rota-agendamentos" value="{{route('agenda.ajaxAgendamentoUnidade')}}">
 @endsection
 
 @section('footerScrits')

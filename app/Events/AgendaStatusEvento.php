@@ -34,7 +34,8 @@ class AgendaStatusEvento implements ShouldBroadcast
             'data' => Carbon::parse($agenda->data)->format('d/m/Y'),
             'horario' => $agenda->horario,
             'medico_id' => $agenda->medico_id,
-            'medico_nome' => $agenda->medico->name
+            'medico_nome' => $agenda->medico->name,
+            'unidade_id' => $agenda->unidade_id,
         ];
         $this->medicoId = $agenda->medico_id;
         $this->tipoUsuario = $tipoUsuario;
@@ -52,6 +53,9 @@ class AgendaStatusEvento implements ShouldBroadcast
         }else{
             $canal = 'agendaStatusMedico.'.$this->medicoId;
         }
-        return new Channel($canal);
+        return [
+                new Channel($canal),
+                new Channel('consultas_acompanhamento')
+                ];
     }
 }

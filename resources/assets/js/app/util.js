@@ -57,7 +57,7 @@ function buscaCep(elemento,endereco,bairro,cidade,estado){
 
 function montaModalDefault(caminho, parametros){
     loadingShow();
-    //$( "#modalDefault" ).html( '' );
+    $( "#modalDefault" ).html( '' );
 	$.get(caminho, { valores: parametros }, function( data ) {
         $( "#modalDefault" ).html( data );
         $('#modalDefault').modal('show');

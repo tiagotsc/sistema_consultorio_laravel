@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-6 text-right">
         @can('paciente-criar')
-         <a class="menu-item" href="{{ route('paciente.create') }}">Cadastrar</a>
+         <a class="menu-item" href="{{ route('paciente.create') }}">Cadastrar <i class="fas fa-plus"></i></a>
          @endcan
         </div>
     </div>

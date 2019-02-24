@@ -38,12 +38,16 @@
         {!! Form::label('medico', 'Tipo usuário') !!}<span class="obrigatorio">*</span>
         {!! Form::select('medico', array(''=>'','S'=>'Médico','N'=>'Secretária'), null, ['class' => 'form-control']) !!}
         </div>
+        <div id="divUnidade" class="form-group col-md-6">
+        {!! Form::label('unidade', 'Clínica/Consultório') !!}<span class="obrigatorio">*</span>
+        {!! Form::select('unidade', $unidades, null, ['multiple'=>'multiple', 'class' => 'form-control']) !!}
+        </div>
         <div class="form-group col-md-6">
-        {!! Form::label('perfis[]', 'perfis') !!}<span class="obrigatorio">*</span>
+        {!! Form::label('perfis[]', 'perfis') !!}<span class="obrigatorio">*</span> <small><kbd title="Tecla">Ctrl</kbd> para marcar ou desmarcar</small>
         {!! Form::select('perfis[]', $perfis, null, ['multiple'=>'multiple', 'class' => 'form-control']) !!}
         </div>
         <div id="divEspecialidade" class="form-group col-md-6">
-        {!! Form::label('especialidade[]', 'Especialidade') !!}<span class="obrigatorio">*</span>
+        {!! Form::label('especialidade[]', 'Especialidade') !!}<span class="obrigatorio">*</span> <small><kbd title="Tecla">Ctrl</kbd> para marcar ou desmarcar</small>
         {!! Form::select('especialidade[]', $especialidades, null, ['multiple'=>'multiple', 'class' => 'form-control']) !!}
         </div>
         <div class="form-group col-md-3">
@@ -75,7 +79,7 @@
         {!! Form::text('cidade', null, ['class' => 'form-control', 'readonly' => true, 'maxlength' => '100', 'placeholder' => 'Preencha...']) !!}
         </div>
         <div class="form-group col-md-3">
-        {!! Form::label('estado_id', 'Estado') !!}<span class="obrigatorio">*</span>
+        {!! Form::label('estado_id', 'Estado') !!}
         {!! Form::select('estado_id', $estados, null, ['class' => 'form-control', 'readonly' => true]) !!}
         </div>
         <div class="form-group col-md-4">

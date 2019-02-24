@@ -23,6 +23,10 @@
             {!! Form::select('plano', array('' => '', 'S'=>'Sim','N'=>'Não'), $dados->plano_saude, ['class' => 'form-control']) !!}
             </div>
             <div class="form-group col-md-3">
+            {!! Form::label('unidade_id', 'Unidade') !!}<span class="obrigatorio">*</span>
+            {!! Form::select('unidade_id', $unidades, $dados->especialidade_id, ['class' => 'form-control']) !!}
+            </div>
+            <div class="form-group col-md-3">
             {!! Form::label('especialidade', 'Especialidade') !!}<span class="obrigatorio">*</span>
             {!! Form::select('especialidade', $especialidades, $dados->especialidade_id, ['class' => 'form-control']) !!}
             </div>
@@ -79,6 +83,7 @@
       <div class="modal-footer">
         <input type="hidden" id="agenda_status" value="{{$dados->agenda_status_id}}">
         <input type="hidden" id="rota_medico_espec" value="{{route('agenda.getMedicos')}}">
+        <input type="hidden" id="rota_espec" value="{{route('agenda.getEspecialidades')}}">
         <input type="hidden" id="rota_horarios_disponiveis" value="{{route('agenda.getHorariosDisponiveis')}}">
         <input type="hidden" id="rota_paciente_busca" value="{{route('agenda.pacienteBusca')}}">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

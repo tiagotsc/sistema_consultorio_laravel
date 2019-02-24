@@ -31,16 +31,29 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('agenda/{id}', 'AgendaController@destroy')->name('agenda.destroy');
     Route::get('agenda/medicos/{idEspecialidade?}', 'AgendaController@getMedicos')->name('agenda.getMedicos');
     Route::get('agenda/horarios/disponiveis/ajax', 'AgendaController@ajaxHorariosDisponiveis')->name('agenda.getHorariosDisponiveis');
+    Route::get('agenda/especialidades/{unidade?}', 'AgendaController@ajaxEspecialidades')->name('agenda.getEspecialidades');
     Route::get('agenda/paciente/busca', 'AgendaController@pacienteBusca')->name('agenda.pacienteBusca');
-    Route::post('/agenda/getpesq', 'AgendaController@getpesq')->name('agenda.getpesq');
+    Route::get('/agenda/getpesq', 'AgendaController@getpesq')->name('agenda.getpesq');
     Route::put('/agenda/alteraStatus/{id}', 'AgendaController@alteraStatus')->name('agenda.alteraStatus');
     #Route::get('agenda/atende/{id}', 'AgendaController@atende')->name('agenda.atende');
+    Route::get('agenda/estatistica/{dia?}/{mes?}/{ano?}/{unidade?}', 'AgendaController@estatistica')->where(['dia' => '[0-9]{2}', 'mes' => '[0-9]{2}', 'ano' => '[0-9]{4}'])->name('agenda.estatistica');
+    Route::get('agenda/agendamentos/unidade/{id?}', 'AgendaController@ajaxAgendamentosUnidade')->name('agenda.ajaxAgendamentoUnidade');
 
     // Atendimento
     Route::resource('atendimento', 'AtendimentoController');
+    Route::get('atendimento/{agenda}/receita/{receita}/imprimir', 'AtendimentoController@receitaImprimir')->name('receita.imprimir');
     
     // Agenda config
     Route::resource('agendaconfig', 'AgendaConfigController');
+
+    // Unidade
+    Route::resource('unidade', 'UnidadeController');
+
+    // SMS
+    Route::get('sms/pendentes/envio', 'SmsController@pendentesEnvio')->name('sms.pendentes');
+    Route::post('sms/enviando', 'SmsController@enviando')->name('sms.enviar');
+    Route::get('sms/resposta', 'SmsController@resposta')->name('sms.resposta');
+    Route::post('sms/resposta/verificando', 'SmsController@verificandoResposta')->name('sms.verificar');
 
     // Usuário
     Route::resource('usuario', 'UserController');
@@ -52,6 +65,14 @@ Route::group(['middleware' => 'auth'], function(){
     // Roles
     Route::resource('roles','RoleController');
     Route::post('/rolesgetpesq', 'RoleController@getpesq')->name('roles.getpesq');
+
+    // Relatório - Categoria
+    Route::resource('/relatorioCategoria', 'relatorioCategoriaController');
+    
+    // Relatório
+    Route::resource('/relatorios', 'RelatorioController');
+    Route::get('/relatorio/gerenciar', 'RelatorioController@gerenciar')->name('relatorio.gerenciar');
+    Route::post('/relatorio/gerar/{id}', 'RelatorioController@gerar')->name('relatorio.gerar');
 
 });
 

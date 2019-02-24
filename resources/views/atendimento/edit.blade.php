@@ -12,7 +12,7 @@
          <h5>Atendimento</h5>
         </div>
         <div class="col-md-6 text-right">
-         <a class="menu-item" href="{{ route('agenda.index') }}">Voltar pesquisa</a>
+         <a class="menu-item" href="{{ route('agenda.index') }}">Voltar para agenda</a>
         </div>
     </div>
     <hr>
@@ -46,7 +46,16 @@
         </div>
     </div>
     <div id="receitas" class="row">
-
+    @if($dados->receitas->count() > 0)
+        @foreach ($dados->receitas as $receita)
+        <div class="form-group col-md-12">
+        {!! Form::label('receita['.$receita->id.']', 'Receita') !!}<span class="obrigatorio">*</span>
+        {!! Form::textarea('receita['.$receita->id.']', $receita->descricao, ['class' => 'form-control word', 'rows' => 8, 'placeholder' => 'Preencha...']) !!}
+        <a href="#" class="remove_receita"><i title="Remover receita. Obs: Depois clique em 'Salvar' para confirmar remoção." data-toggle="tooltip" data-placement="bottom" class="fas fa-minus-circle fa-lg"></i></a>  
+        <a class="floatRight imprimir_receita" receita="{{$receita->id}}" href="{{route('receita.imprimir',['agenda' => $dados->id ,'receita' => $receita->id])}}" target="_blank"><i title="Imprimir receita" data-toggle="tooltip" data-placement="bottom" class="fas fa-print fa-lg"></i></a>
+        </div>
+        @endforeach
+    @endif
     </div>
     <div class="row">
         <div class="form-group col-md-12 text-right">
@@ -55,6 +64,46 @@
     </div>
     <input type="hidden" name="data_consulta" value="{{$dados->data}}">
     {!! Form::close() !!}
+    @php $i = 0; @endphp
+    <div class="row">
+        <div class="col-md-12">
+            @foreach ($historico as $hist)
+            <div class="card">
+                <div data-toggle="collapse" data-target="#collapse{{$i}}" aria-expanded="true" aria-controls="collapse{{$i}}" class="card-header accordionAba" id="heading{{$i}}">
+                    <h5 class="mb-0">
+                        {{$hist->data}} às {{$hist->horario}}
+                    </h5>
+                    <h6>Dr(a): {{$hist->medico->name}} - {{$hist->especialidade->nome}}</h6>
+                </div>
+                <div id="collapse{{$i}}" class="collapse show" aria-labelledby="heading{{$i}}" data-parent="#accordion">
+                    <div class="card-body">
+                        <h6><strong>Anotações</strong></h6>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <p>{!!$hist->medico_anotacoes!!}</p>
+                            </li>
+                        </ul>
+                        @if($hist->receitas->count() > 0)
+                        <br>
+                        <h6><strong>Receita(s)</strong></h6>
+                        @foreach ($hist->receitas as $receita)
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                            <h6>Receita</h6>
+                            <a class="floatRight imprimir_receita" receita="{{$receita->id}}" href="{{route('receita.imprimir',['agenda' => $dados->id ,'receita' => $receita->id])}}" target="_blank"><i title="Imprimir receita" data-toggle="tooltip" data-placement="bottom" class="fas fa-print fa-lg"></i></a>
+                                <p>{!!$receita->descricao!!}</p>
+                            </li>
+                            <br>
+                        </ul>
+                        @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @php $i++; @endphp
+            @endforeach
+        </div>
+    </div>
 </div>
 @endsection
 

@@ -103,3 +103,11 @@ function formataData($data, $tipo = 'BR'){
     }
     return $data;
 }
+
+function formataCelularApi($celular){
+    return str_replace('-','',str_replace(' ','',str_replace(')','',str_replace('(','',$celular))));
+}
+
+function formataRespostaSMS($sms){
+    return strtoupper(preg_replace('/ã|Ã/', 'A', trim($sms)));
+}

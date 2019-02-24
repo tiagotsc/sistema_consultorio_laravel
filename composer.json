@@ -12,6 +12,8 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "5.7.*",
         "lavary/laravel-menu": "^1.7",
+        "mpdf/mpdf": "^7.1",
+        "phpoffice/phpspreadsheet": "^1.5",
         "pusher/pusher-php-server": "^3.2",
         "spatie/laravel-permission": "^2.17"
     },

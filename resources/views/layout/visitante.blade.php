@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <title>Colorlib Medi+</title>
+    <title>Consultório Online+</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -27,7 +27,7 @@
             <div id="visitante-top-bar" class="top-bar"></div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a class="navbar-brand" href="index.html">Medi<span>+</span>  </a>
+                    <a class="navbar-brand" href="index.html">Consultório Online<span>+</span>  </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
@@ -40,10 +40,10 @@
                             <!-- Authentication Links -->
                             @guest
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">Logar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">Registrar</a>
                                 </li>
                             @else
                                 <li class="nav-item dropdown">
@@ -90,12 +90,12 @@
                 <hr class="border-t">
             </div>
             <div class="col-md-6 col-sm-12 copyright">
-                <p>&copy; 2018 Colorlib Medi+. Designed &amp; Developed by <a href="https://colorlib.com/">Colorlib</a></p>
+                <p>&copy; {{date('Y')}} Consultório Online+. Desenvolvido por: <a target="_blank" href="https://github.com/tiagotsc">Tiago Costa</a></p>
             </div>
             <div class="col-md-6 col-sm-12 text-md-right text-sm-left">
-                <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
+                <!--<a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
                 <a href="#" class="p-2"><span class="fa fa-twitter"></span></a>
-                <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>
+                <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>-->
             </div>
             </div>
         </div>
@@ -105,7 +105,7 @@
     <!-- END footer -->
     @section('footerScrits')
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/personalizado.js') }}"></script>
+    <!--<script src="{{ asset('js/personalizado.js') }}"></script>-->
     @show
   </body>
 </html>

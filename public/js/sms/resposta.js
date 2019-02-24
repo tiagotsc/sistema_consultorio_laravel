@@ -1,0 +1,1 @@
+$("#verificar").on("click",function(){$(this).prop("disabled",!0).html("Aguarde..."),$("#frm").submit()});

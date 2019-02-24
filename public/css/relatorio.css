@@ -1,0 +1,16 @@
+#tabelaRelatorioCampos .tableSemPadding, #tabelaRelatorioCamposSumarizados .tableSemPadding, .semPadding{
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.divOverFlowPequena{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:300px;
+}
+
+.divOverFlowMedia{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:600px;
+}

@@ -28,13 +28,43 @@ class GenerateMenus
                     ->data('permission', 'agenda-medico')
                     ->link->attr(['class'=> 'dropdown-item']);*/
 
+            /*$menu->add('SMS', ['route'  => 'sms.pendentes', 'class' => 'nav-item dropdown'])
+            ->data('permission', 'menu-agenda')
+            ->link->attr(['class'=> 'nav-link']);*/
+
+            $menu->add('Sms', ['url'  => '#', 'class' => 'nav-item dropdown'])
+                    ->data('permission', 'menu-admin')
+                    ->link->attr(['class'=> 'nav-link']);
+                    $menu->sms->add('Confirmar consultas', ['route'  => 'sms.pendentes'])
+                    ->data('permission', 'perfil-listar')
+                    ->link->attr(['class'=> 'dropdown-item']);
+                    $menu->sms->add('Obter respostas', ['route'  => 'sms.resposta'])
+                    ->data('permission', 'perfil-listar')
+                    ->link->attr(['class'=> 'dropdown-item']);
+
             $menu->add('Pacientes', ['route'  => 'paciente.index', 'class' => 'nav-item dropdown'])
                     ->data('permission', 'paciente-listar')
                     ->link->attr(['class'=> 'nav-link']);
 
+            $menu->add('Relatórios', ['url'  => '#', 'class' => 'nav-item dropdown'])
+                ->data('permission', 'menu-admin')
+                ->link->attr(['class'=> 'nav-link']);
+                $menu->relatorios->add('Visualizar', ['route'  => 'relatorios.index'])
+                ->data('permission', 'perfil-listar')
+                ->link->attr(['class'=> 'dropdown-item']);
+                $menu->relatorios->add('Categorias', ['route'  => 'relatorioCategoria.index'])
+                ->data('permission', 'perfil-listar')
+                ->link->attr(['class'=> 'dropdown-item']);
+                $menu->relatorios->add('Gerenciar', ['route'  => 'relatorio.gerenciar'])
+                ->data('permission', 'perfil-listar')
+                ->link->attr(['class'=> 'dropdown-item']);
+
             $menu->add('Administrador', ['url'  => '#', 'class' => 'nav-item dropdown'])
                     ->data('permission', 'menu-admin')
                     ->link->attr(['class'=> 'nav-link']);
+                    $menu->administrador->add('Clínica / Consultório', ['route'  => 'unidade.index'])
+                    ->data('permission', 'perfil-listar')
+                    ->link->attr(['class'=> 'dropdown-item']);
                     $menu->administrador->add('Usuários', ['route'  => 'usuario.index'])
                     ->data('permission', 'usuario-listar')
                     ->link->attr(['class'=> 'dropdown-item']);
@@ -44,7 +74,6 @@ class GenerateMenus
                     $menu->administrador->add('Agenda config', ['route'  => 'agendaconfig.create'])
                     ->data('permission', 'perfil-listar')
                     ->link->attr(['class'=> 'dropdown-item']);
-
         })->filter(function($item){
             if(Auth::check()){
                 if(User::find(Auth::id())->can( $item->data('permission'))) {

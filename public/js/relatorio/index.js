@@ -1,0 +1,1 @@
+$(".relatorio_selecionado").on("click",function(o){var a=$("#rota_relatorio_show").val().replace("0",$(this).attr("id"));montaModalDefault(a,"")});

@@ -26,9 +26,11 @@ class AppServiceProvider extends ServiceProvider
                 $timezone = $user->estado->timezone;
                 date_default_timezone_set($timezone);
                 $permissoes = $user->getPermissionsViaRoles()->pluck('name')->toArray();
+                $unidadeSession = session('unidade_session', DB::table('unidade_users')->where('user_id',Auth::id())->first()->unidade_id);
                 $agendamentos = Agenda::select(DB::raw('data as data_db'),DB::raw('count(*) as count'))
                                         ->where([
                                                     ['agenda_status_id','!=',2],
+                                                    ['unidade_id', $unidadeSession],
                                                     ['data','>',date("Y-m-d", strtotime("-6 months"))]
                                                 ])
                                         ->groupBy('data')
@@ -38,7 +40,9 @@ class AppServiceProvider extends ServiceProvider
                         $agenda[$agendamento->data_db] = array('number' => $agendamento->count, 'badgeClass' => 'badge-warning');
                     }
                 }
+                $agenda[date('Y-m-d')]['class'] = 'calendarHoje';
             }
+            $view->with('data_hoje',date('d/m/Y'));
             $view->with('permissoes',json_encode($permissoes));
             $view->with('agendamentos',json_encode($agenda));
         });

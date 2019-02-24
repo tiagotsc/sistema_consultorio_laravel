@@ -10,6 +10,7 @@ use App\Agenda;
 use App\AgendaStatus;
 use App\Paciente;
 use Carbon\Carbon;
+use App\Unidade;
 use Illuminate\Support\Facades\Auth;
 use App\Events\AgendaStatusEvento;
 use DB;
@@ -50,23 +51,28 @@ class AgendaController extends Controller
         foreach($todosStatus as $status){
             $todasSequencias[$status->id] = $status->statusSequencia($usuarioTipo)->pluck('agenda_status.nome',DB::raw("concat('_',agenda_status.id) id"))->toArray();
         }
-        #dd($todasSequencias);
         $AgendaStatus = AgendaStatus::pluck('nome','id');
         $agendaConfig = AgendaConfig::first();
         #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         $horas = DB::table('agendas')->distinct()->select(DB::raw('substr(horario, 1, 5) as horario'))->orderBy('horario')->pluck('horario','horario')->prepend('', '');
         $dataEscolhida = $dia.'/'.$mes.'/'.$ano;
+        $unidadeUser = DB::table('unidade_users')->where('user_id',Auth::id())->pluck('unidade_id')->toArray();
+        $unidades = Unidade::where('status','A')->whereIn('id',$unidadeUser)->orderBy('nome')->pluck('nome','id');
+        $unidadeSession = $request->session()->get('unidade_session', DB::table('unidade_users')->where('user_id',Auth::id())->first()->unidade_id);
         return view('agenda.index', [
                                         'data' => $dataEscolhida, 
                                         'tipo' => ucfirst($usuarioTipo), 
                                         'horas' => $horas, 
                                         'agendaStatus' => $AgendaStatus, 
                                         'userId' => Auth::id(),
+                                        'unidades' => $unidades,
+                                        'unidadeSession' => $unidadeSession,
                                         'todasSequencias' => json_encode($todasSequencias)
                                     ]);
     }
 
     public function getpesq(Request $request){
+        
         if(auth()->user()->medico == 'S'){
             $idMedico = Auth::id();
         }else{
@@ -74,6 +80,7 @@ class AgendaController extends Controller
         }
         $buscar = $request->input('input_dado');
         $horario = $request->input('horario');
+        $unidade = $request->input('unidade');
         $data = formataData($request->input('data'),'USA');
         $dados = Agenda::join('pacientes', 'pacientes.id', '=', 'agendas.paciente_id')
                         ->join('agenda_status','agenda_status.id','=','agendas.agenda_status_id')
@@ -100,6 +107,7 @@ class AgendaController extends Controller
             $dados = $dados->where('agendas.medico_id',$idMedico);
         }
         $dados = $dados->where('agendas.data',$data)
+                        ->where('agendas.unidade_id', $unidade)
                         ->where('agendas.horario','like',$horario.'%')
                         ->where(function ($query) use($buscar) {
                             $query->where('pacientes.nome','like','%'.$buscar.'%')
@@ -122,19 +130,26 @@ class AgendaController extends Controller
      */
     public function create(Request $request)
     {
-        $especialidades = Especialidade::whereHas('users', function ($query) {
-           $query->whereNotNull('user_id');
+        $unidadeUsuarioUnica = DB::table('unidade_users')->where('user_id', Auth::id())->first()->unidade_id;
+        $especialidades = Especialidade::whereHas('users', function ($query) use($unidadeUsuarioUnica) {
+           $query->whereNotNull('users_especialidades.user_id');
+           $query->whereIn('users_especialidades.user_id',function($query) use($unidadeUsuarioUnica) {
+            $query->select('unidade_users.user_id')->from('unidade_users')->where('unidade_users.unidade_id', $unidadeUsuarioUnica);
+            });
         })->orderBy('nome')->pluck('nome', 'id')->prepend('Selecione...', '');
         $data = $request->input('valores');
         if($data < date('d/m/Y')){
             $data = date('d/m/Y');
         }
+        $unidades = Unidade::where('status','A')->orderBy('nome')->pluck('nome','id')->prepend('Selecione...', '');
         #$agendaConfig = AgendaConfig::first();
         #$horas = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
         return view('agenda.create',[
                                         'dataSelecionada' => $data, 
                                         #'horas' => $horas,
-                                        'especialidades' => $especialidades
+                                        'especialidades' => $especialidades,
+                                        'unidades' => $unidades,
+                                        'unidadeUsuarioUnica' => $unidadeUsuarioUnica
                                     ]);
     }
 
@@ -165,6 +180,7 @@ class AgendaController extends Controller
             $dados['horario'] = $request->input('horario_marcado');
             $dados['paciente_id'] = $paciente->id;
             $dados['marcou_user_id'] = Auth::id();
+            $dados['unidade_id'] = $request->input('unidade_id');
             $agenda = new Agenda($dados);
             $data = explode('/',$request->input('data_marcar'));
             if($agenda->save()){
@@ -207,12 +223,14 @@ class AgendaController extends Controller
         $medicos = User::whereHas('especialidades', function ($query) use($idEspecialidade) {
             $query->where('especialidade_id', $idEspecialidade);
         })->orderBy('name')->pluck('name', 'id')->prepend('Selecione...', '');
+        $unidades = Unidade::where('status','A')->orderBy('nome')->pluck('nome','id');
         return view('agenda.edit',[
                                         'dataSelecionada' => $agenda->data, 
                                         'dados' => $agenda,
                                         'horarios' => $horarios,
                                         'especialidades' => $especialidades,
-                                        'medicos' => $medicos
+                                        'medicos' => $medicos,
+                                        'unidades' => $unidades
                                     ]);
     }
 
@@ -244,6 +262,7 @@ class AgendaController extends Controller
             $dados['horario'] = $request->input('horario_marcado');
             $dados['paciente_id'] = $paciente->id;
             $dados['marcou_user_id'] = Auth::id();
+            $dados['unidade_id'] = $request->input('unidade_id');
             $data = explode('/',$request->input('data_marcar'));
             $agenda = Agenda::find($id);
             if($agenda->agenda_status_id == 2){ # Desistiu
@@ -347,18 +366,22 @@ class AgendaController extends Controller
     public function ajaxHorariosDisponiveis(Request $request)
     {
         $horariosDisponiveis = $this->horariosDisponiveis($request->data, $request->medico, $request->especialidade);
-        /*$agendaConfig = AgendaConfig::first();
-        $todosHorarios = $this->intervaloHoras($agendaConfig->inicio.':00',$agendaConfig->fim.':00', $agendaConfig->intervalo);
-        
-        $data = Carbon::createFromFormat('d/m/Y', $request->data)->format('Y-m-d'); 
-        $medico = $request->medico;
-        $especialidades = $request->especialidade;
-
-        $horariosMarcados = Agenda::select('horario')
-                        ->where([['medico_id', $request->medico], ['especialidade_id', $request->especialidade]])
-                        ->pluck('horario')->toArray();
-        $horariosDisponiveis = array_values(array_diff($todosHorarios, $horariosMarcados));*/
         return response()->json($horariosDisponiveis);
+    }
+
+    public function ajaxEspecialidades($unidade = null)
+    {
+        if($unidade != null){
+            $especialidades = Especialidade::whereHas('users', function ($query) use($unidade) {
+                $query->whereNotNull('users_especialidades.user_id');
+                $query->whereIn('users_especialidades.user_id',function($query) use($unidade) {
+                 $query->select('unidade_users.user_id')->from('unidade_users')->where('unidade_users.unidade_id', $unidade);
+                 });
+             })->orderBy('nome')->get();
+        }else{
+            $especialidades = array();
+        }
+        return response()->json($especialidades);
     }
 
     public function pacienteBusca(Request $request)
@@ -370,5 +393,66 @@ class AgendaController extends Controller
                                             ->orWhere('celular','like',$request->dadoBusca.'%')
                                             ->get();
         return response()->json($pacientesEncontrados);
+    }
+
+    public function estatistica($dia = null, $mes = null, $ano = null, $unidade = null)
+    {
+        $data = $ano.'-'.$mes.'-'.$dia;
+        if($dia == null or $mes == null or $ano === null){
+            $timezone = User::find(Auth::id())->estado->timezone;   
+            date_default_timezone_set($timezone);
+            $data = date('Y-m-d');
+        }
+        #$data = '2018-12-15';
+        $resultado = DB::table('agendas')
+                    ->select(
+                                DB::raw('count(*) as total'),
+                                DB::raw("(select count(*) from agendas as sec where sec.agenda_status_id = 6 and sec.data = '".$data."') as atendidos"), # Finalizados
+                                DB::raw("(select count(*) from agendas where agenda_status_id = 1 and data = '".$data."') as ausentes"), # Marcados, pois ainda não chegaram
+                                DB::raw("(select count(*) from agendas where agenda_status_id = 2 and data = '".$data."') as desistiu") # Desistiu
+                            )
+                    ->where('data',$data);
+        if($unidade != null){
+            $resultado = $resultado->where('unidade_id', $unidade);
+        }else{
+            $unidadeSession = session('unidade_session', DB::table('unidade_users')->where('user_id',Auth::id())->first()->unidade_id);
+            $resultado = $resultado->where('unidade_id', $unidadeSession);
+        }
+                    #->whereNotIn('agenda_status_id',[2])
+        $resultado = $resultado->first(); # Status != Desistiu
+        $dados = array('total'=> 0, 'porc_atendidos'=> 0, 'porc_ausentes'=> 0, 'porc_desistiu'=> 0, 'data' => formataData($data));
+        if($resultado->total != 0){
+            $dados['total']             = $resultado->total;
+            $dados['porc_atendidos']    = round(($resultado->atendidos / $resultado->total) * 100,2);
+            $dados['porc_ausentes']     = round(($resultado->ausentes / $resultado->total) * 100,2);
+            $dados['porc_desistiu']     = round(($resultado->desistiu / $resultado->total) * 100,2);
+            $dados['data']              = formataData($data);
+        }
+        return response()->json($dados);
+    }
+
+    public function ajaxAgendamentosUnidade(Request $request, $unidadeId = null)
+    {
+        if($unidadeId != null){
+            $request->session()->put('unidade_session', $unidadeId);
+            $user = User::findOrFail(Auth::id());
+            $timezone = $user->estado->timezone;
+            date_default_timezone_set($timezone);
+            $agendamentos = Agenda::select(DB::raw('data as data_db'),DB::raw('count(*) as count'))
+                                    ->where([
+                                                ['agenda_status_id','!=',2],
+                                                ['unidade_id', $unidadeId],
+                                                ['data','>',date("Y-m-d", strtotime("-6 months"))]
+                                            ])
+                                    ->groupBy('data')
+                                    ->get();
+            if($agendamentos != null){
+                foreach($agendamentos as $agendamento){
+                    $agenda[$agendamento->data_db] = array('number' => $agendamento->count, 'badgeClass' => 'badge-warning');
+                }
+            }
+        }
+        $agenda[date('Y-m-d')]['class'] = 'calendarHoje';
+        return response()->json($agenda);
     }
 }

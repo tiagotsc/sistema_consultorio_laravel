@@ -34,8 +34,22 @@ select[readonly] {
     float:right;
 }
 
+.fa-info-circle{
+    cursor: pointer;
+    color: rgb(0, 123, 255);
+}
+
 .marginBotton{
     margin-bottom: 15px;
+}
+
+.marginTop{
+    margin-top: 10px;
+}
+
+.bigMarginTop{
+    padding-top: 5px;
+    margin-top: 20px;
 }
 
 .marginIcon{
@@ -49,4 +63,36 @@ select[readonly] {
 .modal-full {
     min-width: 100%;
     margin: 0;
+}
+
+/* Efeito pisca - pisca*/
+@keyframes fa-blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 0; }    
+}
+
+/* Efeito pisca - pisca*/
+.pisca_pisca{
+    -webkit-animation: fa-blink .75s linear infinite;
+    -moz-animation: fa-blink .75s linear infinite;
+    -ms-animation: fa-blink .75s linear infinite;
+    -o-animation: fa-blink .75s linear infinite;
+    animation: fa-blink .75s linear infinite;
+}
+
+/* PERSONALIZA A DATA (HOJE) NO CALENDÁRIO */
+.calendarHoje{
+    background-color: #F90;
+}
+
+/* Rodapé */
+footer{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+section.section{
+    margin-bottom: 100px;
 }
