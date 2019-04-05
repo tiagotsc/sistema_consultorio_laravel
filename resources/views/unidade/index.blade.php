@@ -7,9 +7,7 @@
          <h4>Pesquisar clínica / consultório</h4>
         </div>
         <div class="col-md-6 text-right">
-        @can('paciente-criar')
          <a class="menu-item" href="{{ route('unidade.create') }}">Cadastrar <i class="fas fa-plus"></i></a>
-         @endcan
         </div>
     </div>
     <hr>   

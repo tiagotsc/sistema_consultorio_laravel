@@ -7,10 +7,9 @@
          <h5>Relatórios disponíveis</h5>
         </div>
         <div class="col-md-6 text-right">
-        @can('relatorio.cadastrar')
-        @endcan
+        @can('relatorio-cadastrar')
          <a class="menu-item" href="{{ route('relatorios.create') }}">Voltar pesquisa</a>
-        
+         @endcan
         </div>
     </div>
     <hr>
@@ -33,12 +32,11 @@
                                 @foreach ($categoria->relatorios()->where('status','A')->whereIn('permission_id',$permissioesUsuario)->orderBy('nome')->get() as $relatorio)
                                 <li class="list-group-item">
                                     <a title="Clique aqui para gerar o relatório" data-toggle="tooltip" data-placement="bottom" href="#" id="{{$relatorio->id}}" class="relatorio_selecionado iconeMargin">{{$relatorio->nome}}</a>
-                                    @can('relatorio.editar')
-                                    @endcan
+                                    @can('relatorio-editar')
                                     <a title="Editar" data-toggle="tooltip" data-placement="bottom" href="{{route('relatorios.edit',[$relatorio->id])}}">
                                         <i class="fas fa-pencil-alt iconeMargin"></i>
                                     </a>
-                                    
+                                    @endcan
                                     <p>{{$relatorio->descricao}}</p>
                                 </li>
                                 @endforeach

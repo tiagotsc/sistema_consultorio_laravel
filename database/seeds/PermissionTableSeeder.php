@@ -14,8 +14,8 @@ class PermissionTableSeeder extends Seeder
     {
         $allPermissionsBD = DB::table('permissions')->pluck('name')->toArray();
         $permissions = [
-            ['name' => 'menu-admin', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['name' => 'menu-agenda', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'admin-menu', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'agenda-menu', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['name' => 'usuario-listar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['name' => 'usuario-criar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['name' => 'usuario-editar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
@@ -33,6 +33,18 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'agenda-editar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['name' => 'agenda-apagar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['name' => 'agenda-status', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+
+            ['name' => 'sms-gerenciar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'unidade-gerenciar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'agenda_config-gerenciar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'relatorio-menu', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'relatorio_categoria-gerenciar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'relatorio-visualizar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'relatorio-debugar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'relatorio-gerenciar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'relatorio-cadastrar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'relatorio-editar', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'relatorio-excluir', 'guard_name' => 'web', 'created_at' => NOW(), 'updated_at' => NOW()],
          ];
 
          foreach($permissions as $perm){

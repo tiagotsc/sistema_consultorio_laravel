@@ -7,10 +7,10 @@
          <h4>Gerenciar relatórios</h4>
         </div>
         <div class="col-md-6 text-right">
-        @can('perfil-criar')
-        @endcan
+        @can('relatorio-cadastrar')
          <a href="{{ route('relatorios.create') }}">Cadastrar <i class="fas fa-plus"></i></a>
         </div>
+        @endcan
     </div>
     <hr>
     <table class="table display" id="frm-pesq" width="100%">
@@ -37,20 +37,18 @@
                 <td>{{$dado->permissao->users->count()}}</td>
                 <td>{{$dado->status == 'A'? 'Ativo': 'Inativo'}}</td>
                 <td>
-                    @can('relatorio.editar')
-                    @endcan
+                    @can('relatorio-editar')
                     <a title="Editar" data-toggle="tooltip" class="marginIcon" data-placement="bottom" href="{{route('relatorios.edit',[$dado->id])}}">
                         <i class="fas fa-pencil-alt fa-lg iconeMargin"></i>
                     </a>
-                    
-                    @can('relatorio.excluir')
                     @endcan
+                    @can('relatorio-excluir')
                     @if($dado->permissao->roles->count() == 0 and $dado->permissao->users->count() == 0)
                     <a href="#" class="apagar" idDel="{{$dado->id}}" titulo="{{$dado->nome}}" data-toggle="modal" data-target="#modalApagar">
                         <i title="Apagar" data-toggle="tooltip" data-placement="bottom" class="fas fa-trash-alt fa-lg"></i>
                     </a>
                     @endif
-                    
+                    @endcan
                 </td>
             </tr>
             @endforeach

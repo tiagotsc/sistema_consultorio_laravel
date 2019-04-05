@@ -7,6 +7,11 @@ use App\AgendaConfig;
 
 class AgendaConfigController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:agenda_config-gerenciar');
+    }
+    
     /**
      * Display a listing of the resource.
      *

@@ -242,7 +242,7 @@ function getAgendamentosUnidade(){
         $('.responsive-calendar').responsiveCalendar('clearAll');
     $('.responsive-calendar').responsiveCalendar('edit', res);
     }, "json" ).fail(function() {
-        alert('erro na unidade');
+        console.log('erro na unidade');
     });
 }
 

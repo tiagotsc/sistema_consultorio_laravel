@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Auth;
 
 class SmsController extends Controller
 {
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+         $this->middleware('permission:sms-gerenciar');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -398,7 +398,7 @@ class AgendaController extends Controller
     public function estatistica($dia = null, $mes = null, $ano = null, $unidade = null)
     {
         $data = $ano.'-'.$mes.'-'.$dia;
-        if($dia == null or $mes == null or $ano === null){
+        if($dia == null or $mes == null or $ano === null or $dia == '00' or $mes == '00' or $ano == '0000'){
             $timezone = User::find(Auth::id())->estado->timezone;   
             date_default_timezone_set($timezone);
             $data = date('Y-m-d');

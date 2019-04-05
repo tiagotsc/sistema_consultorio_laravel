@@ -58,7 +58,7 @@ getEstatistica();
 
 function getEstatistica(){
     if($("#rota_estatistica").length > 0){
-        var dataEstatistica = ($('input[name="data"]').length > 0 )? $('input[name="data"]').val() : '';
+        var dataEstatistica = ($('input[name="data"]').length > 0 )? $('input[name="data"]').val() : '00/00/0000';
         var unidade = ($('#unidade').length > 0 )? '/'+$('#unidade').val() : '';
         $.getJSON( $("#rota_estatistica").val()+'/'+dataEstatistica+unidade, function( data ) {
             $("#data_estatistica").html(data.data);

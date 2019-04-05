@@ -12,10 +12,9 @@
             <h5>Criar relatório</h5>
         </div>
         <div class="col-md-6 text-right">
-            @can('relatorio.visualizar')
-            @endcan
+            @can('relatorio-visualizar')
             <a class="menu-item" href="{{route('relatorios.index')}}" data-toggle="tooltip" data-placement="bottom" title="Listar relatórios">Listar relatórios</a>
-            
+            @endcan
         </div>
     </div>
     <hr>

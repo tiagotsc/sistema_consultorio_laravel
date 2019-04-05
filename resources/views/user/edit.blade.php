@@ -40,7 +40,7 @@
         </div>
         <div id="divUnidade" class="form-group col-md-6">
         {!! Form::label('unidade', 'Clínica/Consultório') !!}<span class="obrigatorio">*</span>
-        {!! Form::select('unidade', $unidades, $userUnidades, ['class' => 'form-control']) !!}
+        {!! Form::select('unidade', $unidades, $userUnidades, ['class' => 'form-control', 'multiple' => true]) !!}
         </div>
         <div class="form-group col-md-6">
         {!! Form::label('perfis[]', 'perfis') !!}<span class="obrigatorio">*</span> <small><kbd title="Tecla">Ctrl</kbd> para marcar ou desmarcar</small>

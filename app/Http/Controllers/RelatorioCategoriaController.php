@@ -12,10 +12,7 @@ class RelatorioCategoriaController extends Controller
 {
     function __construct()
     {
-            /*$this->middleware('permission:relatorio_categoria.listar',['only' => ['index']]);
-            $this->middleware('permission:relatorio_categoria.cadastrar', ['only' => ['create','store']]);
-            $this->middleware('permission:relatorio_categoria.editar', ['only' => ['edit','update']]);
-            $this->middleware('permission:relatorio_categoria.excluir',['only' => ['destroy']]);*/
+        $this->middleware('permission:relatorio_categoria-gerenciar');
     }
 
     /**
@@ -66,11 +63,9 @@ class RelatorioCategoriaController extends Controller
         } catch (Throwable $e) {
             $msg = 'alert-danger|Erro ao cadastrar categoria! Se persistir, comunique o administrador!';
         }
-        if(Auth::user()->can('relatorio_categoria.editar')){
-            return redirect()->route('relatorioCategoria.edit',[$relatorioCategoria->id])->with('alertMessage', $msg);
-        }else{
-            return redirect()->route('relatorioCategoria.index');
-        }
+        
+        return redirect()->route('relatorioCategoria.index');
+        
     }
 
     /**

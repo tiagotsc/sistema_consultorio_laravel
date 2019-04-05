@@ -7,11 +7,9 @@
          <h4>Lista de categoria de relatório</h4>
         </div>
         <div class="col-md-6 text-right">
-        @can('paciente-criar')
          <a class="menu-item" href="{{route('relatorioCategoria.create')}}" data-toggle="tooltip" data-placement="bottom" title="Adicionar">
             Cadastrar <i class="fas fa-plus"></i>
         </a>
-         @endcan
         </div>
     </div>
     <hr>   
@@ -31,12 +29,9 @@
                 <td>{{$dado->status}}</td>
                 <td>{{$dado->relatorios()->count()}}</td>
                 <td width="20px">
-                    @can('relatorio_categoria.editar')
-                    @endcan
                     <a title="Editar" class="marginIcon" data-toggle="tooltip" data-placement="bottom" href="{{route('relatorioCategoria.edit',[$dado->id])}}">
                         <i class="fas fa-pencil-alt fa-lg iconeMargin"></i>
                     </a>
-                    @can('relatorio_categoria.excluir')@endcan
                     @if($dado->relatorios()->count() == 0)
                     <a href="#" class="apagar" idDel="{{$dado->id}}" titulo="{{$dado->nome}}" data-toggle="modal" data-target="#modalApagar">
                         <i class="fas fa-trash-alt fa-lg" data-toggle="tooltip" data-placement="bottom" title="Apagar"></i>

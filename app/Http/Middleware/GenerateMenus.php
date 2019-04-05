@@ -19,7 +19,7 @@ class GenerateMenus
     {#echo \Request::url();exit();
         \Menu::make('MenuTopo', function ($menu) {
             $menu->add('Agenda', ['route'  => 'agenda.index', 'class' => 'nav-item dropdown'])
-                    ->data('permission', 'menu-agenda')
+                    ->data('permission', 'agenda-menu')
                     ->link->attr(['class'=> 'nav-link']);
                     /*$menu->agenda->add('Secretária', '')
                     ->data('permission', 'agenda-secretaria')
@@ -33,13 +33,13 @@ class GenerateMenus
             ->link->attr(['class'=> 'nav-link']);*/
 
             $menu->add('Sms', ['url'  => '#', 'class' => 'nav-item dropdown'])
-                    ->data('permission', 'menu-admin')
+                    ->data('permission', 'sms-gerenciar')
                     ->link->attr(['class'=> 'nav-link']);
                     $menu->sms->add('Confirmar consultas', ['route'  => 'sms.pendentes'])
-                    ->data('permission', 'perfil-listar')
+                    ->data('permission', 'sms-gerenciar')
                     ->link->attr(['class'=> 'dropdown-item']);
                     $menu->sms->add('Obter respostas', ['route'  => 'sms.resposta'])
-                    ->data('permission', 'perfil-listar')
+                    ->data('permission', 'sms-gerenciar')
                     ->link->attr(['class'=> 'dropdown-item']);
 
             $menu->add('Pacientes', ['route'  => 'paciente.index', 'class' => 'nav-item dropdown'])
@@ -47,23 +47,23 @@ class GenerateMenus
                     ->link->attr(['class'=> 'nav-link']);
 
             $menu->add('Relatórios', ['url'  => '#', 'class' => 'nav-item dropdown'])
-                ->data('permission', 'menu-admin')
+                ->data('permission', 'relatorio-menu')
                 ->link->attr(['class'=> 'nav-link']);
                 $menu->relatorios->add('Visualizar', ['route'  => 'relatorios.index'])
-                ->data('permission', 'perfil-listar')
+                ->data('permission', 'relatorio-visualizar')
                 ->link->attr(['class'=> 'dropdown-item']);
                 $menu->relatorios->add('Categorias', ['route'  => 'relatorioCategoria.index'])
-                ->data('permission', 'perfil-listar')
+                ->data('permission', 'relatorio_categoria-gerenciar')
                 ->link->attr(['class'=> 'dropdown-item']);
                 $menu->relatorios->add('Gerenciar', ['route'  => 'relatorio.gerenciar'])
-                ->data('permission', 'perfil-listar')
+                ->data('permission', 'relatorio-gerenciar')
                 ->link->attr(['class'=> 'dropdown-item']);
 
             $menu->add('Administrador', ['url'  => '#', 'class' => 'nav-item dropdown'])
-                    ->data('permission', 'menu-admin')
+                    ->data('permission', 'admin-menu')
                     ->link->attr(['class'=> 'nav-link']);
                     $menu->administrador->add('Clínica / Consultório', ['route'  => 'unidade.index'])
-                    ->data('permission', 'perfil-listar')
+                    ->data('permission', 'unidade-gerenciar')
                     ->link->attr(['class'=> 'dropdown-item']);
                     $menu->administrador->add('Usuários', ['route'  => 'usuario.index'])
                     ->data('permission', 'usuario-listar')
@@ -72,7 +72,7 @@ class GenerateMenus
                     ->data('permission', 'perfil-listar')
                     ->link->attr(['class'=> 'dropdown-item']);
                     $menu->administrador->add('Agenda config', ['route'  => 'agendaconfig.create'])
-                    ->data('permission', 'perfil-listar')
+                    ->data('permission', 'agenda_config-gerenciar')
                     ->link->attr(['class'=> 'dropdown-item']);
         })->filter(function($item){
             if(Auth::check()){

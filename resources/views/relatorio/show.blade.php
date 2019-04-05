@@ -24,14 +24,13 @@
                 </div>
                 @endforeach
             </div>
-            @can('relatorio.debugar')
-            @endcan
+            @can('relatorio-debugar')
             <div class="row">
                 <div class="form-group col-md-12">
                     <label><input type="checkbox" name="debugar" value="debugar">Modo desenvolvedor (Debugar relatório)</label>
                 </div>
             </div>
-            
+            @endcan
         </div>
         <div class="modal-footer">
             @php $cont = 0; @endphp

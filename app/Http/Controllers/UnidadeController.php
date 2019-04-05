@@ -8,6 +8,17 @@ use App\Unidade;
 
 class UnidadeController extends Controller
 {
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+         $this->middleware('permission:unidade-gerenciar');
+    }
+
     /**
      * Display a listing of the resource.
      *

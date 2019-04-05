@@ -30,18 +30,11 @@ class RelatorioController extends Controller
     
     function __construct()
     { 
-            /*$this->middleware('permission:relatorio.visualizar',['only' => ['index']]);
-            $this->middleware('permission:relatorio.gerenciar',['only' => ['gerenciar']]);
-            $this->middleware('permission:relatorio.cadastrar', ['only' => ['create','store']]);
-            $this->middleware('permission:relatorio.editar', ['only' => ['edit','update']]);
-            $this->middleware('permission:relatorio.excluir',['only' => ['destroy']]);*/
-
-            /*
-            $this->middleware('permission:paciente-listar');
-            $this->middleware('permission:paciente-criar', ['only' => ['create','store']]);
-            $this->middleware('permission:paciente-editar', ['only' => ['edit','update']]);
-            $this->middleware('permission:paciente-apagar', ['only' => ['destroy']]);
-            */
+            $this->middleware('permission:relatorio-visualizar',['only' => ['index']]);
+            $this->middleware('permission:relatorio-gerenciar',['only' => ['gerenciar']]);
+            $this->middleware('permission:relatorio-cadastrar', ['only' => ['create','store']]);
+            $this->middleware('permission:relatorio-editar', ['only' => ['edit','update']]);
+            $this->middleware('permission:relatorio-excluir',['only' => ['destroy']]);
     }
 
     /**
