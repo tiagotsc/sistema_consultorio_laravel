@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
                         EstadosTableSeeder::class,
                         PermissionTableSeeder::class,
                         RelatorioCamposTableSeeder::class,
+                        UnidadeTableSeeder::class,
 						UsuarioAdminTableSeeder::class
                     ]);
     }

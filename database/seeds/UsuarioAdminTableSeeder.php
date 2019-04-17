@@ -36,11 +36,22 @@ class UsuarioAdminTableSeeder extends Seeder
                     'email' => 'adm@adm.com.br',
                     'password' => bcrypt('123456'),
                     'medico' => 'S',
+                    'estado_id' => 19,
                     'created_at' => NOW(),
                     'updated_at' => NOW()
                 ]
             );
             $userAdm = DB::table('users')->where('name','Administrador Sistema')->first();
+            $unidadePrimeira = DB::table('unidades')->where('nome','Primeira unidade')->first();
+       
+            DB::table('unidade_users')->insert(
+                [
+                    'unidade_id' => $unidadePrimeira->id,
+                    'user_id' => $userAdm->id,
+                    'created_at' => NOW(),
+                    'updated_at' => NOW()
+                ]
+            );
         }
         DB::table('model_has_roles')->where([['role_id', $perfilAdm->id],['model_id', $userAdm->id]])->delete();
         DB::insert("insert into model_has_roles (role_id, model_type, model_id) values (".$perfilAdm->id.", 'App\\\User', ".$userAdm->id.")");
