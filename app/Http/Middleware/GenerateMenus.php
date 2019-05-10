@@ -65,11 +65,11 @@ class GenerateMenus
                     $menu->administrador->add('Clínica / Consultório', ['route'  => 'unidade.index'])
                     ->data('permission', 'unidade-gerenciar')
                     ->link->attr(['class'=> 'dropdown-item']);
-                    $menu->administrador->add('Usuários', ['route'  => 'usuario.index'])
-                    ->data('permission', 'usuario-listar')
-                    ->link->attr(['class'=> 'dropdown-item']);
                     $menu->administrador->add('Perfis', ['route'  => 'roles.index'])
                     ->data('permission', 'perfil-listar')
+                    ->link->attr(['class'=> 'dropdown-item']);
+                    $menu->administrador->add('Usuários', ['route'  => 'usuario.index'])
+                    ->data('permission', 'usuario-listar')
                     ->link->attr(['class'=> 'dropdown-item']);
                     $menu->administrador->add('Agenda config', ['route'  => 'agendaconfig.create'])
                     ->data('permission', 'agenda_config-gerenciar')
